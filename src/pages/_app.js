@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import '@/styles/globals.css';
 import { Navigation } from '@/components/navigation';
@@ -14,9 +15,12 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => { wallet.startUp(setSignedAccountId) }, []);
 
   return (
-    <NearContext.Provider value={{ wallet, signedAccountId }}>
-      <Navigation />
-      <Component {...pageProps} />
-    </NearContext.Provider>
+    <>
+      <Toaster />
+      <NearContext.Provider value={{ wallet, signedAccountId }}>
+        <Navigation />
+        <Component {...pageProps} />
+      </NearContext.Provider>
+    </>
   );
 }

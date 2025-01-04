@@ -35,6 +35,15 @@ export const CategoryList = () => {
     fetchCategories();
   }, [wallet]);
 
+  const getVotingStatus = (startDate, endDate) => {
+    const now = Date.now();
+    if (now < parseInt(startDate)) {
+      return { status: 'NOT_STARTED', color: 'yellow' };
+    } else if (now > parseInt(endDate)) {
+      return { status: 'ENDED', color: 'red' };
+    }
+    return { status: 'ACTIVE', color: 'green' };
+  };
 
   if (categories.length === 0) {
     return (
@@ -56,10 +65,19 @@ export const CategoryList = () => {
           <Link key={category.id} href={`/category/${category.id}`} aria-label={`Go to ${category.title}`}>
             <div className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-[250px] hover:scale-[1.05] hover:bg-gray-50">
               <div className="absolute top-4 right-4">
-                <div className="flex items-center bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full">
-                  <ClockIcon size={14} className="mr-1" />
-                  <span>Voting Active</span>
-                </div>
+                {(() => {
+                  const { status, color } = getVotingStatus(category.start_date, category.end_date);
+                  return (
+                    <div className={`flex items-center bg-${color}-100 text-${color}-800 text-sm px-3 py-1 rounded-full`}>
+                      <ClockIcon size={14} className="mr-1" />
+                      <span>
+                        {status === 'ACTIVE' && 'Voting Active'}
+                        {status === 'NOT_STARTED' && 'Voting Not Started'}
+                        {status === 'ENDED' && 'Voting Ended'}
+                      </span>
+                    </div>
+                  );
+                })()}
               </div>
               <div className="p-6 flex flex-col h-full">
                 {(() => {
