@@ -19,6 +19,7 @@ const NomineePage = () => {
   const [electionData, setElectionData] = useState(null);
   const [timeLeft, setTimeLeft] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
+  const [winners, setWinners] = useState([]);
 
   useEffect(() => {
     if (!wallet || !id || !signedAccountId) return;
@@ -85,6 +86,7 @@ const NomineePage = () => {
         args: { election_id: Number(id) },
       });
       setNominees(nominees);
+      setWinners(getWinners(nominees));
     };
 
     fetchElectionData();
@@ -115,6 +117,17 @@ const NomineePage = () => {
     return () => clearInterval(timer);
   }, [electionData]);
 
+  useEffect(() => {
+    if (timeLeft?.status === 'ENDED' && nominees.length > 0) {
+      const maxVotes = Math.max(...nominees.map(n => n.votes_received));
+      // Only set winners if there were actual votes
+      if (maxVotes > 0) {
+        const winningNominees = nominees.filter(n => n.votes_received === maxVotes);
+        setWinners(winningNominees);
+      }
+    }
+  }, [timeLeft, nominees]);
+
   const formatTimeLeft = (ms) => {
     const days = Math.floor(ms / (1000 * 60 * 60 * 24));
     const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -138,6 +151,75 @@ const NomineePage = () => {
     } finally {
       setVotingFor(null);
     }
+  };
+
+  const renderWinnerAnnouncement = () => {
+    if (winners.length === 0) {
+      return (
+        <div className="mb-8 p-6 bg-gray-50 rounded-xl">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-700 mb-4">
+              No Votes Cast
+            </h2>
+            <p className="text-gray-600">
+              This category ended without any votes being cast.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    if (!winners.length) return null;
+
+    return (
+      <div className="mb-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <Award className="w-12 h-12 text-yellow-600" />
+          <h2 className="text-2xl font-bold text-yellow-800">
+            {winners.length === 1 ? 'Winner Announced!' : 'Tied Winners!'}
+          </h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {winners.map((winner) => (
+              <div key={winner.account_id} className="flex items-center space-x-4 bg-white p-4 rounded-lg">
+                <img
+                  src={`https://robohash.org/${winner.account_id}.png`}
+                  alt={winner.account_id}
+                  className="w-16 h-16 rounded-full border-4 border-yellow-200"
+                />
+                <div className="text-center">
+                  <p className="text-lg font-semibold text-yellow-900">{winner.account_id}</p>
+                  <p className="text-yellow-700">{winner.votes_received} votes</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          {winners.length > 1 && (
+            <p className="text-yellow-700 text-center">
+              These nominees tied for first place with {winners[0].votes_received} votes each!
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  const getWinners = (nominees) => {
+    if (!nominees.length) return [];
+  
+    // Get the highest vote count
+    const maxVotes = Math.max(...nominees.map(n => n.votes_received));
+    if (maxVotes === 0) return [];
+    
+    // Get all nominees with the highest vote count (could be multiple in case of tie)
+    const winners = nominees.filter(n => n.votes_received === maxVotes);
+
+    return winners;
+    
+    // return {
+    //   winners,
+    //   isTie: winners.length > 1,
+    //   voteCount: maxVotes
+    // };
   };
 
   return (
@@ -174,9 +256,25 @@ const NomineePage = () => {
         </div>
       </header>
 
+      {timeLeft?.status === 'ENDED' && renderWinnerAnnouncement()}
+    
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {nominees.map((nominee) => (
-          <div key={nominee.account_id} className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div key={nominee.account_id} className={`bg-white rounded-xl shadow-lg overflow-hidden ${
+            timeLeft?.status === 'ENDED' && 
+            winners.some(w => w.account_id === nominee.account_id)
+              ? 'ring-2 ring-yellow-400'
+              : ''
+          }`}>
+            {timeLeft?.status === 'ENDED' && 
+             winners.some(w => w.account_id === nominee.account_id) && (
+              <div className="bg-yellow-100 py-2 px-4 text-center">
+                <span className="text-yellow-800 font-semibold flex items-center justify-center">
+                  <Award className="w-4 h-4 mr-2" />
+                  {winners.length === 1 ? 'Winner' : 'Tied Winner'}
+                </span>
+              </div>
+            )}
             <div className="p-6">
               <div className="flex justify-center mb-4">
                 <img
