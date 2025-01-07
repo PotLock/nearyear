@@ -14,7 +14,11 @@ module.exports = {
     'text-red-800',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        gold: '#FFD700',
+      },
+    },
   },
   plugins: [],
 }
