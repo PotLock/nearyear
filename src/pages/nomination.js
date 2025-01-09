@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useLists } from '../hooks/useLists'; // Adjust the path if necessary
 import Image from 'next/image';
-import { FaHeart, FaLayerGroup, FaThumbsUp, FaUserCircle } from 'react-icons/fa';
+import { FaHeart, FaLayerGroup, FaThumbsUp, FaUserCircle, FaCopy } from 'react-icons/fa';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { NearContext } from '@/wallets/near';
 import { ListContract, ListCreator } from '@/config'; // Import ListContract
@@ -180,6 +180,17 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
     [dataForList.owner, wallet.networkId]
   );
 
+  const handleDuplicate = useCallback(
+    (e) => {
+      e.stopPropagation();
+      const baseUrl = wallet.networkId === 'mainnet' 
+        ? 'https://alpha.potlock.org/list/duplicate/' 
+        : 'https://testnet.potlock.org/list/duplicate/';
+      window.open(`${baseUrl}${dataForList.id}`, '_blank');
+    },
+    [dataForList.id, wallet.networkId]
+  );
+
   const NO_IMAGE =
     'https://i.near.social/magic/large/https://near.social/magic/img/account/null.near';
 
@@ -232,6 +243,9 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
               </div>
             </div>
             <div className="flex items-center justify-center gap-2">
+              <button onClick={handleDuplicate} className="focus:outline-none" title="Duplicate">
+                <FaCopy className="text-[18px]" />
+              </button>
               <button onClick={handleUpvote} className="focus:outline-none">
                 {isUpvoted ? (
                   <FaHeart className="text-[18px] text-red-500" />
