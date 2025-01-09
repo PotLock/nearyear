@@ -103,10 +103,27 @@ const NominationPage = () => {
 
 const ListCard = ({ dataForList, background, backdrop, wallet }) => {
   const [isUpvoted, setIsUpvoted] = useState(false);
+  const [upvotes, setUpvotes] = useState([]);
   const { push } = useRouter();
 
   useEffect(() => {
-    setIsUpvoted(dataForList.upvotes?.some((data) => data?.account === wallet.accountId));
+    const fetchUpvotes = async () => {
+      try {
+        const upvotes = await wallet.viewMethod({
+          contractId: ListContract,
+          method: 'get_upvotes_for_list',
+          args: { list_id: dataForList.id },
+        });
+        setUpvotes(upvotes);
+        setIsUpvoted(upvotes.includes(wallet.accountId));
+      } catch (error) {
+        console.error('Error fetching upvotes:', error);
+      }
+    };
+
+    if (wallet) {
+      fetchUpvotes();
+    }
   }, [dataForList, wallet]);
 
   const handleRoute = useCallback(
@@ -119,37 +136,48 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
     [dataForList?.on_chain_id, wallet.networkId]
   );
 
-  const handleUpvote = (e) => {
+  const handleUpvote = async (e) => {
     e.stopPropagation();
 
     const UPVOTE = 'UPVOTE';
     const DOWNVOTE = 'DOWNVOTE';
 
-    if (isUpvoted) {
-      console.log('Removing upvote for list:', dataForList?.on_chain_id);
-      listsContractClient.remove_upvote({ list_id: dataForList?.on_chain_id });
-
-      handleListToast({
-        name: (dataForList?.name || '').slice(0, 15),
-        type: DOWNVOTE,
-      });
-    } else {
-      console.log('Adding upvote for list:', dataForList?.on_chain_id);
-      listsContractClient.upvote({ list_id: dataForList?.on_chain_id });
-
-      handleListToast({
-        name: (dataForList?.name || '').slice(0, 15),
-        type: UPVOTE,
-      });
+    try {
+      if (isUpvoted) {
+        console.log('Removing upvote for list:', dataForList.id);
+        await wallet.callMethod({
+          contractId: ListContract,
+          method: 'remove_upvote',
+          args: { list_id: dataForList.id },
+        });
+        setUpvotes(upvotes.filter((id) => id !== wallet.accountId));
+        setIsUpvoted(false);
+        handleListToast({ name: dataForList.name.slice(0, 15), type: DOWNVOTE });
+      } else {
+        console.log('Adding upvote for list:', dataForList.id);
+        await wallet.callMethod({
+          contractId: ListContract,
+          method: 'upvote',
+          args: { list_id: dataForList.id },
+        });
+        setUpvotes([...upvotes, wallet.accountId]);
+        setIsUpvoted(true);
+        handleListToast({ name: dataForList.name.slice(0, 15), type: UPVOTE });
+      }
+    } catch (error) {
+      console.error('Upvote action failed:', error);
     }
   };
 
   const handleRouteUser = useCallback(
     (e) => {
       e.stopPropagation();
-      push(`/profile/${dataForList?.owner?.id}`);
+      const baseUrl = wallet.networkId === 'mainnet' 
+        ? 'https://alpha.potlock.org/profile/' 
+        : 'https://testnet.potlock.org/profile/';
+      window.open(`${baseUrl}${dataForList.owner}/lists`, '_blank');
     },
-    [dataForList?.owner]
+    [dataForList.owner, wallet.networkId]
   );
 
   const NO_IMAGE =
@@ -199,8 +227,8 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
                 className="flex items-center gap-1 hover:opacity-50"
                 onClick={handleRouteUser}
               >
-                <FaUserCircle accountId={dataForList?.owner?.id} className="h-4 w-4" />
-                <p className="">{(dataForList.owner?.id || '').slice(0, 25)}</p>
+                <FaUserCircle accountId={dataForList?.owner} className="h-4 w-4" />
+                <p className="">{(dataForList.owner || '').slice(0, 25)}</p>
               </div>
             </div>
             <div className="flex items-center justify-center gap-2">
@@ -212,7 +240,7 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
                 )}
               </button>
               <p className="m-0 p-0 pt-1 text-[16px] font-semibold text-black">
-                {dataForList.upvotes?.length}
+                {upvotes.length}
               </p>
             </div>
           </div>
