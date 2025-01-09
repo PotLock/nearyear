@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 
 // Define the competitions data
 const competitionsData = [
@@ -927,296 +928,308 @@ const LandingPage = () => {
   const isActive = (start, end) => currentDate >= start && currentDate <= end;
 
   return (
-    <div style={{ backgroundColor: '#f5f5f5', color: '#333', minHeight: '100vh', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '3em', fontWeight: 'bold', color: '#333' }}>NEAR YEAR</h1>
-        <p style={{ fontSize: '1.2em', color: '#666' }}>
-          The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming years
-        </p>
-      </header>
+    <>
+      <Head>
+        <title>NEAR YEAR - Celebrating NEAR Ecosystem</title>
+        <meta name="description" content="The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming years." />
+        <meta name="keywords" content="NEAR, blockchain, awards, ecosystem, projects, people" />
+        <meta property="og:title" content="NEAR YEAR - Celebrating NEAR Ecosystem" />
+        <meta property="og:description" content="The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming years." />
+        <meta property="og:image" content="/path/to/image.jpg" />
+        <meta property="og:url" content="https://nearyear.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+      <div style={{ backgroundColor: '#f5f5f5', color: '#333', minHeight: '100vh', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+        <header style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h1 style={{ fontSize: '3em', fontWeight: 'bold', color: '#333' }}>NEAR YEAR</h1>
+          <p style={{ fontSize: '1.2em', color: '#666' }}>
+            The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming years
+          </p>
+        </header>
 
-      <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>Brought to you by</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginTop: '20px', flexWrap: 'wrap' }}>
-          <a href="http://potlock.org" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
-            <Image src="/potlock.png" alt="Potlock Logo" width={100} height={100} />
-          </a>
-          <a href="https://near.foundation" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
-            <Image src="/near-logo.svg" alt="NEAR Foundation Logo" width={100} height={100} />
-          </a>
-          <a href="http://shard.dog" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
-            <Image src="/sharddog.png" alt="Sharddog Logo" width={100} height={100} />
-          </a>
-          <a href="https://blackdragon.meme/" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
-            <Image src="/blackdragon.png" alt="Blackdragon Logo" width={100} height={100} />
-          </a>
-          <a href="https://nearcatalog.xyz/" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
-            <Image src="/nearcatalog.png" alt="NEAR Catalog Logo" width={100} height={100} />
-          </a>
-          <a href="http://nearweek.com" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
-            <Image src="/nearweek.png" alt="NEARWEEK Logo" width={100} height={100} />
-          </a>
-        </div>
-      </section>
-      <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Filter by Category</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
-          <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory('All')}>All</button>
-          {categories.map((category, index) => (
-            <button key={index} style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory(category)}>{category}</button>
-          ))}
-        </div>
-      </section>
+        <section style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>Brought to you by</h2>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginTop: '20px', flexWrap: 'wrap' }}>
+            <a href="http://potlock.org" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+              <Image src="/potlock.png" alt="Potlock Logo" width={100} height={100} />
+            </a>
+            <a href="https://near.foundation" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+              <Image src="/near-logo.svg" alt="NEAR Foundation Logo" width={100} height={100} />
+            </a>
+            <a href="http://shard.dog" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+              <Image src="/sharddog.png" alt="Sharddog Logo" width={100} height={100} />
+            </a>
+            <a href="https://blackdragon.meme/" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+              <Image src="/blackdragon.png" alt="Blackdragon Logo" width={100} height={100} />
+            </a>
+            <a href="https://nearcatalog.xyz/" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+              <Image src="/nearcatalog.png" alt="NEAR Catalog Logo" width={100} height={100} />
+            </a>
+            <a href="http://nearweek.com" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+              <Image src="/nearweek.png" alt="NEARWEEK Logo" width={100} height={100} />
+            </a>
+          </div>
+        </section>
+        <section style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Filter by Category</h2>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
+            <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory('All')}>All</button>
+            {categories.map((category, index) => (
+              <button key={index} style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory(category)}>{category}</button>
+            ))}
+          </div>
+        </section>
 
-      <section style={{ marginBottom: '40px', display: 'flex', gap: '10px' }}>
-        <input 
-          type="text" 
-          placeholder={`Showing ${filteredCompetitions.length} out of ${totalCompetitions} competitions...`} 
-          value={searchTerm} 
-          onChange={(e) => setSearchTerm(e.target.value)} 
-          style={{ flex: '1 1 80%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px' }}
-        />
-        <select 
-          value={selectedCompetitor} 
-          onChange={(e) => setSelectedCompetitor(e.target.value)} 
-          style={{ flex: '1 1 20%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-        >
-          {competitors.map((competitor, index) => (
-            <option key={index} value={competitor}>{competitor}</option>
-          ))}
-        </select>
-      </section>
+        <section style={{ marginBottom: '40px', display: 'flex', gap: '10px' }}>
+          <input 
+            type="text" 
+            placeholder={`Showing ${filteredCompetitions.length} out of ${totalCompetitions} competitions...`} 
+            value={searchTerm} 
+            onChange={(e) => setSearchTerm(e.target.value)} 
+            style={{ flex: '1 1 80%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px' }}
+          />
+          <select 
+            value={selectedCompetitor} 
+            onChange={(e) => setSelectedCompetitor(e.target.value)} 
+            style={{ flex: '1 1 20%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+          >
+            {competitors.map((competitor, index) => (
+              <option key={index} value={competitor}>{competitor}</option>
+            ))}
+          </select>
+        </section>
 
-      {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
-          <p>Loading...</p>
-        </div>
-      ) : (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
-          {filteredCompetitions.map((competition, idx) => (
-            <div key={idx} style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', position: 'relative', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-              <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: categoryColors[competition.category], padding: '5px 10px', borderRadius: '5px', color: '#fff', fontSize: '0.8em' }}>
-                {competition.category}
-              </div>
-              <h3 style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => toggleCompetition(idx)}>
-                {competition.name}
-              </h3>
-              {expandedCompetition === idx && (
-                <div style={{ marginTop: '10px' }}>
-                  <p>{competition.description}</p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                    {competition.content.map((item, itemIdx) => (
-                      <div 
-                        key={itemIdx} 
-                        style={{ flex: '1 1 calc(33% - 10px)', border: '1px solid #eee', borderRadius: '8px', padding: '10px', position: 'relative', backgroundColor: '#f9f9f9' }}
-                        title={item.comment}
-                      >
-                        <strong>{item.name}</strong>
-                      </div>
-                    ))}
-                  </div>
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
+            {filteredCompetitions.map((competition, idx) => (
+              <div key={idx} style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', position: 'relative', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+                <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: categoryColors[competition.category], padding: '5px 10px', borderRadius: '5px', color: '#fff', fontSize: '0.8em' }}>
+                  {competition.category}
                 </div>
-              )}
-              {competition.listLink.includes('potlock.org') && (
-                <a 
-                  href={competition.listLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  style={{ position: 'absolute', bottom: '10px', right: '10px', cursor: 'pointer', transition: 'transform 0.3s' }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                >
-                  🔗
-                </a>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-
-      <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Timeline</h2>
-        <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-          {timelineEvents.map((event, index) => (
-            <div key={index} style={{
-              width: '80%',
-              border: '1px solid #ccc',
-              borderRadius: '8px',
-              padding: '20px',
-              backgroundColor: '#fff',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-              position: 'relative',
-              animation: isActive(event.start, event.end) ? 'glow 1.5s infinite' : 'none'
-            }}>
-              <div style={{
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                height: '5px',
-                width: isActive(event.start, event.end) ? '100%' : '0',
-                backgroundColor: '#FFD700',
-                transition: 'width 0.3s'
-              }}></div>
-              <h3 style={{ fontWeight: 'bold', color: '#333' }}>{event.title}</h3>
-              <div style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                fontSize: '0.9em',
-                color: '#666'
-              }}>
-                📅 {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}
+                <h3 style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => toggleCompetition(idx)}>
+                  {competition.name}
+                </h3>
+                {expandedCompetition === idx && (
+                  <div style={{ marginTop: '10px' }}>
+                    <p>{competition.description}</p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                      {competition.content.map((item, itemIdx) => (
+                        <div 
+                          key={itemIdx} 
+                          style={{ flex: '1 1 calc(33% - 10px)', border: '1px solid #eee', borderRadius: '8px', padding: '10px', position: 'relative', backgroundColor: '#f9f9f9' }}
+                          title={item.comment}
+                        >
+                          <strong>{item.name}</strong>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {competition.listLink.includes('potlock.org') && (
+                  <a 
+                    href={competition.listLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ position: 'absolute', bottom: '10px', right: '10px', cursor: 'pointer', transition: 'transform 0.3s' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    🔗
+                  </a>
+                )}
               </div>
-              <ul style={{ paddingLeft: '20px', color: '#666' }}>
-                {event.title === "ANNOUNCEMENT" && (
-                  <>
-                    <li>Official nominations, announcement article and call for nominations</li>
-                    <li>Whole article put out with justification</li>
-                    <li>Initial Content</li>
-                  </>
-                )}
-                {event.title === "SUBMISSIONS" && (
-                  <>
-                    <li>People begin to submit their own lists</li>
-                    <li>Debates: founder debate - detail TBA</li>
-                  </>
-                )}
-                {event.title === "VOTING" && (
-                  <>
-                    <li>People vote (anyone but need Sharddog NFT)</li>
-                    <li>End of Jan - award show</li>
-                  </>
-                )}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <style jsx>{`
-        @keyframes glow {
-          0%, 100% {
-            box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700;
-          }
-          50% {
-            box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
-          }
-        }
-      `}</style>
-
-      <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>🚀 How to Participate</h2>
-        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
-          
-          <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-            <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>👥 For Voters</h3>
-            <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Get Verified:</strong> Obtain a Sharddog &quot;I Voted&quot; NFT for verification.
-              </li>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Vote:</strong> Participate in the voting process during the designated period.
-              </li>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Earn Rewards:</strong> Receive an exclusive &quot;NEAR YEAR&quot; Sharddog NFT for participating.
-              </li>
-            </ol>
+            ))}
           </div>
+        )}
 
-          <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-            <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>🏆 For Curators</h3>
-            <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Nominate:</strong> Duplicate the <a href="https://potlock.org/list-docs" target="_blank" rel="noopener noreferrer">list</a> on Potlock and keep the same name.
-              </li>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Include Details:</strong> Add project account names from <a href="http://near.social" target="_blank" rel="noopener noreferrer">near.social</a>.
-              </li>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Share:</strong> Post your list on Twitter tagging @potlock_ @nearweek @nearprotocol @nearcatalog.
-              </li>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Self-Nominate:</strong> Create a list entry and notify <a href="https://x.com/plugrel" target="_blank" rel="noopener noreferrer">plugrel</a> on Twitter.
-              </li>
-            </ol>
+        <section style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Timeline</h2>
+          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+            {timelineEvents.map((event, index) => (
+              <div key={index} style={{
+                width: '80%',
+                border: '1px solid #ccc',
+                borderRadius: '8px',
+                padding: '20px',
+                backgroundColor: '#fff',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                position: 'relative',
+                animation: isActive(event.start, event.end) ? 'glow 1.5s infinite' : 'none'
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  height: '5px',
+                  width: isActive(event.start, event.end) ? '100%' : '0',
+                  backgroundColor: '#FFD700',
+                  transition: 'width 0.3s'
+                }}></div>
+                <h3 style={{ fontWeight: 'bold', color: '#333' }}>{event.title}</h3>
+                <div style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  fontSize: '0.9em',
+                  color: '#666'
+                }}>
+                  📅 {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}
+                </div>
+                <ul style={{ paddingLeft: '20px', color: '#666' }}>
+                  {event.title === "ANNOUNCEMENT" && (
+                    <>
+                      <li>Official nominations, announcement article and call for nominations</li>
+                      <li>Whole article put out with justification</li>
+                      <li>Initial Content</li>
+                    </>
+                  )}
+                  {event.title === "SUBMISSIONS" && (
+                    <>
+                      <li>People begin to submit their own lists</li>
+                      <li>Debates: founder debate - detail TBA</li>
+                    </>
+                  )}
+                  {event.title === "VOTING" && (
+                    <>
+                      <li>People vote (anyone but need Sharddog NFT)</li>
+                      <li>End of Jan - award show</li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            ))}
           </div>
+        </section>
 
-          <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-            <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>🏗️ For Projects</h3>
-            <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Create Project:</strong> <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">Register</a> on Potlock with a named account that represents your project.
-              </li>
-              <li style={{ marginBottom: '10px' }}>
-                <strong>Apply to List:</strong> Tweet at <a href="https://x.com/plugrel" target="_blank" rel="noopener noreferrer">@plugrel</a> with your Potlock profile and the category name you are applying for.
-              </li>
-            </ol>
-          </div>
-
-        </div>
-      </section>
-
-      <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>FAQ</h2>
-        <div style={{ marginTop: '20px' }}>
-          {[
-            {
-              id: 1,
-              question: "Who can participate in the NEAR YEAR Awards?",
-              answer: "Anyone can participate by nominating projects and voting. However, for the vote to count you need a Sharddog 'I NEAR YEAR' NFT for verification."
-            },
-            {
-              id: 2,
-              question: "How do I nominate a project or person?",
-              answer: "Create a list on Potlock, include project account names, and share your list on Twitter with #NEARYearAwards tagging @NEARProtocol @potlock_ @nearweek. You can also self-nominate by creating a list entry and notifying @plugrel on Twitter."
-            },
-            {
-              id: 3,
-              question: "What are the voting requirements?",
-              answer: "You need a Sharddog 'NEAR YEAR' NFT that represents a unique, verified human identity. List creators receive 2x voting power if verified."
-            },
-
-            {
-              id: 4,
-              question: "What do winners receive?",
-              answer: "Winners receive immutable bragging rights through on-chain recognition. All participants can earn exclusive NEAR YEAR Sharddog NFTs by voting or nominating."
-            },
-            {
-              id: 5,
-              question: "My project is listed on the doc but not on listing page.",
-              answer: "This means you need to create a profile on Potlock and then apply to list and tag @plugrel on Twitter. All the existing people on onchain list already had profiles (see who doesn’t with the indicated 🟡 emoji)."
+        <style jsx>{`
+          @keyframes glow {
+            0%, 100% {
+              box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700;
             }
-          ].map((faq) => (
-            <div key={faq.id} style={{ marginBottom: '10px' }}>
-              <h3 style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => toggleCompetition(faq.id)}>
-                {faq.question}
-              </h3>
-              {expandedCompetition === faq.id && (
-                <p style={{ marginTop: '5px' }}>{faq.answer}</p>
-              )}
+            50% {
+              box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
+            }
+          }
+        `}</style>
+
+        <section style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>🚀 How to Participate</h2>
+          <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+            
+            <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+              <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>👥 For Voters</h3>
+              <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Get Verified:</strong> Obtain a Sharddog &quot;I Voted&quot; NFT for verification.
+                </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Vote:</strong> Participate in the voting process during the designated period.
+                </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Earn Rewards:</strong> Receive an exclusive &quot;NEAR YEAR&quot; Sharddog NFT for participating.
+                </li>
+              </ol>
             </div>
-          ))}
-        </div>
-      </section>
+
+            <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+              <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>🏆 For Curators</h3>
+              <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Nominate:</strong> Duplicate the <a href="https://potlock.org/list-docs" target="_blank" rel="noopener noreferrer">list</a> on Potlock and keep the same name.
+                </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Include Details:</strong> Add project account names from <a href="http://near.social" target="_blank" rel="noopener noreferrer">near.social</a>.
+                </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Share:</strong> Post your list on Twitter tagging @potlock_ @nearweek @nearprotocol @nearcatalog.
+                </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Self-Nominate:</strong> Create a list entry and notify <a href="https://x.com/plugrel" target="_blank" rel="noopener noreferrer">plugrel</a> on Twitter.
+                </li>
+              </ol>
+            </div>
+
+            <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+              <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>🏗️ For Projects</h3>
+              <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Create Project:</strong> <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">Register</a> on Potlock with a named account that represents your project.
+                </li>
+                <li style={{ marginBottom: '10px' }}>
+                  <strong>Apply to List:</strong> Tweet at <a href="https://x.com/plugrel" target="_blank" rel="noopener noreferrer">@plugrel</a> with your Potlock profile and the category name you are applying for.
+                </li>
+              </ol>
+            </div>
+
+          </div>
+        </section>
+
+        <section style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>FAQ</h2>
+          <div style={{ marginTop: '20px' }}>
+            {[
+              {
+                id: 1,
+                question: "Who can participate in the NEAR YEAR Awards?",
+                answer: "Anyone can participate by nominating projects and voting. However, for the vote to count you need a Sharddog 'I NEAR YEAR' NFT for verification."
+              },
+              {
+                id: 2,
+                question: "How do I nominate a project or person?",
+                answer: "Create a list on Potlock, include project account names, and share your list on Twitter with #NEARYearAwards tagging @NEARProtocol @potlock_ @nearweek. You can also self-nominate by creating a list entry and notifying @plugrel on Twitter."
+              },
+              {
+                id: 3,
+                question: "What are the voting requirements?",
+                answer: "You need a Sharddog 'NEAR YEAR' NFT that represents a unique, verified human identity. List creators receive 2x voting power if verified."
+              },
+
+              {
+                id: 4,
+                question: "What do winners receive?",
+                answer: "Winners receive immutable bragging rights through on-chain recognition. All participants can earn exclusive NEAR YEAR Sharddog NFTs by voting or nominating."
+              },
+              {
+                id: 5,
+                question: "My project is listed on the doc but not on listing page.",
+                answer: "This means you need to create a profile on Potlock and then apply to list and tag @plugrel on Twitter. All the existing people on onchain list already had profiles (see who doesn’t with the indicated 🟡 emoji)."
+              }
+            ].map((faq) => (
+              <div key={faq.id} style={{ marginBottom: '10px' }}>
+                <h3 style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => toggleCompetition(faq.id)}>
+                  {faq.question}
+                </h3>
+                {expandedCompetition === faq.id && (
+                  <p style={{ marginTop: '5px' }}>{faq.answer}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
 
 
-      <footer style={{ textAlign: 'center', marginTop: '40px' }}>
-        <div style={{ marginBottom: '10px' }}>
-          <Link href="/how-to-nominate">How to Nominate</Link>
-          <span> | </span>
-          <Link href="/how-to-vote">How to Vote</Link>
-          <span> | </span>
-          <Link href="/view-nominees">View Nominees</Link>
-          <span> | </span>
-          <Link href="/view-categories">View Categories</Link>
-        </div>
-        <div>
-          <a href="https://x.com/potlock_" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <span> | </span>
-          <a href="https://github.com/potlock/nearawards" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-      </footer>
-    </div>
+        <footer style={{ textAlign: 'center', marginTop: '40px' }}>
+          <div style={{ marginBottom: '10px' }}>
+            <Link href="/how-to-nominate">How to Nominate</Link>
+            <span> | </span>
+            <Link href="/how-to-vote">How to Vote</Link>
+            <span> | </span>
+            <Link href="/view-nominees">View Nominees</Link>
+            <span> | </span>
+            <Link href="/view-categories">View Categories</Link>
+          </div>
+          <div>
+            <a href="https://x.com/potlock_" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <span> | </span>
+            <a href="https://github.com/potlock/nearawards" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 };
 
