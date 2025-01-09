@@ -1010,20 +1010,8 @@ const LandingPage = () => {
                 <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: categoryColors[competition.category], padding: '5px 10px', borderRadius: '5px', color: '#fff', fontSize: '0.8em' }}>
                   {competition.category}
                 </div>
-                <h3 style={{ fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggleCompetition(idx)}>
+                <h3 style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => toggleCompetition(idx)}>
                   {competition.name}
-                  {competition.listLink.includes('potlock.org') && (
-                    <a 
-                      href={competition.listLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ marginLeft: '10px', cursor: 'pointer', transition: 'transform 0.3s' }}
-                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    >
-                      🔗
-                    </a>
-                  )}
                 </h3>
                 {expandedCompetition === idx && (
                   <div style={{ marginTop: '10px' }}>
@@ -1040,6 +1028,18 @@ const LandingPage = () => {
                       ))}
                     </div>
                   </div>
+                )}
+                {competition.listLink.includes('potlock.org') && (
+                  <a 
+                    href={competition.listLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ position: 'absolute', bottom: '10px', right: '10px', cursor: 'pointer', transition: 'transform 0.3s' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    🔗
+                  </a>
                 )}
               </div>
             ))}
@@ -1214,18 +1214,18 @@ const LandingPage = () => {
 
         <footer style={{ textAlign: 'center', marginTop: '40px' }}>
           <div style={{ marginBottom: '10px' }}>
-            <Link href="/how-to-nominate">How to Nominate</Link>
+            <Link href="https://alpha.potlock.org/register" target="_blank" >Create Project</Link>
             <span> | </span>
-            <Link href="/how-to-vote">How to Vote</Link>
+            <Link href="/vote">How to Vote</Link>
             <span> | </span>
-            <Link href="/view-nominees">View Nominees</Link>
+            <Link href="/nomination">View Nominees</Link>
             <span> | </span>
-            <Link href="/view-categories">View Categories</Link>
+            <Link href="/">View Categories</Link>
           </div>
           <div>
             <a href="https://x.com/potlock_" target="_blank" rel="noopener noreferrer">Twitter</a>
             <span> | </span>
-            <a href="https://github.com/potlock/nearawards" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/potlock/nearyear" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </footer>
       </div>

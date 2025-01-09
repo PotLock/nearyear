@@ -56,8 +56,8 @@ export const CategoryList = () => {
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <header className="text-center mb-12">
-        <h1 className="text-5xl font-extrabold mb-4">NEAR Protocol Awards 2025</h1>
-        <p className="text-base md:text-lg text-gray-700">Celebrate and recognize excellence in the NEAR ecosystem</p>
+        <h1 className="text-5xl font-extrabold mb-4">NEAR YEAR</h1>
+        <p className="text-base md:text-lg text-gray-700">Testnet voting. Real voting hasn't start.  Create a list to nomiante new projects, or create a project to qualify for nominations</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

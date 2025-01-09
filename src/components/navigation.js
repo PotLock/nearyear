@@ -34,8 +34,8 @@ export const Navigation = () => {
             Vote
             <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
           </Link>
-          <Link href="https://alpha.potlock.org/lists" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
-            Nominate with A List
+          <Link href="/nomination"  style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
+            Nominate w List
             {/* <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span> */}
           </Link>
           <Link href="https://alpha.potlock.org/register" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
