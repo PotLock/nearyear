@@ -297,3 +297,9 @@
     border-bottom: 1px solid #ccc;
   }
 }
+
+@media (min-width: 701px) {
+  .mobile-menu {
+    display: none;
+  }
+}

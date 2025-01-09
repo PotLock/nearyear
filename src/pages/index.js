@@ -284,14 +284,14 @@ const competitionsData = [
         listLink: "https://alpha.potlock.org/list/33",
         points: 15,
         content: [
-          { name: "NEAR DA / Nuffle - Eigen Layer AVS Expansion 🟡", comment: "" },
-          { name: "Bitte - through chain abstraction", comment: "" },
-          { name: "Aurora - Virtuals Chians & NEAR Intents 🟡", comment: "" },
-          { name: "Hot - shipping Chain signatures early 🟡", comment: "" },
-          { name: "DapDap - first l2s with BOS narrative in 2023, continuing 🟡", comment: "" },
-          { name: "Eliza Framework - NEAR integration but chain abstractiond evelopment frmaeowkr 🟡", comment: "" },
+          { name: "NEAR DA / Nuffle 🟡", comment: "Eigen Layer AVS Expansio" },
+          { name: "Bitte", comment: "through chain abstraction" },
+          { name: "Aurora🟡", comment: "Virtuals Chains & NEAR Intents" },
+          { name: "Hot🟡", comment: "shipping Chain signatures first" },
+          { name: "DapDap 🟡", comment: "first l2s with BOS narrative in 2023, continuing" },
+          { name: "Eliza Framework 🟡", comment: "NEAR integration but chain abstractiond evelopment frmaeowkr" },
           { name: "PlayEmber: 🟡", comment: "" },
-          { name: "Meta Pool - liquidi staking onS oalna, EVM ICP, and Multichain governance settled on DAO on NEAR. Support public goods funding throuhg Gitcoin and Potlock and funded project across those ecosystems.", comment: "" }
+          { name: "Meta Pool", comment: "Liquid staking on SOLANA, EVM ICP, and Multichain governance settled on DAO on NEAR. Support public goods funding through Gitcoin and POTLOCK and funded project across those ecosystems." }
         ]
       },
       {
@@ -1210,7 +1210,7 @@ const LandingPage = () => {
           }
         `}</style>
 
-        <section style={{ marginBottom: '40px' }}>
+        <section style={{ marginBottom: '60px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>🚀 How to Participate</h2>
           <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
             
@@ -1262,7 +1262,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section style={{ marginBottom: '40px' }}>
+        <section style={{ marginBottom: '60px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>FAQ</h2>
           <div style={{ marginTop: '20px' }}>
             {[

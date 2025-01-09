@@ -182,9 +182,11 @@ const NomineePage = () => {
           <div className="flex flex-wrap justify-center gap-4">
             {winners.map((winner) => (
               <div key={winner.account_id} className="flex items-center space-x-4 bg-white p-4 rounded-lg">
-                <img
+                <Image
                   src={`https://robohash.org/${winner.account_id}.png`}
                   alt={winner.account_id}
+                  width={64}
+                  height={64}
                   className="w-16 h-16 rounded-full border-4 border-yellow-200"
                 />
                 <div className="text-center">
@@ -278,9 +280,11 @@ const NomineePage = () => {
             )}
             <div className="p-6">
               <div className="flex justify-center mb-4">
-                <img
+                <Image
                   src={`https://robohash.org/${nominee.account_id}.png`}
                   alt={nominee.account_id}
+                  width={96}
+                  height={96}
                   className="w-24 h-24 rounded-full border-4 border-blue-100"
                 />
               </div>
