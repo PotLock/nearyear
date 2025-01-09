@@ -5,8 +5,10 @@ import Image from 'next/image';
 import { FaHeart, FaLayerGroup, FaThumbsUp, FaUserCircle, FaCopy, FaUser } from 'react-icons/fa';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { NearContext } from '@/wallets/near';
-import { ListContract, ListCreator } from '@/config'; // Import ListContract
+import { ListContract, ListCreator, SOCIAL_CONTRACT } from '@/config'; // Import ListContract
 import { toast } from 'react-hot-toast';
+import { wallet } from '@/wallets/near'; // Ensure wallet is correctly imported
+import { socialContract } from '@/config'; // Ensure socialContract is correctly imported
 
 // Define the getRandomBackgroundImage function
 const getRandomBackgroundImage = () => {
@@ -20,6 +22,26 @@ const getRandomBackgroundImage = () => {
   const randomIndex = Math.floor(Math.random() * backgrounds.length);
   return backgrounds[randomIndex];
 };
+
+export async function getProfile(accountId) {
+  try {
+    const response = await wallet.viewMethod({
+      contractId: SOCIAL_CONTRACT,
+      method: 'get',
+      args: { keys: [`${accountId}/profile/**`] },
+    });
+    if (!response) {
+      throw new Error("Failed to fetch profile");
+    }
+
+    const { profile } = response[accountId];
+    return profile;
+  } catch (error) {
+    console.error(`Error fetching profile for ${accountId}:`, error);
+    return null;
+  }
+}
+console.log(getProfile('mob.near'));
 
 const NominationPage = () => {
   const router = useRouter();
@@ -37,7 +59,7 @@ const NominationPage = () => {
         const lists = await wallet.viewMethod({
           contractId: ListContract,
           method: 'get_lists_for_owner',
-          args: { owner_id: ListCreator }, // Pass the owner_id argument
+          args: { owner_id: ListCreator },
         });
         console.log('Fetched lists:', lists);
 
@@ -49,6 +71,27 @@ const NominationPage = () => {
         lists.forEach(list => {
           console.log(`Project: ${list.project_name}, List ID: ${list.id}`);
         });
+
+        // Fetch profiles for each list owner using getProfile
+        const profilesData = await Promise.all(
+          lists.map(async (list) => {
+            try {
+              const profile = await getProfile(list.owner);
+              console.log(`Profile data for ${list.owner}:`, profile);
+              return { owner: list.owner, profile };
+            } catch {
+              console.log(`Failed to fetch profile for ${list.owner}`);
+              return { owner: list.owner, profile: null };
+            }
+          })
+        );
+
+        const profilesMap = profilesData.reduce((acc, { owner, profile }) => {
+          acc[owner] = profile;
+          return acc;
+        }, {});
+
+        console.log('Profiles:', profilesMap);
 
         setLists(lists);
 
@@ -105,6 +148,7 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [upvotes, setUpvotes] = useState([]);
   const [approvedRegistrations, setApprovedRegistrations] = useState([]);
+  const [profiles, setProfiles] = useState({});
   const { push } = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -132,12 +176,32 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
             list_id: dataForList.id,
             status: 'Approved',
             from_index: 0,
-            limit: 100, // Adjust the limit as needed
+            limit: 100,
           },
         });
-        // Extract registrant_id from each registration
         const registrantIds = registrations.map(registration => registration.registrant_id);
         setApprovedRegistrations(registrantIds);
+
+        // Fetch profiles for each registrant using getProfile
+        const profilesData = await Promise.all(
+          registrantIds.map(async (id) => {
+            try {
+              const profile = await getProfile(id);
+              console.log(`Profile data for ${id}:`, profile);
+              return { id, profile };
+            } catch {
+              console.log(`Failed to fetch profile for ${id}`);
+              return { id, profile: null };
+            }
+          })
+        );
+
+        const profilesMap = profilesData.reduce((acc, { id, profile }) => {
+          acc[id] = profile;
+          return acc;
+        }, {});
+
+        setProfiles(profilesMap);
       } catch (error) {
         console.error('Error fetching approved registrations:', error);
       }
@@ -275,7 +339,13 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
             <ul className="list-none pl-0">
               {approvedRegistrations.map((registrantId) => (
                 <li key={registrantId} className="flex items-center gap-2">
-                  <FaUser className="h-4 w-4" />
+                  <Image
+                    src={profiles[registrantId]?.image || NO_IMAGE}
+                    alt={registrantId}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
                   <span
                     role="button"
                     className="hover:underline"

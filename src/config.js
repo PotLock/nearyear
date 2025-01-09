@@ -11,6 +11,11 @@ const listCreatorAccount = {
   testnet: 'potlock.testnet',
 };
 
+ const socialContract = {
+  mainnet: "social.near",
+  testnet: "v1.social08.testnet"
+};
+
 // Chains for EVM Wallets 
 const evmWalletChains = {
   mainnet: {
@@ -28,6 +33,7 @@ const evmWalletChains = {
 }
 
 export const NetworkId = 'mainnet';
+export const SOCIAL_CONTRACT = socialContract[NetworkId];
 export const HelloNearContract =  voteContract[NetworkId];
 export const ListContract = listContract[NetworkId];
 export const ListCreator = listCreatorAccount[NetworkId];
