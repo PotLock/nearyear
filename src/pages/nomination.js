@@ -115,7 +115,7 @@ const NominationPage = () => {
   if (error) return <p>Error loading lists: {error.message}</p>;
 
   return (
-    <div className="w-full">
+    <div className="w-full p-4">
       {lists.length ? (
         <div className="mt-8 grid w-full grid-cols-1 gap-8 pb-10 md:grid-cols-2 lg:grid-cols-3">
           {lists.map((item) => {
@@ -284,7 +284,8 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
   return (
     <div
       onClick={handleRoute}
-      className="cursor-pointer transition-all duration-300 hover:translate-y-[-1rem] overflow-hidden rounded-[12px] border border-gray-300"
+      className="cursor-pointer transition-all duration-300 hover:translate-y-[-1rem] overflow-hidden rounded-[12px] border border-gray-200"
+      style={{ maxWidth: '500px' }}
     >
       <Image
         src={dataForList?.cover_image_url || backdrop}
@@ -292,6 +293,7 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
         width={500}
         height={500}
         className="h-[500px] w-full object-cover"
+        style={{ width: 'auto', height: 'auto' }}
       />
       <div className="bg-background p-3">
         <p className="text-lg font-[600] leading-tight">
