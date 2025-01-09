@@ -1,5 +1,5 @@
 const voteContract = {
-  mainnet: 'mpdao.vote.potlock.near',
+  mainnet: 'v1.vote.potlock.near',
   testnet: 'awards.potlock.testnet',
 };
 const listContract = {

@@ -1218,13 +1218,13 @@ const LandingPage = () => {
               <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>👥 For Voters</h3>
               <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
                 <li style={{ marginBottom: '10px' }}>
-                  <strong>Get Verified:</strong> Obtain a Sharddog &quot;I Voted&quot; NFT for verification.
+                  <strong>Get Verified:</strong> Obtain a Sharddog I Voted NFT for verification.
                 </li>
                 <li style={{ marginBottom: '10px' }}>
                   <strong>Vote:</strong> Participate in the voting process during the designated period.
                 </li>
                 <li style={{ marginBottom: '10px' }}>
-                  <strong>Earn Rewards:</strong> Receive an exclusive &quot;NEAR YEAR&quot; Sharddog NFT for participating.
+                  <strong>Earn Rewards:</strong> Receive an exclusive NEAR YEAR& Sharddog NFT for participating.
                 </li>
               </ol>
             </div>
