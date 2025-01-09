@@ -1022,7 +1022,7 @@ const LandingPage = () => {
             }}>
               <span style={{ fontSize: '2em', marginRight: '15px' }}>🗳️</span>
               <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
-                During the nomination period, nominated projects are onboarded to the chain, and curators can create their own lists to boost new nominees. This is also the time to debate and advocate for this year's achievements.
+                During the nomination period, nominated projects are onboarded to the chain, and curators can create their own lists to boost new nominees. This is also the time to debate and advocate for 2024 achievements.
               </p>
             </div>
             <div style={{ 
@@ -1036,7 +1036,7 @@ const LandingPage = () => {
             }}>
               <span style={{ fontSize: '2em', marginRight: '15px' }}>🏆</span>
               <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
-                During the voting period, verified humans with Shard Dog NFTs choose the top winners, followed by an awards show.
+                During the voting period, verified humans with ShardDog NFTs choose the top winners, followed by an awards show.
               </p>
             </div>
           </div>
