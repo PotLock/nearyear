@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { useLists } from '../hooks/useLists'; // Adjust the path if necessary
+import { useLists } from '../hooks/useLists';
 import Image from 'next/image';
 import { FaHeart, FaLayerGroup, FaThumbsUp, FaUserCircle, FaCopy, FaUser } from 'react-icons/fa';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { NearContext } from '@/wallets/near';
-import { ListContract, ListCreator, SOCIAL_CONTRACT } from '@/config'; // Import ListContract
+import { ListContract, ListCreator, SOCIAL_CONTRACT } from '@/config';
 import { toast } from 'react-hot-toast';
-import { wallet } from '@/wallets/near'; // Ensure wallet is correctly imported
-import { socialContract } from '@/config'; // Ensure socialContract is correctly imported
+import { wallet } from '@/wallets/near';
+import { socialContract } from '@/config';
+import Select from 'react-select';
 
 // Define the getRandomBackgroundImage function
 const getRandomBackgroundImage = () => {
@@ -41,63 +42,68 @@ export async function getProfile(accountId) {
     return null;
   }
 }
-console.log(getProfile('mob.near'));
 
 const NominationPage = () => {
   const router = useRouter();
-  const accountId = 'plugrel.near'; // Hardcoded for plugrel.near
+  const accountId = 'plugrel.near';
   const { data, error, isLoading } = useLists({ account: accountId });
   const { wallet } = useContext(NearContext);
   const [lists, setLists] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedAccounts, setSelectedAccounts] = useState([]);
+  const [approvedRegistrations, setApprovedRegistrations] = useState([]);
+  const [profiles, setProfiles] = useState({});
 
   useEffect(() => {
     if (!wallet) return;
 
     const fetchLists = async () => {
-      console.log('Fetching lists for owner:', accountId);
       try {
         const lists = await wallet.viewMethod({
           contractId: ListContract,
           method: 'get_lists_for_owner',
           args: { owner_id: ListCreator },
         });
-        console.log('Fetched lists:', lists);
 
-        // Log the network type
-        const networkType = wallet.networkId === 'testnet' ? 'Testnet' : 'Mainnet';
-        console.log(`Network: ${networkType}`);
-
-        // Log each list with its project
-        lists.forEach(list => {
-          console.log(`Project: ${list.project_name}, List ID: ${list.id}`);
-        });
-
-        // Fetch profiles for each list owner using getProfile
-        const profilesData = await Promise.all(
+        const allRegistrations = await Promise.all(
           lists.map(async (list) => {
+            const registrations = await wallet.viewMethod({
+              contractId: ListContract,
+              method: 'get_registrations_for_list',
+              args: {
+                list_id: list.id,
+                status: 'Approved',
+                from_index: 0,
+                limit: 100,
+              },
+            });
+            list.registrants = registrations.map(registration => registration.registrant_id);
+            return list.registrants;
+          })
+        );
+
+        const uniqueRegistrations = [...new Set(allRegistrations.flat())];
+        setApprovedRegistrations(uniqueRegistrations);
+        setLists(lists);
+
+        // Fetch profiles for each unique registrant
+        const profilesData = await Promise.all(
+          uniqueRegistrations.map(async (id) => {
             try {
-              const profile = await getProfile(list.owner);
-              console.log(`Profile data for ${list.owner}:`, profile);
-              return { owner: list.owner, profile };
+              const profile = await getProfile(id);
+              return { id, profile };
             } catch {
-              console.log(`Failed to fetch profile for ${list.owner}`);
-              return { owner: list.owner, profile: null };
+              return { id, profile: null };
             }
           })
         );
 
-        const profilesMap = profilesData.reduce((acc, { owner, profile }) => {
-          acc[owner] = profile;
+        const profilesMap = profilesData.reduce((acc, { id, profile }) => {
+          acc[id] = profile;
           return acc;
         }, {});
 
-        console.log('Profiles:', profilesMap);
-
-        setLists(lists);
-
-        if (lists.length === 0) {
-          toast.error('No lists owned by this project.');
-        }
+        setProfiles(profilesMap);
       } catch (error) {
         console.error('Error fetching lists:', error);
         toast.error('Error fetching lists.');
@@ -107,18 +113,41 @@ const NominationPage = () => {
     fetchLists();
   }, [wallet]);
 
-  console.log('Data:', data);
-  console.log('Error:', error);
-  console.log('IsLoading:', isLoading);
+  const filteredLists = lists.filter(list => 
+    list.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+    (selectedAccounts.length === 0 || (list.registrants && selectedAccounts.some(account => list.registrants.includes(account))))
+  );
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading lists: {error.message}</p>;
 
   return (
     <div className="w-full p-4">
-      {lists.length ? (
+      <div className="mb-8 text-center">
+        <h1 className="text-2xl font-bold">NEAR YEAR Prize Categories</h1>
+        <p className="mt-2 text-lg">
+          View all ({filteredLists.length} of {lists.length}) NEAR YEAR Prize Categories and customize your own list to nominate your own favorites.
+        </p>
+      </div>
+
+      <input
+        type="text"
+        placeholder={`Search lists... (${filteredLists.length} of ${lists.length})`}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="w-full mb-4 p-2 border border-gray-300 rounded"
+      />
+
+      <Select
+        isMulti
+        options={approvedRegistrations.map(id => ({ value: id, label: id }))}
+        onChange={(selectedOptions) => setSelectedAccounts(selectedOptions.map(option => option.value))}
+        className="mb-4"
+      />
+
+      {filteredLists.length ? (
         <div className="mt-8 grid w-full grid-cols-1 gap-8 pb-10 md:grid-cols-2 lg:grid-cols-3">
-          {lists.map((item) => {
+          {filteredLists.map((item) => {
             let background = '';
             let backdrop = '';
 
@@ -133,22 +162,22 @@ const NominationPage = () => {
                 dataForList={item}
                 key={item.id}
                 wallet={wallet}
+                profiles={profiles}
               />
             );
           })}
         </div>
       ) : (
-        toast.error('No lists owned by this project.')
+        <p>No lists match the selected criteria.</p>
       )}
     </div>
   );
 };
 
-const ListCard = ({ dataForList, background, backdrop, wallet }) => {
+const ListCard = ({ dataForList, background, backdrop, wallet, profiles }) => {
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [upvotes, setUpvotes] = useState([]);
   const [approvedRegistrations, setApprovedRegistrations] = useState([]);
-  const [profiles, setProfiles] = useState({});
   const { push } = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -181,27 +210,6 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
         });
         const registrantIds = registrations.map(registration => registration.registrant_id);
         setApprovedRegistrations(registrantIds);
-
-        // Fetch profiles for each registrant using getProfile
-        const profilesData = await Promise.all(
-          registrantIds.map(async (id) => {
-            try {
-              const profile = await getProfile(id);
-              console.log(`Profile data for ${id}:`, profile);
-              return { id, profile };
-            } catch {
-              console.log(`Failed to fetch profile for ${id}`);
-              return { id, profile: null };
-            }
-          })
-        );
-
-        const profilesMap = profilesData.reduce((acc, { id, profile }) => {
-          acc[id] = profile;
-          return acc;
-        }, {});
-
-        setProfiles(profilesMap);
       } catch (error) {
         console.error('Error fetching approved registrations:', error);
       }
