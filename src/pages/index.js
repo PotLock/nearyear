@@ -1010,8 +1010,20 @@ const LandingPage = () => {
                 <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: categoryColors[competition.category], padding: '5px 10px', borderRadius: '5px', color: '#fff', fontSize: '0.8em' }}>
                   {competition.category}
                 </div>
-                <h3 style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => toggleCompetition(idx)}>
+                <h3 style={{ fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggleCompetition(idx)}>
                   {competition.name}
+                  {competition.listLink.includes('potlock.org') && (
+                    <a 
+                      href={competition.listLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{ marginLeft: '10px', cursor: 'pointer', transition: 'transform 0.3s' }}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    >
+                      🔗
+                    </a>
+                  )}
                 </h3>
                 {expandedCompetition === idx && (
                   <div style={{ marginTop: '10px' }}>
@@ -1028,18 +1040,6 @@ const LandingPage = () => {
                       ))}
                     </div>
                   </div>
-                )}
-                {competition.listLink.includes('potlock.org') && (
-                  <a 
-                    href={competition.listLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    style={{ position: 'absolute', bottom: '10px', right: '10px', cursor: 'pointer', transition: 'transform 0.3s' }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  >
-                    🔗
-                  </a>
                 )}
               </div>
             ))}
