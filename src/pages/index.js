@@ -939,12 +939,23 @@ const LandingPage = () => {
         <meta property="og:url" content="https://nearyear.com" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <div style={{ backgroundColor: '#f5f5f5', color: '#333', minHeight: '100vh', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-        <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h1 style={{ fontSize: '3em', fontWeight: 'bold', color: '#333' }}>NEAR YEAR</h1>
-          <p style={{ fontSize: '1.2em', color: '#666' }}>
-            The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming years
+      <div style={{ 
+        backgroundColor: '#f5f5f5', 
+        color: '#333', 
+        minHeight: '100vh', 
+        padding: '60px 20px', 
+        fontFamily: 'Arial, sans-serif', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center' 
+      }}>
+        <header style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <h1 style={{ fontSize: '4em', fontWeight: 'bold', margin: '0', color: '#333' }}>NEAR YEAR</h1>
+          <p style={{ fontSize: '1.5em', margin: '10px 0 20px', color: '#666' }}>
+            Celebrating the NEAR Ecosystem's Achievements and Future Innovations
           </p>
+
         </header>
 
         <section style={{ marginBottom: '40px' }}>
