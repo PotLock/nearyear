@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useLists } from '../hooks/useLists'; // Adjust the path if necessary
 import Image from 'next/image';
-import { FaHeart, FaLayerGroup, FaThumbsUp, FaUserCircle, FaCopy } from 'react-icons/fa';
+import { FaHeart, FaLayerGroup, FaThumbsUp, FaUserCircle, FaCopy, FaUser } from 'react-icons/fa';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { NearContext } from '@/wallets/near';
 import { ListContract, ListCreator } from '@/config'; // Import ListContract
@@ -104,7 +104,9 @@ const NominationPage = () => {
 const ListCard = ({ dataForList, background, backdrop, wallet }) => {
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [upvotes, setUpvotes] = useState([]);
+  const [approvedRegistrations, setApprovedRegistrations] = useState([]);
   const { push } = useRouter();
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   useEffect(() => {
     const fetchUpvotes = async () => {
@@ -121,8 +123,29 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
       }
     };
 
+    const fetchApprovedRegistrations = async () => {
+      try {
+        const registrations = await wallet.viewMethod({
+          contractId: ListContract,
+          method: 'get_registrations_for_list',
+          args: {
+            list_id: dataForList.id,
+            status: 'Approved',
+            from_index: 0,
+            limit: 100, // Adjust the limit as needed
+          },
+        });
+        // Extract registrant_id from each registration
+        const registrantIds = registrations.map(registration => registration.registrant_id);
+        setApprovedRegistrations(registrantIds);
+      } catch (error) {
+        console.error('Error fetching approved registrations:', error);
+      }
+    };
+
     if (wallet) {
       fetchUpvotes();
+      fetchApprovedRegistrations();
     }
   }, [dataForList, wallet]);
 
@@ -197,67 +220,79 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
   return (
     <div
       onClick={handleRoute}
-      className="cursor-pointer transition-all duration-300 hover:translate-y-[-1rem]"
+      className="cursor-pointer transition-all duration-300 hover:translate-y-[-1rem] overflow-hidden rounded-[12px] border border-gray-300"
     >
       <Image
-        src={dataForList?.cover_image_url ? '/assets/images/default-backdrop.png' : backdrop}
+        src={dataForList?.cover_image_url || backdrop}
         alt="backdrop"
         width={500}
-        height={5}
-        className={`h-max w-full ${backdrop.endsWith('list_bg_image.png') ? 'px-4' : ''} object-cover`}
+        height={500}
+        className="h-[500px] w-full object-cover"
       />
-      <div
-        className="bg-background overflow-hidden rounded-[12px] border border-gray-300"
-        data-testid="list-card"
-      >
-        <div className="relative">
-          <LazyLoadImage
-            alt="listImage"
-            className="h-[221px] w-full object-cover"
-            src={dataForList?.cover_image_url ?? background}
-            width={500}
-            height={150}
-          />
-          <div
-            style={{ boxShadow: '0px 3px 5px 0px rgba(5, 5, 5, 0.08)' }}
-            className="bg-background absolute bottom-4 right-4 flex items-center gap-1 rounded-[4px] px-4 py-2"
-          >
-            <FaLayerGroup />
-            <p className="text-[12px] font-[600]">{dataForList?.registrations_count} Accounts</p>
+      <div className="bg-background p-3">
+        <p className="text-lg font-[600] leading-tight">
+          {(dataForList?.name || '').slice(0, 150)}
+        </p>
+        <div className="mt-2 flex items-center justify-between space-x-2">
+          <div className="flex items-center gap-2 text-[14px]">
+            <p className="">BY</p>
+            <div
+              role="button"
+              className="flex items-center gap-1 hover:opacity-50"
+              onClick={handleRouteUser}
+            >
+              <FaUserCircle accountId={dataForList?.owner} className="h-4 w-4" />
+              <p className="">{(dataForList.owner || '').slice(0, 25)}</p>
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <button onClick={handleDuplicate} className="focus:outline-none" title="Duplicate">
+              <FaCopy className="text-[18px]" />
+            </button>
+            <button onClick={handleUpvote} className="focus:outline-none">
+              {isUpvoted ? (
+                <FaHeart className="text-[18px] text-red-500" />
+              ) : (
+                <FaThumbsUp className="m-0 fill-red-500 p-0" />
+              )}
+            </button>
+            <p className="m-0 p-0 pt-1 text-[16px] font-semibold text-black">
+              {upvotes.length}
+            </p>
           </div>
         </div>
-        <div className="flex h-[112px] flex-col justify-between p-3">
-          <p className="text-lg font-[600] leading-tight">
-            {(dataForList?.name || '').slice(0, 150)}
+        <div className="mt-2">
+          <p
+            className="text-sm font-semibold cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsCollapsed(!isCollapsed);
+            }}
+          >
+            Approved Nominees ({approvedRegistrations.length}):
           </p>
-          <div className="mt-2 flex items-center justify-between space-x-2">
-            <div className="flex items-center gap-2 text-[14px]">
-              <p className="">BY</p>
-              <div
-                role="button"
-                className="flex items-center gap-1 hover:opacity-50"
-                onClick={handleRouteUser}
-              >
-                <FaUserCircle accountId={dataForList?.owner} className="h-4 w-4" />
-                <p className="">{(dataForList.owner || '').slice(0, 25)}</p>
-              </div>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <button onClick={handleDuplicate} className="focus:outline-none" title="Duplicate">
-                <FaCopy className="text-[18px]" />
-              </button>
-              <button onClick={handleUpvote} className="focus:outline-none">
-                {isUpvoted ? (
-                  <FaHeart className="text-[18px] text-red-500" />
-                ) : (
-                  <FaThumbsUp className="m-0 fill-red-500 p-0" />
-                )}
-              </button>
-              <p className="m-0 p-0 pt-1 text-[16px] font-semibold text-black">
-                {upvotes.length}
-              </p>
-            </div>
-          </div>
+          {!isCollapsed && (
+            <ul className="list-none pl-0">
+              {approvedRegistrations.map((registrantId) => (
+                <li key={registrantId} className="flex items-center gap-2">
+                  <FaUser className="h-4 w-4" />
+                  <span
+                    role="button"
+                    className="hover:underline"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const baseUrl = wallet.networkId === 'mainnet'
+                        ? 'https://alpha.potlock.org/profile/'
+                        : 'https://testnet.potlock.org/profile/';
+                      window.open(`${baseUrl}${registrantId}`, '_blank');
+                    }}
+                  >
+                    {registrantId}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

@@ -950,13 +950,97 @@ const LandingPage = () => {
         alignItems: 'center', 
         justifyContent: 'center' 
       }}>
-        <header style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <header style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{ fontSize: '4em', fontWeight: 'bold', margin: '0', color: '#333' }}>NEAR YEAR</h1>
           <p style={{ fontSize: '1.5em', margin: '10px 0 20px', color: '#666' }}>
-            Celebrating the NEAR Eco Achievements and Future Innovations
+            The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming year
           </p>
-
+          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+            <button style={{ 
+              backgroundColor: '#333', 
+              color: '#fff', 
+              padding: '15px 30px', 
+              fontSize: '1em', 
+              border: 'none', 
+              borderRadius: '5px', 
+              cursor: 'pointer', 
+              transition: 'background-color 0.3s' 
+            }} 
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#555'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#333'}
+            onClick={() => window.location.href = '/nomination'}>
+              Nominate
+            </button>
+            <button style={{ 
+              backgroundColor: '#666', 
+              color: '#fff', 
+              padding: '15px 30px', 
+              fontSize: '1em', 
+              border: 'none', 
+              borderRadius: '5px', 
+              cursor: 'pointer', 
+              transition: 'background-color 0.3s' 
+            }} 
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#888'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#666'}
+            onClick={() => window.location.href = 'https://alpha.potlock.org/register'}>
+              Create Profile
+            </button>
+          </div>
         </header>
+
+        <section style={{ maxWidth: '800px', textAlign: 'left', marginTop: '40px' }}>
+          <h2 style={{ fontSize: '2em', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>How It Works</h2>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '20px',
+            '@media (min-width: 768px)': { flexDirection: 'row' }
+          }}>
+            <div style={{ 
+              backgroundColor: '#fff', 
+              borderRadius: '8px', 
+              padding: '20px', 
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
+              display: 'flex', 
+              alignItems: 'center',
+              flex: '1'
+            }}>
+              <span style={{ fontSize: '2em', marginRight: '15px' }}>📜</span>
+              <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
+                On-chain lists are created for different categories, with projects and profiles that have existing on-chain accounts automatically added.
+              </p>
+            </div>
+            <div style={{ 
+              backgroundColor: '#fff', 
+              borderRadius: '8px', 
+              padding: '20px', 
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
+              display: 'flex', 
+              alignItems: 'center',
+              flex: '1'
+            }}>
+              <span style={{ fontSize: '2em', marginRight: '15px' }}>🗳️</span>
+              <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
+                During the nomination period, nominated projects are onboarded to the chain, and curators can create their own lists to boost new nominees. This is also the time to debate and advocate for this year's achievements.
+              </p>
+            </div>
+            <div style={{ 
+              backgroundColor: '#fff', 
+              borderRadius: '8px', 
+              padding: '20px', 
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
+              display: 'flex', 
+              alignItems: 'center',
+              flex: '1'
+            }}>
+              <span style={{ fontSize: '2em', marginRight: '15px' }}>🏆</span>
+              <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
+                During the voting period, verified humans with Shard Dog NFTs choose the top winners, followed by an awards show.
+              </p>
+            </div>
+          </div>
+        </section>
 
         <section style={{ marginBottom: '40px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>Brought to you by</h2>
@@ -1059,60 +1143,59 @@ const LandingPage = () => {
 
         <section style={{ marginBottom: '40px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Timeline</h2>
-          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            {timelineEvents.map((event, index) => (
-              <div key={index} style={{
-                width: '80%',
-                border: '1px solid #ccc',
-                borderRadius: '8px',
-                padding: '20px',
-                backgroundColor: '#fff',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                position: 'relative',
-                animation: isActive(event.start, event.end) ? 'glow 1.5s infinite' : 'none'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '0',
-                  left: '0',
-                  height: '5px',
-                  width: isActive(event.start, event.end) ? '100%' : '0',
-                  backgroundColor: '#FFD700',
-                  transition: 'width 0.3s'
-                }}></div>
-                <h3 style={{ fontWeight: 'bold', color: '#333' }}>{event.title}</h3>
-                <div style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  fontSize: '0.9em',
-                  color: '#666'
+          <div style={{ 
+            marginTop: '20px', 
+            display: 'flex', 
+            flexWrap: 'wrap', 
+            justifyContent: 'center', 
+            gap: '20px' 
+          }}>
+            {timelineEvents.map((event, index) => {
+              const isActive = currentDate >= event.start && currentDate <= event.end;
+              return (
+                <div key={index} style={{
+                  flex: '1 1 calc(33% - 20px)', 
+                  border: '1px solid #ccc', 
+                  borderRadius: '8px', 
+                  padding: '20px', 
+                  backgroundColor: isActive ? '#e0f7fa' : '#fff',
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
                 }}>
-                  📅 {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h3 style={{ fontWeight: 'bold', color: '#333', margin: '0' }}>{event.title}</h3>
+                    <span style={{ fontSize: '0.9em', color: '#666' }}>
+                      📅 {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}
+                    </span>
+                  </div>
+                  <hr style={{ margin: '10px 0', borderColor: '#ccc' }} />
+                  <ul style={{ paddingLeft: '0', color: '#666', margin: '0' }}>
+                    {event.title === "ANNOUNCEMENT" && (
+                      <>
+                        <li>Official nominations, announcement article and call for nominations</li>
+                        <li>Whole article put out with justification</li>
+                        <li>Initial Content</li>
+                      </>
+                    )}
+                    {event.title === "SUBMISSIONS" && (
+                      <>
+                        <li>People begin to submit their own lists</li>
+                        <li>Debates: founder debate - detail TBA</li>
+                      </>
+                    )}
+                    {event.title === "VOTING" && (
+                      <>
+                        <li>People vote (anyone but need Sharddog NFT)</li>
+                        <li>End of Jan - award show</li>
+                      </>
+                    )}
+                  </ul>
                 </div>
-                <ul style={{ paddingLeft: '20px', color: '#666' }}>
-                  {event.title === "ANNOUNCEMENT" && (
-                    <>
-                      <li>Official nominations, announcement article and call for nominations</li>
-                      <li>Whole article put out with justification</li>
-                      <li>Initial Content</li>
-                    </>
-                  )}
-                  {event.title === "SUBMISSIONS" && (
-                    <>
-                      <li>People begin to submit their own lists</li>
-                      <li>Debates: founder debate - detail TBA</li>
-                    </>
-                  )}
-                  {event.title === "VOTING" && (
-                    <>
-                      <li>People vote (anyone but need Sharddog NFT)</li>
-                      <li>End of Jan - award show</li>
-                    </>
-                  )}
-                </ul>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
