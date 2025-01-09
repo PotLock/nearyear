@@ -1057,7 +1057,16 @@ const LandingPage = () => {
                 backgroundColor: '#FFD700',
                 transition: 'width 0.3s'
               }}></div>
-              <h3 style={{ fontWeight: 'bold', color: '#333' }}>{event.title} - {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}</h3>
+              <h3 style={{ fontWeight: 'bold', color: '#333' }}>{event.title}</h3>
+              <div style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                fontSize: '0.9em',
+                color: '#666'
+              }}>
+                📅 {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}
+              </div>
               <ul style={{ paddingLeft: '20px', color: '#666' }}>
                 {event.title === "ANNOUNCEMENT" && (
                   <>
@@ -1109,7 +1118,7 @@ const LandingPage = () => {
                 <strong>Vote:</strong> Participate in the voting process during the designated period.
               </li>
               <li style={{ marginBottom: '10px' }}>
-                <strong>Earn Rewards:</strong> Receive an exclusive "NEAR YEAR" Sharddog NFT for participating.
+                <strong>Earn Rewards:</strong> Receive an exclusive &quot;NEAR YEAR&quot; Sharddog NFT for participating.
               </li>
             </ol>
           </div>
