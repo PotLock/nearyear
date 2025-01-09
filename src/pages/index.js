@@ -953,7 +953,7 @@ const LandingPage = () => {
         <header style={{ textAlign: 'center', marginBottom: '20px' }}>
           <h1 style={{ fontSize: '4em', fontWeight: 'bold', margin: '0', color: '#333' }}>NEAR YEAR</h1>
           <p style={{ fontSize: '1.5em', margin: '10px 0 20px', color: '#666' }}>
-            Celebrating the NEAR Ecosystem's Achievements and Future Innovations
+            Celebrating the NEAR Eco Achievements and Future Innovations
           </p>
 
         </header>

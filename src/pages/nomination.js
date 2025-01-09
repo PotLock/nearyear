@@ -133,7 +133,7 @@ const ListCard = ({ dataForList, background, backdrop, wallet }) => {
         : 'https://testnet.potlock.org/list/';
       window.open(`${baseUrl}${dataForList?.id}`, '_blank');
     },
-    [dataForList?.on_chain_id, wallet.networkId]
+    [dataForList?.id, wallet.networkId]
   );
 
   const handleUpvote = async (e) => {
