@@ -90,14 +90,21 @@ const LandingPage = () => {
   return (
     <>
       <Head>
-        <title>NEAR YEAR - Celebrating NEAR Ecosystem</title>
-        <meta name="description" content="The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming years." />
-        <meta name="keywords" content="NEAR, blockchain, awards, ecosystem, projects, people" />
-        <meta property="og:title" content="NEAR YEAR - Celebrating NEAR Ecosystem" />
-        <meta property="og:description" content="The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming years." />
-        <meta property="og:image" content="/path/to/image.jpg" />
+        <title>NEAR YEAR Awards - Celebrate the NEAR Ecosystem</title>
+        <meta name="description" content="Join the NEAR YEAR Awards, the premier on-chain event celebrating the NEAR blockchain's top projects and people. Discover future achievements and participate in the ecosystem's growth." />
+        <meta name="keywords" content="NEAR, blockchain, awards, ecosystem, projects, people, POTLOCK, NEAR YEAR, on-chain, nominations, voting" />
+        <meta property="og:title" content="NEAR YEAR Awards - Celebrate the NEAR Ecosystem" />
+        <meta property="og:description" content="Join the NEAR YEAR Awards, the premier on-chain event celebrating the NEAR blockchain's top projects and people. Discover future achievements and participate in the ecosystem's growth." />
+        <meta property="og:image" content="/NEARYEARMeta.png" />
         <meta property="og:url" content="https://nearyear.com" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="NEAR YEAR Awards - Celebrate the NEAR Ecosystem" />
+        <meta name="twitter:description" content="Join the NEAR YEAR Awards, the premier on-chain event celebrating the NEAR blockchain's top projects and people. Discover future achievements and participate in the ecosystem's growth." />
+        <meta name="twitter:image" content="/NEARYEARMeta.png" />
+        <link rel="canonical" href="https://nearyear.com" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="NEAR YEAR Awards" />
       </Head>
       <div style={{ 
         backgroundColor: '#f5f5f5', 

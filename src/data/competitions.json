@@ -35,10 +35,10 @@
           "listLink": "",
           "points": 12,
           "content": [
-            { "name": "Chain Signatures", "comment": "" },
-            { "name": "NEAR DA", "comment": "" },
-            { "name": "NEAR Intents", "comment": "" },
-            { "name": "Nightshade 2.0", "comment": "" }
+            { "name": "Chain Signatures", "comment": "Uses MPC network and NEARs amount model to let near accounts sign transactions on any chain" },
+            { "name": "NEAR DA", "comment": "Uses NEAR smart contract to post l2 blobs with the markets cheapest solution" },
+            { "name": "NEAR Intents", "comment": "Using NEAR to provide a unified liquiity layer of Web3" },
+            { "name": "Nightshade 2.0", "comment": "Major upgrade to NEAR Protocol" }
           ]
         },
         {
@@ -48,10 +48,10 @@
           "listLink": "",
           "points": 5,
           "content": [
-            { "name": "Jensen touching Illia", "comment": "" },
-            { "name": "HiJack Twitter Account", "comment": "" },
-            { "name": "NEAR is a Doge L2", "comment": "" },
-            { "name": "Baby Blackdragon", "comment": "" }
+            { "name": "Jensen touching Illia", "comment": "In Nvidia conference Jensen the found of Nvidia touches NEAR" },
+            { "name": "HiJack Twitter Account", "comment": "NEAR ofifficla account gets taken over by Hijacker making CoinDesk news before realizing its a stunt to promote redacted" },
+            { "name": "NEAR is a Doge L2", "comment": "NEAR changes to Doge coin logo for birthday introducing DogeSwap powered by NEAR Intents. Insider joke that NEAR is Doge L2" },
+            { "name": "Baby Blackdragon", "comment": "Baby Blackdragon coin emerges after announcement of Erika x Illia baby" }
           ]
         },
         {
@@ -61,22 +61,20 @@
           "listLink": "https://alpha.potlock.org/list/39",
           "points": 15,
           "content": [
-            { "name": "BlackDragon", "comment": "" },
-            { "name": "NEAR AI 🟡", "comment": "" },
-            { "name": "Intear", "comment": "" },
-            { "name": "NEAR Intents 🟡", "comment": "" },
-            { "name": "Omnilane 🟡", "comment": "" },
-            { "name": "FastNEAR", "comment": "" },
-            { "name": "Meme.cooking", "comment": "" },
-            { "name": "$Purge 🟡", "comment": "" },
-            { "name": "Potlock", "comment": "" },
-            { "name": "Mitte 🟡", "comment": "" },
-            { "name": "Race of Sloths 🟡", "comment": "" },
+            { "name": "BlackDragon", "comment": "Emerging from NDC Meme token, Blackdragon becomes go to memecoin on NEAR" },
+            { "name": "NEAR AI 🟡", "comment": "Alex Skidanov makes a return to NEAR Ecosystme to lead its AI Arm" },
+            { "name": "Intear", "comment": "An NEARVidia knockoff emerges and becomes the go to meme community that powers essential NEAR Infra." },
+            { "name": "NEAR Intents 🟡", "comment": "Open source CHain Abstracted liquidity layer built by Aurora" },
+            { "name": "Omnilane 🟡", "comment": "Part of Chain Abstraction cohort, multichain liquiidty" },
+            { "name": "FastNEAR", "comment": "Evgeny from NEAR Social focused on making NEAR Fast, becoming go to RPC on NEAR" },
+            { "name": "Meme.cooking", "comment": "Shitzu launches pump fun on NEAR" },
+            { "name": "$Purge 🟡", "comment": "AI coin where community confesses their sins" },
+            { "name": "POTLOCK", "comment": "the open funding stack and go to funding platform" },
+            { "name": "Mitte 🟡", "comment": "NFT orderbook and bonding curve launchpad on NEAR" },
+            { "name": "Race of Sloths 🟡", "comment": "Rewarding open source contributions on NEAR" },
             { "name": "DeFi Shardz 🟡", "comment": "" },
-            { "name": "NEAR Catalog", "comment": "" },
-            { "name": "Deltabot", "comment": "" },
-            { "name": "Fast NEAR", "comment": "" }
-          ]
+            { "name": "NEAR Catalog", "comment": "The open source NEAR Ecosystem directory" },
+            { "name": "Deltabot", "comment": "Mutlichain trading bot" }          ]
         },
         {
           "name": "BEST DeFI Project",
