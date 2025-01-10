@@ -2,13 +2,14 @@ import { useEffect, useState, useContext } from 'react';
 import { NearContext } from '@/wallets/near';
 import styles from '@/styles/app.module.css';
 import Link from 'next/link';
-
 import { VoteContract } from '../config';
 import { Clock as ClockIcon, ChevronLeft, Crown, Layers, DollarSign, HandHelping, Zap, Clapperboard, BriefcaseBusiness, Award } from 'lucide-react';
+import { NotFound } from './NotFound';
 
 export const CategoryList = () => {
   const { wallet } = useContext(NearContext);
   const [categories, setCategories] = useState([]);
+  const [contractExists, setContractExists] = useState(true);
 
   const categoryIcons = {
     1: Crown,
@@ -24,14 +25,33 @@ export const CategoryList = () => {
   useEffect(() => {
     if (!wallet) return;
 
-    const fetchCategories = async () => {
-      const categories = await wallet.viewMethod({
-        contractId: VoteContract,
-        method: 'get_elections',
-      });
-      setCategories(categories);
+    const checkContractExists = async () => {
+      try {
+        await wallet.viewMethod({
+          contractId: VoteContract,
+          method: 'get_elections',
+        });
+      } catch (error) {
+        console.error('Error checking contract existence:', error);
+        if (error.message.includes("account") && error.message.includes("doesn't exist")) {
+          setContractExists(false);
+        }
+      }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const categories = await wallet.viewMethod({
+          contractId: VoteContract,
+          method: 'get_elections',
+        });
+        setCategories(categories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    checkContractExists();
     fetchCategories();
   }, [wallet]);
 
@@ -45,19 +65,23 @@ export const CategoryList = () => {
     return { status: 'ACTIVE', color: 'green' };
   };
 
+  if (!contractExists) {
+    return <NotFound />;
+  }
+
   if (categories.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="loader"></div>
       </div>
     );
-  };
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <header className="text-center mb-12">
         <h1 className="text-5xl font-extrabold mb-4">NEAR YEAR</h1>
-        <p className="text-base md:text-lg text-gray-700">Real voting has not started.  Create a list to nomiante new projects, or create a project to qualify for nominations</p>
+        <p className="text-base md:text-lg text-gray-700">Real voting has not started. Create a list to nominate new projects, or create a project to qualify for nominations</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
