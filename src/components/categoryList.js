@@ -3,7 +3,7 @@ import { NearContext } from '@/wallets/near';
 import styles from '@/styles/app.module.css';
 import Link from 'next/link';
 
-import { HelloNearContract } from '../config';
+import { VoteContract } from '../config';
 import { Clock as ClockIcon, ChevronLeft, Crown, Layers, DollarSign, HandHelping, Zap, Clapperboard, BriefcaseBusiness, Award } from 'lucide-react';
 
 export const CategoryList = () => {
@@ -26,7 +26,7 @@ export const CategoryList = () => {
 
     const fetchCategories = async () => {
       const categories = await wallet.viewMethod({
-        contractId: HelloNearContract,
+        contractId: VoteContract,
         method: 'get_elections',
       });
       setCategories(categories);

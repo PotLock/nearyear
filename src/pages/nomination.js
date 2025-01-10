@@ -55,6 +55,25 @@ const NominationPage = () => {
   const [profiles, setProfiles] = useState({});
 
   useEffect(() => {
+    const { query } = router;
+    if (query.search) {
+      setSearchQuery(query.search);
+    }
+    if (query.accounts) {
+      setSelectedAccounts(query.accounts.split(','));
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    const query = {
+      ...router.query,
+      search: searchQuery || undefined,
+      accounts: selectedAccounts.length ? selectedAccounts.join(',') : undefined,
+    };
+    router.replace({ pathname: router.pathname, query }, undefined, { shallow: true });
+  }, [searchQuery, selectedAccounts]);
+
+  useEffect(() => {
     if (!wallet) return;
 
     const fetchLists = async () => {
@@ -135,12 +154,13 @@ const NominationPage = () => {
         placeholder={`Search lists... (${filteredLists.length} of ${lists.length})`}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full mb-4 p-2 border border-gray-300 rounded"
+        className="w-full mb-4 p-2 border border-gray-300 rounded bg-white text-black"
       />
 
       <Select
         isMulti
         options={approvedRegistrations.map(id => ({ value: id, label: id }))}
+        value={selectedAccounts.map(id => ({ value: id, label: id }))}
         onChange={(selectedOptions) => setSelectedAccounts(selectedOptions.map(option => option.value))}
         className="mb-4"
       />

@@ -34,7 +34,7 @@ const evmWalletChains = {
 
 export const NetworkId = 'mainnet';
 export const SOCIAL_CONTRACT = socialContract[NetworkId];
-export const HelloNearContract =  voteContract[NetworkId];
+export const VoteContract =  voteContract[NetworkId];
 export const ListContract = listContract[NetworkId];
 export const ListCreator = listCreatorAccount[NetworkId];
 export const EVMWalletChain = evmWalletChains[NetworkId];

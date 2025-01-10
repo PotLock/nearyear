@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { NearContext } from '@/wallets/near';
 import styles from '@/styles/app.module.css';
 
-import { HelloNearContract } from '../config';
+import { VoteContract } from '../config';
 
 export const NomineeList = ({ electionId }) => {
   const { wallet, signedAccountId } = useContext(NearContext);
@@ -14,7 +14,7 @@ export const NomineeList = ({ electionId }) => {
 
     const fetchNominees = async () => {
       const nominees = await wallet.viewMethod({
-        contractId: HelloNearContract,
+        contractId: VoteContract,
         method: 'get_election_candidates',
         args: { election_id: electionId },
       });
@@ -27,7 +27,7 @@ export const NomineeList = ({ electionId }) => {
   const voteForNominee = async (candidateId) => {
     setShowSpinner(true);
     await wallet.callMethod({
-      contractId: HelloNearContract,
+      contractId: VoteContract,
       method: 'vote',
       args: { election_id: electionId, vote: [candidateId, 1] },
     });

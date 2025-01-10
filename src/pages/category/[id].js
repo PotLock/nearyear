@@ -7,7 +7,7 @@ import confetti from 'canvas-confetti';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 
-import { HelloNearContract } from '../../config';
+import { VoteContract } from '../../config';
 
 import { ChevronLeft, Clock, Award } from 'lucide-react';
 
@@ -27,7 +27,7 @@ const NomineePage = () => {
 
     const checkVoteStatus = async () => {
       const hasParticipated = await wallet.viewMethod({
-        contractId: HelloNearContract,
+        contractId: VoteContract,
         method: 'has_voter_participated',
         args: { 
           election_id: Number(id),
@@ -73,7 +73,7 @@ const NomineePage = () => {
 
     const fetchElectionData = async () => {
       const data = await wallet.viewMethod({
-        contractId: HelloNearContract,
+        contractId: VoteContract,
         method: 'get_election',
         args: { election_id: Number(id) },
       });
@@ -82,7 +82,7 @@ const NomineePage = () => {
 
     const fetchNominees = async () => {
       const nominees = await wallet.viewMethod({
-        contractId: HelloNearContract,
+        contractId: VoteContract,
         method: 'get_election_candidates',
         args: { election_id: Number(id) },
       });
@@ -142,7 +142,7 @@ const NomineePage = () => {
     setVotingFor(candidateId);
     try {
       await wallet.callMethod({
-        contractId: HelloNearContract,
+        contractId: VoteContract,
         method: 'vote',
         args: { election_id: Number(id), vote: [candidateId, 1] },
         deposit: '10000000000000000000000',
