@@ -7,6 +7,7 @@ import { NearContext } from '@/wallets/near';
 import { getProfile } from './nomination';
 import competitionsData from '../data/competitions.json';
 import { Footer } from '@/components/footer';
+import Select from 'react-select';
 
 // Use the imported data
 const importedCompetitionsData = competitionsData.competitionsData;
@@ -53,7 +54,7 @@ const LandingPage = () => {
   const [expandedCompetition, setExpandedCompetition] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCompetitor, setSelectedCompetitor] = useState('All');
+  const [selectedCompetitors, setSelectedCompetitors] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -72,7 +73,7 @@ const LandingPage = () => {
   const filteredCompetitions = importedCompetitionsData.flatMap(group => group.competitions)
     .filter(competition => 
       (selectedCategory === 'All' || competition.category === selectedCategory) &&
-      (selectedCompetitor === 'All' || competition.content.some(item => item.name === selectedCompetitor)) &&
+      (selectedCompetitors.length === 0 || selectedCompetitors.some(competitor => competition.content.some(item => item.name === competitor))) &&
       competition.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -86,6 +87,10 @@ const LandingPage = () => {
   ];
 
   const isActive = (start, end) => currentDate >= start && currentDate <= end;
+
+  const handleCompetitorChange = (selectedOptions) => {
+    setSelectedCompetitors(selectedOptions.map(option => option.value));
+  };
 
   return (
     <>
@@ -209,7 +214,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section style={{ marginBottom: '40px' }}>
+        <section style={{ marginBottom: '60px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>Brought to you by</h2>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginTop: '20px', flexWrap: 'wrap' }}>
             <a href="http://potlock.org" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
@@ -232,7 +237,7 @@ const LandingPage = () => {
             </a>
           </div>
         </section>
-        <section id="categories" style={{ marginBottom: '40px' }}>
+        <section style={{ marginBottom: '60px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>All Categories</h2>
           <p>All of the shortlisted nominations. If a project isnt an on-chain nominee they need to <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">create a project</a></p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
@@ -243,23 +248,36 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section style={{ marginBottom: '40px', display: 'flex', gap: '10px' }}>
+        <section style={{ marginBottom: '60px', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <input 
             type="text" 
             placeholder={`Showing ${filteredCompetitions.length} out of ${totalCompetitions} competitions...`} 
             value={searchTerm} 
             onChange={(e) => setSearchTerm(e.target.value)} 
-            style={{ flex: '1 1 80%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px' }}
+            style={{ width: '100%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px' }}
           />
-          <select 
-            value={selectedCompetitor} 
-            onChange={(e) => setSelectedCompetitor(e.target.value)} 
-            style={{ flex: '1 1 20%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-          >
-            {competitors.map((competitor, index) => (
-              <option key={index} value={competitor}>{competitor}</option>
-            ))}
-          </select>
+          <Select
+            isMulti
+            options={competitors.map(competitor => ({ value: competitor, label: competitor }))}
+            value={selectedCompetitors.map(competitor => ({ value: competitor, label: competitor }))}
+            onChange={handleCompetitorChange}
+            className="mb-4"
+            styles={{
+              container: (provided) => ({
+                ...provided,
+                width: '100%',
+              }),
+              control: (provided) => ({
+                ...provided,
+                padding: '10px',
+                fontSize: '1em',
+                backgroundColor: '#e0e0e0',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+              }),
+            }}
+          />
         </section>
 
         {loading ? (
@@ -267,20 +285,26 @@ const LandingPage = () => {
             <p>Loading...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredCompetitions.map((competition, idx) => (
-              <CompetitionCard
-                key={idx}
-                competition={competition}
-                listLink={competition.listLink}
-                profiles={profiles}
-                wallet={wallet}
-              />
-            ))}
-          </div>
+          filteredCompetitions.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredCompetitions.map((competition, idx) => (
+                <CompetitionCard
+                  key={idx}
+                  competition={competition}
+                  listLink={competition.listLink}
+                  profiles={profiles}
+                  wallet={wallet}
+                />
+              ))}
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+              <p>No competitions found.</p>
+            </div>
+          )
         )}
 
-        <section style={{ marginBottom: '40px' }}>
+        <section style={{ marginBottom: '60px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Timeline</h2>
           <div style={{ 
             marginTop: '20px', 
@@ -401,7 +425,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section style={{ marginBottom: '60px' }}>
+        <section style={{ marginBottom: '60px', width: "100%" }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>FAQ</h2>
           <div style={{ marginTop: '20px' }}>
             {[
@@ -420,7 +444,6 @@ const LandingPage = () => {
                 question: "What are the voting requirements?",
                 answer: "You need a Sharddog 'NEAR YEAR' NFT that represents a unique, verified human identity. List creators receive 2x voting power if verified."
               },
-
               {
                 id: 4,
                 question: "What do winners receive?",
@@ -432,12 +455,13 @@ const LandingPage = () => {
                 answer: "This means you need to create a profile on Potlock and then apply to list and tag @plugrel on Twitter. All the existing people on onchain list already had profiles (see who doesn’t with the indicated 🟡 emoji)."
               }
             ].map((faq) => (
-              <div key={faq.id} style={{ marginBottom: '10px' }}>
-                <h3 style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => toggleCompetition(faq.id)}>
+              <div key={faq.id} style={{ marginBottom: '10px', border: '1px solid #ccc', borderRadius: '8px', padding: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+                <h3 style={{ fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => toggleCompetition(faq.id)}>
                   {faq.question}
+                  <span>{expandedCompetition === faq.id ? '-' : '+'}</span>
                 </h3>
                 {expandedCompetition === faq.id && (
-                  <p style={{ marginTop: '5px' }}>{faq.answer}</p>
+                  <p style={{ marginTop: '5px', transition: 'max-height 0.3s ease-in-out', overflow: 'hidden' }}>{faq.answer}</p>
                 )}
               </div>
             ))}
