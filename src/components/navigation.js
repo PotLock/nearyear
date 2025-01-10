@@ -23,12 +23,12 @@ export const Navigation = () => {
 
   return (
     <nav style={{ position: 'sticky', top: 0, backgroundColor: '#ffffff', color: '#333', padding: '10px 20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', zIndex: 1000 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div id="desktop-menu" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333' }}>
           <span style={{ fontSize: '1.5em' }}>🏆</span>
           <span style={{ marginLeft: '10px', fontWeight: 'bold', fontSize: '1.2em' }}>NEAR YEAR</span>
         </Link>
-        <div className="desktop-menu" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div id="desktop-menu" className="hidden md:flex items-center gap-5">
           <Link href="/vote" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
             Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
           </Link>
@@ -42,7 +42,11 @@ export const Navigation = () => {
             {label}
           </button>
         </div>
-        <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5em' }} className="mobile-menu-button">
+        <button 
+          onClick={() => setMenuOpen(!menuOpen)} 
+          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5em' }} 
+          className="mobile-menu-button block md:hidden"
+        >
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>

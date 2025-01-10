@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useCallback, useEffect, useState, useContext } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useLists } from '../hooks/useLists';
 import Image from 'next/image';
 import { FaHeart, FaLayerGroup, FaThumbsUp, FaUserCircle, FaCopy, FaUser } from 'react-icons/fa';
@@ -46,6 +48,7 @@ export async function getProfile(accountId) {
 
 const NominationPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const accountId = 'plugrel.near';
   const { data, error, isLoading } = useLists({ account: accountId });
   const { wallet } = useContext(NearContext);
@@ -55,25 +58,27 @@ const NominationPage = () => {
   const [approvedRegistrations, setApprovedRegistrations] = useState([]);
   const [profiles, setProfiles] = useState({});
 
+  // Initialize state from URL parameters on component mount
   useEffect(() => {
-    const { query } = router;
-    if (query.search) {
-      setSearchQuery(query.search);
+    const search = searchParams.get('search');
+    const accounts = searchParams.get('accounts');
+    if (search) {
+      setSearchQuery(search);
     }
-    if (query.accounts) {
-      setSelectedAccounts(query.accounts.split(','));
+    if (accounts) {
+      setSelectedAccounts(accounts.split(','));
     }
-  }, [router.query]);
+  }, [searchParams]);
 
+  // Update URL parameters when state changes
   useEffect(() => {
-    const query = {
-      ...router.query,
-      search: searchQuery || undefined,
-      accounts: selectedAccounts.length ? selectedAccounts.join(',') : undefined,
-    };
-    router.replace({ pathname: router.pathname, query }, undefined, { shallow: true });
+    const query = new URLSearchParams();
+    if (searchQuery) query.set('search', searchQuery);
+    if (selectedAccounts.length) query.set('accounts', selectedAccounts.join(','));
+    router.replace(`?${query.toString()}`, undefined, { shallow: true });
   }, [searchQuery, selectedAccounts]);
 
+  // Fetch lists and profiles
   useEffect(() => {
     if (!wallet) return;
 

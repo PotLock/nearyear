@@ -80,9 +80,9 @@ const LandingPage = () => {
 
   const currentDate = new Date();
   const timelineEvents = [
-    { title: "ANNOUNCEMENT", start: new Date('2025-01-08'), end: new Date('2025-01-08') },
-    { title: "SUBMISSIONS", start: new Date('2025-01-08'), end: new Date('2025-01-14') },
-    { title: "VOTING", start: new Date('2025-01-14'), end: new Date('2025-01-21') }
+    { title: "ANNOUNCEMENT", start: new Date('2025-01-10'), end: new Date('2025-01-10') },
+    { title: "SUBMISSIONS", start: new Date('2025-01-10'), end: new Date('2025-01-17') },
+    { title: "VOTING", start: new Date('2025-01-17'), end: new Date('2025-01-25') }
   ];
 
   const isActive = (start, end) => currentDate >= start && currentDate <= end;
