@@ -6,6 +6,7 @@ import CompetitionCard from '../components/CompetitionCard';
 import { NearContext } from '@/wallets/near';
 import { getProfile } from './nomination';
 import competitionsData from '../data/competitions.json';
+import { Footer } from '@/components/footer';
 
 // Use the imported data
 const importedCompetitionsData = competitionsData.competitionsData;
@@ -224,9 +225,9 @@ const LandingPage = () => {
             </a>
           </div>
         </section>
-        <section style={{ marginBottom: '40px' }}>
+        <section id="categories" style={{ marginBottom: '40px' }}>
           <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>All Categories</h2>
-          <p>All of the shortlisted nominations. If a project isn't an on-chain nominee they need to <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">create a project</a></p>
+          <p>All of the shortlisted nominations. If a project isnt an on-chain nominee they need to <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">create a project</a></p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
             <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory('All')}>All</button>
             {categories.map((category, index) => (
@@ -436,23 +437,7 @@ const LandingPage = () => {
           </div>
         </section>
 
-
-        <footer style={{ textAlign: 'center', marginTop: '40px' }}>
-          <div style={{ marginBottom: '10px' }}>
-            <Link href="https://alpha.potlock.org/register" target="_blank" >Create Project</Link>
-            <span> | </span>
-            <Link href="/vote">How to Vote</Link>
-            <span> | </span>
-            <Link href="/nomination">View Nominees</Link>
-            <span> | </span>
-            <Link href="/">View Categories</Link>
-          </div>
-          <div>
-            <a href="https://x.com/potlock_" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <span> | </span>
-            <a href="https://github.com/potlock/nearyear" target="_blank" rel="noopener noreferrer">GitHub</a>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

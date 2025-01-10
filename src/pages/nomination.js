@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { wallet } from '@/wallets/near';
 import { socialContract } from '@/config';
 import Select from 'react-select';
+import { Footer } from '@/components/footer';
 
 // Define the getRandomBackgroundImage function
 const getRandomBackgroundImage = () => {
@@ -190,6 +191,7 @@ const NominationPage = () => {
       ) : (
         <p>No lists match the selected criteria.</p>
       )}
+      <Footer />
     </div>
   );
 };
