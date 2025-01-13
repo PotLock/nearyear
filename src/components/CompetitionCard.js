@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ListContract } from '../config';
+import { FaTwitter } from 'react-icons/fa';
 
 const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
   const [listDetails, setListDetails] = useState(null);
@@ -111,6 +112,11 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
                     <div className="mt-2 text-sm text-gray-600">
                       {item.comment}
                     </div>
+                  )}
+                  {item.twitterLink && (
+                    <a href={item.twitterLink} target="_blank" rel="noopener noreferrer" className="ml-2">
+                      <FaTwitter size={16} />
+                    </a>
                   )}
                 </div>
               );

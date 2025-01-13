@@ -21,7 +21,7 @@
           "listLink": "",
           "points": 8,
           "content": [
-            { "name": "Eth Denver", "comment": "Alice in wonderland theme with Chain Abstraction" },
+            { "name": "Eth Denver", "comment": "Alice in wonderland theme with Chain Abstraction", "twitterLink": "https://twitter.com/EthereumDenver" },
             { "name": "Consensys", "comment": "Chain Abstraction" },
             { "name": "Redacted + Devcon", "comment": "NEARCON reimagined" },
             { "name": "Token2049", "comment": "NEAR AI Showcase, return of Skidanov" },
@@ -775,7 +775,7 @@
             { "name": "Oleg", "comment": "" },
             { "name": "Russ", "comment": "" },
             { "name": "Cameron", "comment": "" },
-            { "name": "Efiz 💙", "comment": "" }
+            { "name": "Efiz", "comment": "" }
           ]
         },
         {
@@ -814,7 +814,7 @@
           "listLink": "https://alpha.potlock.org/list/47",
           "points": 10,
           "content": [
-            { "name": "Harshit from NEAE foundation", "comment": "" },
+            { "name": "Harshit from NEAR Foundation", "comment": "" },
             { "name": "AVB from Wild User Interviews", "comment": "" },
             { "name": "Dleer from Neko", "comment": "" },
             { "name": "Wax From Chill", "comment": "" },
@@ -831,13 +831,13 @@
           "listLink": "https://alpha.potlock.org/list/46",
           "points": 10,
           "content": [
-            { "name": "Guillermo - writes all docs and leads dev rel", "comment": "" },
-            { "name": "Elliot - build dao and ecosystem savan", "comment": "" },
-            { "name": "Min - keypom cto and og dev rel", "comment": "" },
-            { "name": "Vlad - devhub and super near og", "comment": "" },
-            { "name": "Joe - OG dev rel, shard dog shipper, livestreamer", "comment": "" },
-            { "name": "Owen - devrel, community caller, leaving to pursue on-chaindegeneracy at BetVex", "comment": "" },
-            { "name": "Luis from Bitte", "comment": "" }
+            { "name": "Guillermo", "comment": "writes all docs and leads dev rel" },
+            { "name": "Elliot", "comment": "build dao and ecosystem savan" },
+            { "name": "Min", "comment": "keypom cto and og dev rel" },
+            { "name": "Vlad", "comment": "devhub and super near og" },
+            { "name": "Joe", "comment": "OG dev rel, shard dog shipper, livestreamer" },
+            { "name": "Owen", "comment": "devrel, community caller, leaving to pursue on-chaindegeneracy at BetVex" },
+            { "name": "Microchipgnu", "comment": "CTO of Mintbase" }
           ]
         },
         {
@@ -847,12 +847,12 @@
           "listLink": "https://alpha.potlock.org/list/50",
           "points": 10,
           "content": [
-            { "name": "Chris Donavan 🟡", "comment": "" },
-            { "name": "Abhishek, General Counsel at NEAR FOUNDATION 🟡", "comment": "" },
-            { "name": "Marc Goldfinch, Counsel at Proximity 🟡", "comment": "" },
-            { "name": "Atrox, NDC & Blackdragon", "comment": "" },
-            { "name": "Bianca, NEAR Foundation 🌕", "comment": "" },
-            { "name": "Davin, NEAR Foundation 🌕", "comment": "" }
+            { "name": "Chris Donavan", "comment": "COO of NEAR Foundation" },
+            { "name": "Abhishek", "comment": "General Counsel at NEAR Foundation" },
+            { "name": "Marc Goldfinch", "comment": "Counsel at Proximity" },
+            { "name": "Atrox", "comment": "Atrox, NDC & Blackdragon" },
+            { "name": "Bianca", "comment": "NEAR Foundation" },
+            { "name": "Davin", "comment": "NEAR Foundation" }
           ]
         }
       ]
