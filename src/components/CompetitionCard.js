@@ -44,10 +44,10 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      "Overall Concepts": "bg-gold",
+      "Concepts": "bg-gold",
       "Projects": "bg-green",
       "Downbad": "bg-red",
-      "Future Look in 2025": "bg-blue",
+      "2025": "bg-blue",
       "People": "bg-purple"
     };
     return colors[category] || "bg-gray-200";
@@ -71,13 +71,16 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
             className="rounded-full mr-2"
           />
         )}
-        <h3
-          className="font-bold cursor-pointer truncate max-w-xs hover:overflow-visible hover:whitespace-normal"
-          onClick={() => setIsContentVisible(!isContentVisible)}
-          title={displayName}
-        >
-          {displayName} ({approvedRegistrations.length}/{competition.content.length})
-        </h3>
+        <div>
+          <h3
+            className="font-bold cursor-pointer truncate max-w-xs hover:overflow-visible hover:whitespace-normal"
+            onClick={() => setIsContentVisible(!isContentVisible)}
+            title={displayName}
+          >
+            {displayName} ({approvedRegistrations.length}/{competition.content.length})
+          </h3>
+          <p className="competition-description">{competition.description}</p>
+        </div>
       </div>
       <div className="absolute top-2 right-2 flex items-center gap-2">
         {listLink && (

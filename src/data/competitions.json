@@ -5,7 +5,7 @@
         {
           "name": "MOST EXCITING THING ON NEAR for 2025",
           "description": "Discover the most groundbreaking developments on NEAR for 2025.",
-          "category": "Overall Concepts",
+          "category": "Concepts",
           "listLink": "",
           "points": 10,
           "content": [
@@ -17,7 +17,7 @@
         {
           "name": "BEST EVENT for NEAR in 2024",
           "description": "Highlighting the top events that shaped NEAR in 2024.",
-          "category": "Overall Concepts",
+          "category": "Concepts",
           "listLink": "",
           "points": 8,
           "content": [
@@ -31,7 +31,7 @@
         {
           "name": "Best Tech Innovation",
           "description": "Recognizing the most innovative technological advancements on NEAR.",
-          "category": "Overall Concepts",
+          "category": "Concepts",
           "listLink": "",
           "points": 12,
           "content": [
@@ -44,7 +44,7 @@
         {
           "name": "BEST JOKE in NEAR",
           "description": "Celebrating the humor and light-hearted moments within the NEAR community.",
-          "category": "Overall Concepts",
+          "category": "Concepts",
           "listLink": "",
           "points": 5,
           "content": [
@@ -83,15 +83,15 @@
           "listLink": "https://alpha.potlock.org/list/28",
           "points": 15,
           "content": [
-            { "name": "Ref", "comment": "" },
-            { "name": "Burrow 🟡", "comment": "" },
-            { "name": "NEAR Intents 🟡", "comment": "" },
-            { "name": "Linear", "comment": "" },
-            { "name": "Meta Pool", "comment": "" },
-            { "name": "Meme.cooking", "comment": "" },
-            { "name": "Mitte 🟡", "comment": "" },
-            { "name": "Veax 🟡", "comment": "" },
-            { "name": "Delta Bot", "comment": "" },
+            { "name": "Ref", "comment": "OG Defi Swap on NEAR also pushing chain abstraction" },
+            { "name": "Burrow 🟡", "comment": "Our OG lending protocol" },
+            { "name": "NEAR Intents 🟡", "comment": "Redefining Cross Chain liquidity" },
+            { "name": "Linear", "comment": "Liquid staking on NEAR" },
+            { "name": "Meta Pool", "comment": "Multichain liquidity staking with community governance" },
+            { "name": "Meme.cooking", "comment": "go to launchpad for memes on NEAR leveraging bonding curves and Ref" },
+            { "name": "Mitte 🟡", "comment": "NFT orderbook and bonding curve launchpad on NEAR" },
+            { "name": "Veax 🟡", "comment": "Another DEX on NEAR, competitior to Ref" },
+            { "name": "Delta Bot", "comment": "Mutlichain trading bot" },
             { "name": "Intear - 🔵", "comment": "" }
           ]
         },
@@ -481,11 +481,11 @@
           "listLink": "https://alpha.potlock.org/list/60",
           "points": 5,
           "content": [
-            { "name": "Creatives DAOs", "comment": "" },
-            { "name": "Marketing DAOs", "comment": "" },
+            { "name": "Creatives DAOs", "comment": "Vibes while it lasted" },
+            { "name": "Marketing DAOs", "comment": "also vibes while it lasted" },
             { "name": "Opact Tickets", "comment": "Relayers no longer mantained" },
             { "name": "BOS 🟡", "comment": "No longer mantained and pagoda shutdown" },
-            { "name": "NEAR DC", "comment": "" },
+            { "name": "NEAR DC", "comment": "At least we got house of stake coming up" },
             { "name": "Astra++", "comment": "Shutdown with NDC Tech WG" },
             { "name": "Pagoda", "comment": "Shutdown" },
             { "name": "Octopus Network", "comment": "Now omnity network" },
@@ -500,22 +500,22 @@
           "listLink": "https://alpha.potlock.org/list/54",
           "points": 5,
           "content": [
-            { "name": "NEAR Vietnam Hub", "comment": "" },
-            { "name": "NEAR Vietnam DAO", "comment": "" },
-            { "name": "NEAR Balkans", "comment": "" },
-            { "name": "NEAR Africa", "comment": "" },
-            { "name": "Banyan", "comment": "" },
-            { "name": "NEAR Ukraine Guild", "comment": "" },
-            { "name": "NEAR Protocol China 🟡", "comment": "" },
-            { "name": "NEAR Toronto", "comment": "" },
-            { "name": "NEAR Korea DAO", "comment": "" },
-            { "name": "NEAR Korea Hub 🟡", "comment": "" }
+            { "name": "NEAR Vietnam Hub", "comment": "Official organizers of NEAR APAC. Shoutout to Kent from NEAR Catalog. Heavy workshops and collab with GFI" },
+            { "name": "NEAR Vietnam DAO", "comment": "DAO supported by Regional Community DAOs" },
+            { "name": "NEAR Balkans", "comment": "Many went to Calimero. They built alot, PathFinder, Tekuno." },
+            { "name": "NEAR Africa", "comment": "Grassroots community. Recent City Node for Hackbox" },
+            { "name": "Banyan", "comment": "Aka NEAR US. Yep Shot and Cameron lowkey went to NF aand" },
+            { "name": "NEAR Ukraine Guild", "comment": "Remember mysteryboxes" },
+            { "name": "NEAR Protocol China 🟡", "comment": "Robert Yan and his crew of devs we not sure about" },
+            { "name": "NEAR Toronto", "comment": "They pushing alot of work in Waterloo and never been funded as a hub" },
+            { "name": "NEAR Korea DAO", "comment": "Aka CoinEasy DAO" },
+            { "name": "NEAR Korea Hub 🟡", "comment": "The BD gawds, at least we got Mitte and Ticle. Bullish on Product execution" }
           ]
         },
         {
           "name": "MOST Likely to generate the most DeFI Revenue",
           "description": "Projects most likely to generate significant DeFi revenue.",
-          "category": "Future Look in 2025",
+          "category": "2025",
           "listLink": "",
           "points": 10,
           "content": [
@@ -532,7 +532,7 @@
         {
           "name": "Most LIkely App to Get A Billion Users First",
           "description": "Apps most likely to reach a billion users first.",
-          "category": "Future Look in 2025",
+          "category": "2025",
           "listLink": "",
           "points": 10,
           "content": [
