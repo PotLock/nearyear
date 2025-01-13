@@ -3,7 +3,7 @@ import { NearContext } from '@/wallets/near';
 import styles from '@/styles/app.module.css';
 import Link from 'next/link';
 import { VoteContract } from '../config';
-import { Clock as ClockIcon, ChevronLeft, Crown, Layers, DollarSign, HandHelping, Zap, Clapperboard, BriefcaseBusiness, Award } from 'lucide-react';
+import { Podcast, ClockIcon, Award, Zap, Briefcase, Smile, Network, LineChart, Crown, HeartHandshake, Video, Rocket, DollarSign, Frame, Shield, Coins, Sparkles, GitBranch, Users, BookOpen, RefreshCcw, Database, Boxes, Paintbrush, ImagePlus, Image, Smartphone, Palette, Anchor, MessageCircle, GraduationCap, Flame, Building2, Scale, Wallet, Heart, Brain, Globe, Skull, CloudRain, RocketIcon, FileCode } from 'lucide-react';
 import { NotFound } from './NotFound';
 
 export const CategoryList = () => {
@@ -12,14 +12,46 @@ export const CategoryList = () => {
   const [contractExists, setContractExists] = useState(true);
 
   const categoryIcons = {
-    1: Crown,
-    2: Layers,
-    3: DollarSign,
-    4: HandHelping,
-    5: Zap,
-    6: Clapperboard,
-    7: BriefcaseBusiness,
-    8: Award,
+    1: Podcast,    // Top NEAR Yapper
+    2: Zap,            // Most Cracked NEAR Dev
+    3: Briefcase,        // BEST BD at NF
+    4: Smile,            // BEST VIBE ON NEAR
+    5: Network,          // MOST LIKELY TO BE INVOLVED WITH PROJECTS
+    6: LineChart,        // BEST DATA ANALYST
+    7: Crown,            // COOLEST FOUNDER
+    8: HeartHandshake,   // MOST HELPFUL NEARIAN
+    9: Video,            // BEST CONTENT CREATORS
+    10: Rocket,          // MOST ANTICIPATED TOKEN LAUNCH
+    11: DollarSign,      // BEST DeFI Project
+    12: Frame,           // BEST NFT Platform
+    13: Shield,          // BEST PRIVACY PROJECT
+    14: Coins,           // Best NEAR Token
+    15: Sparkles,        // Best New Token
+    16: GitBranch,       // BEST Multichain Expansion
+    17: Users,           // Best NEAR DAO
+    18: BookOpen,        // BEST Open Source Projects
+    19: RefreshCcw,      // BEST PIVOT
+    20: Database,        // BEST Infrastructure
+    21: Users,           // Strongest Community
+    22: Boxes,           // Best New Project
+    23: Paintbrush,      // Best New PFP Collection
+    24: Image,           // Best Existing NFT Collection
+    25: Smartphone,      // Best Consumer App
+    26: Palette,         // Best NEAR Artist
+    27: Anchor,          // Most Likely to Not Leave
+    28: MessageCircle,   // WHO NEEDS TO START YAPPING MORE
+    29: GraduationCap,   // BEST DEV REL
+    30: Flame,           // Biggest Degen
+    31: Building2,       // BEST AT NEAR Foundation
+    32: Scale,           // BEST ECO LAWYERS
+    33: Wallet,          // Best NEAR Wallet
+    34: Heart,           // Baddest Baddies
+    35: Brain,           // Best AI Project
+    36: Globe,           // BEST REGIONAL COMMUNITY
+    37: Skull,           // BEST FAILED DAO
+    38: CloudRain,       // SADDEST PROJECT SHUTDOWNS
+    39: RocketIcon,    // Most Anticipated Mainnet Launch
+    40: FileCode,        // Best New Smart Contract
   };
 
   useEffect(() => {

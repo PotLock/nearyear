@@ -11,6 +11,31 @@ import { VoteContract } from '../../config';
 
 import { ChevronLeft, Clock, Award } from 'lucide-react';
 
+
+const ProfileImage = ({ accountId }) => {
+  const [isError, setIsError] = useState(false);
+
+  const handleImageError = () => {
+    if (!isError) {
+      setIsError(true);
+    }
+  };
+
+  return (
+    <Image
+      src={isError 
+        ? `https://robohash.org/${accountId}.png`
+        : `https://i.near.social/magic/thumbnail/https://near.social/magic/img/account/${accountId}`
+      }
+      alt={accountId}
+      width={96}
+      height={96}
+      className="w-24 h-24 rounded-full border-4 border-blue-100"
+      onError={handleImageError}
+    />
+  );
+};
+
 const NomineePage = () => {
   const router = useRouter();
   const { id, transactionHashes, errorCode, errorMessage } = router.query;
@@ -228,7 +253,7 @@ const NomineePage = () => {
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <div className="flex items-center mb-8">
-        <Link href="/" passHref>
+        <Link href="/vote" passHref>
           <button className="flex items-center text-gray-600 hover:text-gray-900">
             <ChevronLeft className="w-6 h-6 mr-2" />
             Back to Categories
@@ -280,13 +305,7 @@ const NomineePage = () => {
             )}
             <div className="p-6">
               <div className="flex justify-center mb-4">
-                <Image
-                  src={`https://robohash.org/${nominee.account_id}.png`}
-                  alt={nominee.account_id}
-                  width={96}
-                  height={96}
-                  className="w-24 h-24 rounded-full border-4 border-blue-100"
-                />
+                <ProfileImage accountId={nominee.account_id} />
               </div>
               <h3 className="text-xl font-semibold text-center mb-2">{nominee.account_id}</h3>
               <div className="flex justify-center items-center mb-4">
