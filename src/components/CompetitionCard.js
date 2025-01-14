@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { ListContract } from '../config';
 import { FaTwitter } from 'react-icons/fa';
 
-const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
+const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllCommentsVisible }) => {
   const [listDetails, setListDetails] = useState(null);
   const [approvedRegistrations, setApprovedRegistrations] = useState([]);
   const [isContentVisible, setIsContentVisible] = useState(false);
@@ -40,6 +40,11 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
     fetchListDetails();
   }, [listLink, wallet]);
 
+  useEffect(() => {
+    setCommentVisibility(Array(competition.content.length).fill(isAllCommentsVisible));
+    setIsContentVisible(isAllCommentsVisible);
+  }, [isAllCommentsVisible, competition.content.length]);
+
   const displayName = listDetails?.name || competition.name;
   const backdrop = listDetails?.cover_image_url || '';
 
@@ -58,6 +63,11 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
     setCommentVisibility((prevVisibility) =>
       prevVisibility.map((visible, i) => (i === index ? !visible : visible))
     );
+  };
+
+  const toggleAllComments = () => {
+    const allVisible = commentVisibility.every(visible => visible);
+    setCommentVisibility(Array(competition.content.length).fill(!allVisible));
   };
 
   return (
@@ -95,32 +105,31 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet }) => {
       </div>
       {isContentVisible && (
         <div className="mt-4">
+          <button onClick={toggleAllComments} className="mb-2 text-blue-500 underline">
+            {commentVisibility.every(visible => visible) ? 'Collapse All' : 'Expand All'}
+          </button>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            {competition.content.map((item, index) => {
-              console.log('Item Comment:', item.comment);
-
-              return (
-                <div key={index} className="border p-2 rounded hover:bg-gray-100">
-                  <strong
-                    role="button"
-                    onClick={() => toggleCommentVisibility(index)}
-                    className="cursor-pointer"
-                  >
-                    {item.name}
-                  </strong>
-                  {commentVisibility[index] && (
-                    <div className="mt-2 text-sm text-gray-600">
-                      {item.comment}
-                    </div>
-                  )}
-                  {item.twitterLink && (
-                    <a href={item.twitterLink} target="_blank" rel="noopener noreferrer" className="ml-2">
-                      <FaTwitter size={16} />
-                    </a>
-                  )}
-                </div>
-              );
-            })}
+            {competition.content.map((item, index) => (
+              <div key={index} className="border p-2 rounded hover:bg-gray-100">
+                <strong
+                  role="button"
+                  onClick={() => item.comment && toggleCommentVisibility(index)}
+                  className={`cursor-pointer ${!item.comment && 'cursor-default'}`}
+                >
+                  {item.name}
+                </strong>
+                {commentVisibility[index] && item.comment && (
+                  <div className="mt-2 text-sm text-gray-600">
+                    {item.comment}
+                  </div>
+                )}
+                {item.twitterLink && (
+                  <a href={item.twitterLink} target="_blank" rel="noopener noreferrer" className="ml-2">
+                    <FaTwitter size={16} />
+                  </a>
+                )}
+              </div>
+            ))}
           </div>
           {listLink && (
             <div className="mt-4">

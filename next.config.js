@@ -3,7 +3,24 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     dangerouslyAllowSVG: true,
-    domains: ['ipfs.near.social', 'another-domain.com', 'i.near.social', 'robohash.org'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ipfs.near.social',
+      },
+      {
+        protocol: 'https',
+        hostname: 'another-domain.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.near.social',
+      },
+      {
+        protocol: 'https',
+        hostname: 'robohash.org',
+      },
+    ],
   },
 };
 

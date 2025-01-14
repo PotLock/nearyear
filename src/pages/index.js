@@ -23,6 +23,12 @@ const categoryColors = {
 const LandingPage = () => {
   const { wallet } = useContext(NearContext);
   const [profiles, setProfiles] = useState({});
+  const [expandedCompetition, setExpandedCompetition] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCompetitors, setSelectedCompetitors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isAllCommentsVisible, setIsAllCommentsVisible] = useState(false);
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -46,25 +52,18 @@ const LandingPage = () => {
       }, {});
 
       setProfiles(profilesMap);
+      setLoading(false);
     };
 
     fetchProfiles();
   }, [wallet]);
 
-  const [expandedCompetition, setExpandedCompetition] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCompetitors, setSelectedCompetitors] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const toggleCompetition = (id) => {
     setExpandedCompetition(expandedCompetition === id ? null : id);
+  };
+
+  const toggleAllComments = () => {
+    setIsAllCommentsVisible(!isAllCommentsVisible);
   };
 
   const categories = ['All', ...new Set(importedCompetitionsData.flatMap(group => group.competitions.map(comp => comp.category)))];
@@ -280,6 +279,9 @@ const LandingPage = () => {
           />
         </section>
 
+        <button onClick={toggleAllComments} className="mb-4 text-blue-500 underline">
+          {isAllCommentsVisible ? 'Collapse All Details' : 'Expand All Details'}
+        </button>
         {loading ? (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
             <p>Loading...</p>
@@ -294,6 +296,7 @@ const LandingPage = () => {
                   listLink={competition.listLink}
                   profiles={profiles}
                   wallet={wallet}
+                  isAllCommentsVisible={isAllCommentsVisible}
                 />
               ))}
             </div>
