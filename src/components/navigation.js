@@ -32,6 +32,9 @@ export const Navigation = () => {
           <Link href="/vote" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
             Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
           </Link>
+          <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
+            Voter Whitelist
+          </Link>
           <Link href="/nomination" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
             Nominate w List
           </Link>
@@ -54,6 +57,9 @@ export const Navigation = () => {
         <div className="mobile-menu" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '10px', borderTop: '1px solid #ccc' }}>
           <Link href="/vote" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
             Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
+          </Link>
+          <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
+            Voter Whitelist
           </Link>
           <Link href="/nomination" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
             Nominate w List
