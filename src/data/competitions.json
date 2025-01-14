@@ -664,7 +664,7 @@
           "content": [
             { "name": "Nate Founder of Bitte", "comment": "", "twitterLink": "https://twitter.com/nategeier" },
             { "name": "Vlad G - Founder of Web4", "comment": "", "twitterLink": "https://twitter.com/vgrichina" },
-            { "name": "Frol - Core Contributor at DevHub", "comment": "", "twitterLink": "https://twitter.com/frol_devhub" },
+            { "name": "Frol - Core Contributor at DevHub", "comment": "", "twitterLink": "https://twitter.com/Freol" },
             { "name": "Alex - Founder of Aurora 🟡", "comment": "", "twitterLink": "https://twitter.com/AlexAuroraDev" },
             { "name": "Bowen - Head of Protocol", "comment": "", "twitterLink": "https://twitter.com/BowenWang18" },
             { "name": "Evgeny K", "comment": "Founder of Fast NEAR & NEAR Social & Proximity", "twitterLink": "https://twitter.com/ekuzyakov" },
@@ -769,10 +769,10 @@
             { "name": "Cameron", "comment": "", "twitterLink": "https://twitter.com/Cameron_Dennis_" },
             { "name": "Yuen", "comment": "", "twitterLink": "https://twitter.com/yuensid" },
             { "name": "Aesocbar", "comment": "", "twitterLink": "https://twitter.com/aescobarindo" },
-            { "name": "AGT 🟡", "comment": "" },
+            { "name": "AGT 🟡", "comment": "", "twitterLink": "https://twitter.com/travbori" },
             { "name": "Odin", "comment": "", "twitterLink": "https://twitter.com/odins_eyehole" },
-            { "name": "Efiz", "comment": "", "twitterLink": "https://twitter.com/elliotbraem" },
-            { "name": "Joe from Sharddog", "comment": "" },
+            { "name": "Efiz", "comment": "", "twitterLink": "https://twitter.com/elliot_braem" },
+            { "name": "Joe from Sharddog", "comment": "", "twitterLink": "https://twitter.com/joespano_" },
             { "name": "Chloe from Marma J", "comment": "" },
             { "name": "Alan from Open Web Academy / Metapool", "comment": "" },
             { "name": "Slimedragon from Intear", "comment": "" },
@@ -817,7 +817,7 @@
             { "name": "Oleg", "comment": "", "twitterLink": "https://twitter.com/oleg_fem" },
             { "name": "Russ", "comment": "", "twitterLink": "https://twitter.com/russlive215" },
             { "name": "Cameron", "comment": "", "twitterLink": "https://twitter.com/Cameron_Dennis_" },
-            { "name": "Efiz", "comment": "", "twitterLink": "https://twitter.com/elliotbraem" }
+            { "name": "Efiz", "comment": "", "twitterLink": "https://twitter.com/elliot_braem" }
           ]
         },
         {
@@ -833,20 +833,20 @@
             { "name": "Evgen from Fast NEAR", "comment": "", "twitterLink": "https://twitter.com/ekuzyakov" },
             { "name": "Mike Purvis", "comment": "", "twitterLink": "https://twitter.com/mikedotexe" },
             { "name": "Petr from Here Wallet", "comment": "", "twitterLink": "https://twitter.com/p_volnov" },
-            { "name": "Vadim from NEAR AI", "comment": "" },
-            { "name": "Bowen from NEAR One", "comment": "" },
-            { "name": "Firat from Nuffle Labs", "comment": "" },
-            { "name": "Vlad from DevHub", "comment": "" },
-            { "name": "Alex from Aurora", "comment": "" },
-            { "name": "Mario from Meme Cooking", "comment": "" },
-            { "name": "Slime from Intear", "comment": "" },
-            { "name": "Rekt Degen from Meteor Wallet", "comment": "" },
+            { "name": "Vadim from NEAR AI", "comment": "", "twitterLink": "https://twitter.com/zacodil" },
+            { "name": "Bowen from NEAR One", "comment": "", "twitterLink": "https://twitter.com/BowenWang18" },
+            { "name": "Firat from Nuffle Labs", "comment": "", "twitterLink": "https://twitter.com/serrrfirat" },
+            { "name": "Vlad from DevHub", "comment": "", "twitterLink": "https://twitter.com/vlad_g_near" },
+            { "name": "Alex from Aurora", "comment": "", "twitterLink": "https://twitter.com/AlexAuroraDev" },
+            { "name": "Mario from Meme Cooking", "comment": "", "twitterLink": "https://twitter.com/marior_dev" },
+            { "name": "Slime from Intear", "comment": "", "twitterLink": "https://twitter.com/slimedrgn" },
+            { "name": "Rekt Degen from Meteor Wallet", "comment": "", "twitterLink": "https://twitter.com/rekt_degen" },
             { "name": "Robert Yan from ???", "comment": "" },
-            { "name": "Elliot from Build DAO", "comment": "" },
-            { "name": "Vlad from Web4", "comment": "" },
-            { "name": "Peter from NEAR DevHub", "comment": "" },
+            { "name": "Elliot from Build DAO", "comment": "", "twitterLink": "https://twitter.com/elliot_braem" },
+            { "name": "Vlad from Web4", "comment": "", "twitterLink": "https://twitter.com/vgrichina" },
+            { "name": "Peter Salomonsen", "comment": "Js in Wasm, Devhub Contributor", "twitterLink": "https://twitter.com/salomonsen_p" },
             { "name": "Olga from NEAR One 🟡", "comment": "" },
-            { "name": "DMD from Signet 🟡", "comment": "" }
+            { "name": "DMD from Signet 🟡", "comment": "", "twitterLink": "https://twitter.com/dmd_near" }
           ]
         },
         {
