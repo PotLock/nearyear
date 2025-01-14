@@ -55,15 +55,15 @@
         "category": "Projects",
         "listLink": "https://alpha.potlock.org/list/39",
         "content": [
-          { "name": "BlackDragon", "comment": "Emerging from NDC Meme token, Blackdragon becomes go to memecoin on NEAR", "onchain": true },
+          { "name": "BlackDragon", "comment": "Emerging from NDC Meme token, Blackdragon becomes go to memecoin on NEAR",  "twitterLink": "https://twitter.com/dragonisnear","onchain": true },
           { "name": "NEAR AI", "comment": "Alex Skidanov makes a return to NEAR Ecosystme to lead its AI Arm", "onchain": false },
           { "name": "Intear", "comment": "An NEARVidia knockoff emerges and becomes the go to meme community that powers essential NEAR Infra.", "onchain": true },
           { "name": "NEAR Intents", "comment": "Open source CHain Abstracted liquidity layer built by Aurora", "onchain": false },
           { "name": "Omnilane", "comment": "Part of Chain Abstraction cohort, multichain liquiidty", "onchain": false },
           { "name": "FastNEAR", "comment": "Evgeny from NEAR Social focused on making NEAR Fast, becoming go to RPC on NEAR", "onchain": true },
-          { "name": "Meme.cooking", "comment": "Shitzu launches pump fun on NEAR", "onchain": true },
+          { "name": "Meme.cooking", "comment": "Shitzu launches pump fun on NEAR", "twitterLink": "https://twitter.com/memedotcooking", "onchain": true },
           { "name": "Purge", "comment": "AI coin where community confesses their sins", "onchain": false },
-          { "name": "POTLOCK", "comment": "the open funding stack and go to funding platform", "onchain": true },
+          { "name": "POTLOCK", "comment": "the open funding stack and go to funding platform",  "twitterLink": "https://twitter.com/POTLOCK_", "onchain": true },
           { "name": "Mitte", "comment": "NFT orderbook and bonding curve launchpad on NEAR", "onchain": false },
           { "name": "Race of Sloths", "comment": "Rewarding open source contributions on NEAR", "onchain": false },
           { "name": "DeFi Shardz", "comment": "", "onchain": false },
@@ -77,16 +77,16 @@
         "category": "Projects",
         "listLink": "https://alpha.potlock.org/list/28",
         "content": [
-          { "name": "Ref", "comment": "OG Defi Swap on NEAR also pushing chain abstraction", "onchain": true },
+          { "name": "Ref", "comment": "OG Defi Swap on NEAR also pushing chain abstraction", "twitterLink": "https://twitter.com/finance_ref", "onchain": true },
           { "name": "Burrow", "comment": "Our OG lending protocol", "onchain": false },
-          { "name": "NEAR Intents", "comment": "Redefining Cross Chain liquidity", "onchain": false },
+          { "name": "NEAR Intents", "comment": "Redefining Cross Chain liquidity",  "twitterLink": "https://twitter.com/auroraisnear","onchain": false },
           { "name": "Linear", "comment": "Liquid staking on NEAR", "onchain": true },
-          { "name": "Meta Pool", "comment": "Multichain liquidity staking with community governance", "onchain": true },
-          { "name": "Meme.cooking", "comment": "go to launchpad for memes on NEAR leveraging bonding curves and Ref", "onchain": true },
-          { "name": "Mitte", "comment": "NFT orderbook and bonding curve launchpad on NEAR", "onchain": false },
-          { "name": "Veax", "comment": "Another DEX on NEAR, competitior to Ref", "onchain": false },
+          { "name": "Meta Pool", "comment": "Multichain liquidity staking with community governance", "twitterLink": "https://twitter.com/meta_pool", "onchain": true },
+          { "name": "Meme.cooking", "comment": "go to launchpad for memes on NEAR leveraging bonding curves and Ref", "twitterLink": "https://twitter.com/memedotcooking", "onchain": true },
+          { "name": "Mitte", "comment": "NFT orderbook and bonding curve launchpad on NEAR", "twitterLink": "https://twitter.com/MITTE_gg", "onchain": false },
+          { "name": "Veax", "comment": "Another DEX on NEAR, competitior to Ref", "twitterLink": "https://twitter.com/veax_defi", "onchain": false },
           { "name": "Delta Bot", "comment": "Mutlichain trading bot", "onchain": true },
-          { "name": "Intear", "comment": "", "onchain": true }
+          { "name": "Intear", "comment": "", "twitterLink": "https://twitter.com/intelnear", "onchain": true }
         ]
       },
       {
@@ -97,7 +97,7 @@
         "content": [
           { "name": "Asian Girl Boss", "comment": "", "onchain": true },
           { "name": "Purge", "comment": "", "onchain": true },
-          { "name": "Intear", "comment": "", "onchain": true },
+          { "name": "Intear", "comment": "", "twitterLink": "https://twitter.com/intelnear", "onchain": true },
           { "name": "Lonk", "comment": "", "onchain": true },
           { "name": "BLACKDRAGON", "comment": "", "onchain": true },
           { "name": "ASI", "comment": "", "onchain": true },
@@ -125,8 +125,8 @@
           { "name": "Uwon $UWON", "comment": "" },
           { "name": "stNEAR ($stNEAR)", "comment": "" },
           { "name": "Shitzu", "comment": "" },
-          { "name": "Intear $INTEAR", "comment": "" },
-          { "name": "Ref ($REF)", "comment": "" },
+          { "name": "Intear $INTEAR", "comment": "", "twitterLink": "https://twitter.com/intelnear" },
+          { "name": "Ref ($REF)", "comment": "", "twitterLink": "https://twitter.com/finance_ref" },
           { "name": "$KAT", "comment": "" },
           { "name": "$TOUCHED", "comment": "" },
           { "name": "NEAT", "comment": "" },
@@ -173,8 +173,8 @@
             { "name": "Uwon $UWON", "comment": "" },
             { "name": "stNEAR ($stNEAR)", "comment": "" },
             { "name": "Shitzu", "comment": "" },
-            { "name": "Intear $INTEAR", "comment": "" },
-            { "name": "Ref ($REF)", "comment": "" },
+            { "name": "Intear $INTEAR", "comment": "", "twitterLink": "https://twitter.com/intelnear" },
+            { "name": "Ref ($REF)", "comment": "", "twitterLink": "https://twitter.com/finance_ref" },
             { "name": "$KAT", "comment": "" },
             { "name": "$TOUCHED", "comment": "" },
             { "name": "NEAT", "comment": "" },
@@ -192,7 +192,7 @@
           "content": [
             { "name": "Shitzu Reveal", "comment": "" },
             { "name": "Blackdragon NFT", "comment": "" },
-            { "name": "Mitterian NFTs by Mitte", "comment": "" },
+            { "name": "Mitterian NFTs by Mitte", "comment": "", "twitterLink": "https://twitter.com/MITTE_gg" },
             { "name": "NDC Baddies", "comment": "" },
             { "name": "YEAR OF CHEF", "comment": "" },
             { "name": "UseMen", "comment": "" }
@@ -259,7 +259,7 @@
             { "name": "NEAR Intents intents.near", "comment": "" },
             { "name": "Potlock Factory v1 v1.potfactory.potlock.near", "comment": "" },
             { "name": "MpDAO Vote Contract mpdao-vote.near", "comment": "" },
-            { "name": "Mitte token contract token0.near", "comment": "" },
+            { "name": "Mitte token contract token0.near", "comment": "", "twitterLink": "https://twitter.com/MITTE_gg" },
             { "name": "NEAR DA", "comment": "" },
             { "name": "meme-cooking.near", "comment": "" },
             { "name": "omft.near", "comment": "" }
@@ -302,7 +302,7 @@
           "points": 15,
           "content": [
             { "name": "DefiShardz 🟡", "comment": "" },
-            { "name": "Mitte:NFT 🟡", "comment": "" },
+            { "name": "Mitte 🟡", "comment": "MitteNFT", "twitterLink": "https://twitter.com/MITTE_gg" },
             { "name": "BODEGA", "comment": "" },
             { "name": "Sharddog", "comment": "" },
             { "name": "PARAS 🟡", "comment": "" },
@@ -334,14 +334,14 @@
           "listLink": "https://alpha.potlock.org/list/34",
           "points": 15,
           "content": [
-            { "name": "Blackdragon DAO", "comment": "" },
-            { "name": "Ref DAO", "comment": "" },
-            { "name": "mpDAO", "comment": "" },
-            { "name": "Build DAO", "comment": "" },
-            { "name": "Blunt DAO", "comment": "" },
-            { "name": "NEARWEEK NewsDAO", "comment": "" },
-            { "name": "Shitzu DAO", "comment": "" },
-            { "name": "Hijack DAO", "comment": "" }
+            { "name": "Blackdragon DAO", "twitterLink": "https://twitter.com/dragonisnear", "comment": "" },
+            { "name": "Ref DAO", "comment": "", "twitterLink": "https://twitter.com/finance_ref" },
+            { "name": "mpDAO", "comment": "", "twitterLink": "https://twitter.com/meta_pool" },
+            { "name": "Build DAO", "comment": "", "twitterLink": "https://twitter.com/nearbuilders" },
+            { "name": "Blunt DAO", "comment": "", "twitterLink": "https://twitter.com/bluntdao" },
+            { "name": "NEARWEEK NewsDAO", "comment": "", "twitterLink": "https://twitter.com/nearweek" },
+            { "name": "Shitzu DAO", "comment": "", "twitterLink": "https://twitter.com/ShitzuCommunity" },
+            { "name": "Hijack DAO", "comment": "", "twitterLink": "https://twitter.com/HijackNear" }
           ]
         },
         {
@@ -360,7 +360,7 @@
             { "name": "NEAR Social", "comment": "" },
             { "name": "NEAR Catalog", "comment": "" },
             { "name": "Devhub Platform", "comment": "" },
-            { "name": "Metapool", "comment": "" },
+            { "name": "Meta Pool", "comment": "", "twitterLink": "https://twitter.com/meta_pool" },
             { "name": "FastNEAR", "comment": "" },
             { "name": "Reclaim Protocol 🟡", "comment": "" }
           ]
@@ -393,7 +393,7 @@
             { "name": "NEAR AI - ??? 💛", "comment": "" },
             { "name": "Nuffle - From DA - Eigen DeFi 🟡", "comment": "" },
             { "name": "Keypom - from Onboarding to Infinx infrastructure via acquisition", "comment": "" },
-            { "name": "Mitte - NFT orderbook → launchpad 🟡", "comment": "" },
+            { "name": "Mitte - NFT orderbook → launchpad 🟡", "twitterLink": "https://twitter.com/MITTE_gg", "comment": "" },
             { "name": "DapDap? — enterprise front ends 🟡", "comment": "" },
             { "name": "Sender - from Wallet to AGI and ASI token 🟡", "comment": "" },
             { "name": "NDC→ Blackdragon", "comment": "" },
@@ -559,18 +559,18 @@
           "listLink": "",
           "points": 10,
           "content": [
-            { "name": "NEAR Intents", "comment": "" },
-            { "name": "ReF", "comment": "" },
-            { "name": "Templar Protocol", "comment": "" },
-            { "name": "Burrow", "comment": "" },
-            { "name": "OMNILANE 🟡", "comment": "" },
-            { "name": "Nuffle 🟡", "comment": "" },
-            { "name": "Meme cooking", "comment": "" },
-            { "name": "Mitte", "comment": "" }
+            { "name": "NEAR Intents", "comment": "", "twitterLink": "https://twitter.com/auroraisnear" },
+            { "name": "ReF", "comment": "", "twitterLink": "https://twitter.com/finance_ref" },
+            { "name": "Templar Protocol", "comment": "", "twitterLink": "https://twitter.com/TemplarProtocol" },
+            { "name": "Burrow", "comment": "", "twitterLink":"https://twitter.com/burrow_finance" },
+            { "name": "OMNILANE 🟡", "comment": "", "twitterLink": "https://twitter.com/omnilane_labs" },
+            { "name": "Nuffle 🟡", "comment": "", "twitterLink": "https://twitter.com/nufflelabs" },
+            { "name": "Meme cooking", "comment": "", "twitterLink":"https://twitter.com/memedotcooking" },
+            { "name": "Mitte", "comment": "", "twitterLink": "https://twitter.com/MITTE_gg" }
           ]
         },
         {
-          "name": "Most LIkely App to Get A Billion Users First",
+          "name": "Most Likely App to Get A Billion Users First",
           "description": "Apps most likely to reach a billion users first.",
           "category": "2025",
           "listLink": "",
@@ -580,12 +580,12 @@
             { "name": "USDC on NEAR 🟡", "comment": "" },
             { "name": "USDT on NEAR 🟡", "comment": "" },
             { "name": "KACHING 🟡", "comment": "" },
-            { "name": "SWEAT 🟡", "comment": "" },
-            { "name": "Ref", "comment": "" },
-            { "name": "NEAR AI 🟡", "comment": "" },
-            { "name": "BITTE", "comment": "" },
-            { "name": "METEOR", "comment": "" },
-            { "name": "AURORA VIRTUAL CHAINS 🟡", "comment": "" }
+            { "name": "SWEAT 🟡", "comment": "", "twitterLink": "https://twitter.com/SweatEconomy" },
+            { "name": "Ref", "comment": "", "twitterLink": "https://twitter.com/finance_ref" },
+            { "name": "NEAR AI 🟡", "comment": "", "twitterLink": "https://twitter.com/near_ai" },
+            { "name": "BITTE", "comment": "", "twitterLink": "https://twitter.com/bitteprotocol" },
+            { "name": "METEOR", "comment": "", "twitterLink": "https://twitter.com/meteorwallet" },
+            { "name": "AURORA VIRTUAL CHAINS 🟡", "comment": "", "twitterLink": "https://twitter.com/auroraisnear" }
           ]
         },
         {
@@ -595,7 +595,7 @@
           "listLink": "https://alpha.potlock.org/list/24",
           "points": 10,
           "content": [
-            { "name": "WEB3HEDGE", "comment": "" },
+            { "name": "WEB3HEDGE", "comment": "", "twitterLink": "https://twitter.com/web3hedge" },
             { "name": "Edward from Meteor Wallet", "comment": "" },
             { "name": "OLEG from Sweat", "comment": "" },
             { "name": "Myron from Kaichinge 🟡", "comment": "" },
@@ -662,23 +662,23 @@
           "listLink": "https://alpha.potlock.org/list/44",
           "points": 10,
           "content": [
-            { "name": "Nate Founder of Bitte", "comment": "" },
-            { "name": "Vlad G - Founder of Web4", "comment": "" },
-            { "name": "Frol - Core Contributor at DevHub", "comment": "" },
-            { "name": "Alex - Founder of Aurora 🟡", "comment": "" },
-            { "name": "Bowen - Head of Protocol", "comment": "" },
-            { "name": "Evgeny K - Founder of NEAR", "comment": "" },
-            { "name": "Kendall - Director of Proximity 🟡", "comment": "" },
-            { "name": "Cameron Dennis", "comment": "" },
-            { "name": "Oleg - Founder of Sweat", "comment": "" },
+            { "name": "Nate Founder of Bitte", "comment": "", "twitterLink": "https://twitter.com/nategeier" },
+            { "name": "Vlad G - Founder of Web4", "comment": "", "twitterLink": "https://twitter.com/vgrichina" },
+            { "name": "Frol - Core Contributor at DevHub", "comment": "", "twitterLink": "https://twitter.com/frol_devhub" },
+            { "name": "Alex - Founder of Aurora 🟡", "comment": "", "twitterLink": "https://twitter.com/AlexAuroraDev" },
+            { "name": "Bowen - Head of Protocol", "comment": "", "twitterLink": "https://twitter.com/BowenWang18" },
+            { "name": "Evgeny K", "comment": "Founder of Fast NEAR & NEAR Social & Proximity", "twitterLink": "https://twitter.com/ekuzyakov" },
+            { "name": "Kendall - Director of Proximity 🟡", "comment": "", "twitterLink": "https://twitter.com/kendaIIc" },
+            { "name": "Cameron Dennis", "comment": "", "twitterLink": "https://twitter.com/Cameron_Dennis_" },
+            { "name": "Oleg - Founder of Sweat", "comment": "", "twitterLink": "https://twitter.com/oleg_fem" },
             { "name": "Mally from NEAR Foundation", "comment": "" },
-            { "name": "Maggy from NEA", "comment": "" },
-            { "name": "Harshit from NEAR Foundation", "comment": "" },
-            { "name": "David MOrrison.- Contnt at NEAR Foundation", "comment": "" },
-            { "name": "Sasha from Learn NEAR Club", "comment": "" },
-            { "name": "Jonathan from meteor Wallet", "comment": "" },
-            { "name": "Rekt Degen from Meteor Wallet", "comment": "" },
-            { "name": "Amos from Meta Web", "comment": "" }
+            { "name": "Maggy from NEAR", "comment": "" },
+            { "name": "Harshit from NEAR Foundation", "comment": "", "twitterLink": "https://twitter.com/chronear" },
+            { "name": "David Morrison", "comment": "Content at NEAR Foundation", "twitterLink": "https://twitter.com/David___Mo" },
+            { "name": "Sasha from Learn NEAR Club", "comment": "", "twitterLink": "https://twitter.com/SashaBaksht" },
+            { "name": "Web3Hedge from Meteor Wallet", "comment": "", "twitterLink": "https://twitter.com/web3hedge" },
+            { "name": "Rekt Degen from Meteor Wallet", "comment": "", "twitterLink": "https://twitter.com/rekt_degen" },
+            { "name": "Amos from Meta Web", "comment": "", "twitterLink": "https://twitter.com/MetaWeb_Amos" }
           ]
         },
         {
@@ -688,14 +688,14 @@
           "listLink": "https://alpha.potlock.org/list/45",
           "points": 10,
           "content": [
-            { "name": "Matt from Proximity", "comment": "" },
-            { "name": "Rekt Degen", "comment": "" },
-            { "name": "Abhishek 🟡", "comment": "" },
-            { "name": "ALex Skidanov 🟡", "comment": "" },
-            { "name": "Vlad from Web4", "comment": "" },
-            { "name": "Sandi from Calimero", "comment": "" },
-            { "name": "Didier from Pikespeak", "comment": "" },
-            { "name": "Eric from Pagoda", "comment": "" }
+            { "name": "Matt from Proximity", "comment": "", "twitterLink": "https://twitter.com/mattdlockyer" },
+            { "name": "Rekt Degen", "comment": "", "twitterLink": "https://twitter.com/rekt_degen" },
+            { "name": "Abhishek 🟡", "comment": "", "twitterLink": "https://twitter.com/AbhishekEsq" },
+            { "name": "ALex Skidanov 🟡", "comment": "", "twitterLink": "https://twitter.com/alexskidanov" },
+            { "name": "Vlad from Web4", "comment": "", "twitterLink": "https://twitter.com/vgrichina" },
+            { "name": "Sandi from Calimero", "comment": "", "twitterLink": "https://twitter.com/chefsale" },
+            { "name": "Didier from Pikespeak", "comment": "", "twitterLink": "https://twitter.com/pironidi" },
+            { "name": "Eric from Pagoda", "comment": "", "twitterLink": "https://twitter.com/eric_winer" }
           ]
         },
         {
@@ -705,13 +705,14 @@
           "listLink": "https://alpha.potlock.org/list/48",
           "points": 10,
           "content": [
-            { "name": "HARSHIT", "comment": "" },
-            { "name": "JARROD BARNES", "comment": "" },
-            { "name": "VIKASH 🟡", "comment": "" },
-            { "name": "DAVID Norris 🟡", "comment": "" },
-            { "name": "Jared thompson", "comment": "" },
-            { "name": "Abhishek 🟡", "comment": "" },
-            { "name": "Konrad 🟨", "comment": "" },
+            { "name": "HARSHIT", "comment": "", "twitterLink": "https://twitter.com/chronear" },
+            { "name": "JARROD BARNES", "comment": "", "twitterLink": "https://twitter.com/JarrodBarnes" },
+            { "name": "VIKASH 🟡", "comment": "", "twitterLink": "https://twitter.com/buidlnear" },
+            { "name": "David Norris 🟡", "comment": "" },
+            { "name": "David Morrison", "comment": "", "twitterLink": "https://twitter.com/David___Mo" },
+            { "name": "Jared Thompson", "comment": "", "twitterLink": "https://twitter.com/jarednotjerry" },
+            { "name": "Abhishek 🟡", "comment": "", "twitterLink": "https://twitter.com/AbhishekEsq" },
+            { "name": "Konrad 🟡", "comment": "", "twitterLink": "https://twitter.com/swisshustler" },
             { "name": "Anyone from NEAR can apply", "comment": "" }
           ]
         },
@@ -725,7 +726,7 @@
             { "name": "Ester", "comment": "" },
             { "name": "Paula from Race of Sloths", "comment": "" },
             { "name": "Kiana from NEAR Foudnation", "comment": "" },
-            { "name": "Luana from Flying Rhino Marketing", "comment": "" }
+            { "name": "Luana from Flying Rhino Marketing", "comment": "", "twitterLink": "https://twitter.com/Luacantu" }
           ]
         },
         {
@@ -764,19 +765,20 @@
           "listLink": "https://alpha.potlock.org/list/25",
           "points": 10,
           "content": [
-            { "name": "Marcus", "comment": "" },
-            { "name": "Cameron", "comment": "" },
-            { "name": "Yuen", "comment": "" },
-            { "name": "Aesocbar", "comment": "" },
+            { "name": "Marcus", "comment": "", "twitterLink": "https://twitter.com/marcus_NEAR" },
+            { "name": "Cameron", "comment": "", "twitterLink": "https://twitter.com/Cameron_Dennis_" },
+            { "name": "Yuen", "comment": "", "twitterLink": "https://twitter.com/yuensid" },
+            { "name": "Aesocbar", "comment": "", "twitterLink": "https://twitter.com/aescobarindo" },
             { "name": "AGT 🟡", "comment": "" },
-            { "name": "Odin", "comment": "" },
-            { "name": "Efiz", "comment": "" },
+            { "name": "Odin", "comment": "", "twitterLink": "https://twitter.com/odins_eyehole" },
+            { "name": "Efiz", "comment": "", "twitterLink": "https://twitter.com/elliotbraem" },
             { "name": "Joe from Sharddog", "comment": "" },
             { "name": "Chloe from Marma J", "comment": "" },
             { "name": "Alan from Open Web Academy / Metapool", "comment": "" },
             { "name": "Slimedragon from Intear", "comment": "" },
-            { "name": "Jarrod Barnes from NEAR Foundation", "comment": "" },
-            { "name": "Kent | need to add", "comment": "" }
+            { "name": "Jarrod Barnes", "comment": "Head of Ecosystem at NEAR Foundation", "twitterLink": "https://twitter.com/JarrodBarnes" },
+            { "name": "Kent", "comment": "need to add" },
+            { "name": "James", "comment": "Build DAO founder", "twitterLink": "https://twitter.com/rekt_degen" }
           ]
         },
         {
@@ -787,7 +789,7 @@
           "points": 10,
           "content": [
             { "name": "Aeoscbar", "comment": "" },
-            { "name": "Yuen", "comment": "" }
+            { "name": "Yuen", "comment": "", "twitterLink": "https://twitter.com/yuensid" }
           ]
         },
         {
@@ -810,12 +812,12 @@
           "listLink": "https://alpha.potlock.org/list/21",
           "points": 10,
           "content": [
-            { "name": "David Morrison", "comment": "" },
-            { "name": "Web3Hedge", "comment": "" },
-            { "name": "Oleg", "comment": "" },
-            { "name": "Russ", "comment": "" },
-            { "name": "Cameron", "comment": "" },
-            { "name": "Efiz", "comment": "" }
+            { "name": "David Morrison", "comment": "", "twitterLink": "https://twitter.com/David___Mo" },
+            { "name": "Web3Hedge", "comment": "", "twitterLink": "https://twitter.com/web3hedge" },
+            { "name": "Oleg", "comment": "", "twitterLink": "https://twitter.com/oleg_fem" },
+            { "name": "Russ", "comment": "", "twitterLink": "https://twitter.com/russlive215" },
+            { "name": "Cameron", "comment": "", "twitterLink": "https://twitter.com/Cameron_Dennis_" },
+            { "name": "Efiz", "comment": "", "twitterLink": "https://twitter.com/elliotbraem" }
           ]
         },
         {
@@ -825,12 +827,12 @@
           "listLink": "https://alpha.potlock.org/list/19",
           "points": 10,
           "content": [
-            { "name": "Iliblackdragon", "comment": "" },
-            { "name": "Microchipgnu CTO of Mintbase", "comment": "" },
-            { "name": "Benji from Keypom", "comment": "" },
-            { "name": "Evgen from Fast NEAR", "comment": "" },
-            { "name": "Mike Purvis", "comment": "" },
-            { "name": "Petr from Here Wallet", "comment": "" },
+            { "name": "Iliblackdragon", "comment": "", "twitterLink": "https://twitter.com/ilblackdragon" },
+            { "name": "Microchipgnu CTO of Mintbase", "comment": "", "twitterLink": "https://twitter.com/microchipgnu" },
+            { "name": "Benji from Keypom", "comment": "", "twitterLink": "https://twitter.com/ben_kurrek" },
+            { "name": "Evgen from Fast NEAR", "comment": "", "twitterLink": "https://twitter.com/ekuzyakov" },
+            { "name": "Mike Purvis", "comment": "", "twitterLink": "https://twitter.com/mikedotexe" },
+            { "name": "Petr from Here Wallet", "comment": "", "twitterLink": "https://twitter.com/p_volnov" },
             { "name": "Vadim from NEAR AI", "comment": "" },
             { "name": "Bowen from NEAR One", "comment": "" },
             { "name": "Firat from Nuffle Labs", "comment": "" },
