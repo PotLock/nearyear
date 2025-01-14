@@ -112,8 +112,21 @@ export const CategoryList = () => {
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <header className="text-center mb-12">
-        <h1 className="text-5xl font-extrabold mb-4">NEAR YEAR</h1>
-        <p className="text-base md:text-lg text-gray-700">Real voting has not started. Create a list to nominate new projects, or create a project to qualify for nominations</p>
+        <h1 className="text-5xl font-extrabold mb-4">NEAR YEAR Voting</h1>
+        <p className="text-base md:text-lg text-gray-700">
+          Real voting has not started. 
+          <Link href="/nomination" target="_blank" className="text-blue-600 hover:underline">
+            <strong> Create a list </strong>
+          </Link> 
+          to nominate new projects, or 
+          <Link href="https://alpha.potlock.org/register" target="_blank" className="text-blue-600 hover:underline">
+            <strong> create a project </strong>
+          </Link> 
+          to qualify for nominations, and 
+          <Link href="https://shard.dog/nearyear" target="_blank" className="text-blue-600 hover:underline">
+            <strong> register to vote</strong>
+          </Link>
+        </p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

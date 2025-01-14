@@ -24,33 +24,26 @@ export const Navigation = () => {
   return (
     <nav style={{ position: 'sticky', top: 0, backgroundColor: '#ffffff', color: '#333', padding: '10px 20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', zIndex: 1000 }}>
       <div id="desktop-menu" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333' }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333', whiteSpace: 'nowrap' }}>
           <span style={{ fontSize: '1.5em' }}>🏆</span>
           <span style={{ marginLeft: '10px', fontWeight: 'bold', fontSize: '1.2em' }}>NEAR YEAR</span>
         </Link>
-        <div id="desktop-menu" className="hidden md:flex items-center gap-5">
+        <div id="desktop-menu" className="hidden md:flex items-center gap-5" style={{ flexGrow: 1, justifyContent: 'center' }}>
           <Link href="/vote" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
             Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
           </Link>
-          <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
-            Voter Whitelist
+          <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', textAlign: 'center' }}>
+            Voter NFT
           </Link>
           <Link href="/nomination" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
-            Nominate w List
+            Nominate
           </Link>
           <Link href="https://alpha.potlock.org/register" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
             Create Project
           </Link>
-          <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={action}>
-            {label}
-          </button>
         </div>
-        <button 
-          onClick={() => setMenuOpen(!menuOpen)} 
-          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5em' }} 
-          className="mobile-menu-button block md:hidden"
-        >
-          {menuOpen ? <FaTimes /> : <FaBars />}
+        <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={action}>
+          {label}
         </button>
       </div>
       {menuOpen && (
@@ -59,7 +52,7 @@ export const Navigation = () => {
             Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
           </Link>
           <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
-            Voter Whitelist
+            Voter Registration
           </Link>
           <Link href="/nomination" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
             Nominate w List
