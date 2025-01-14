@@ -71,7 +71,7 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
   };
 
   return (
-    <div className={`flex-1 border border-gray-200 rounded-lg p-4 relative bg-white shadow-md transition-all duration-300 ${isContentVisible ? 'h-auto' : 'h-16'}`}>
+    <div className={`flex-1 border border-gray-200 rounded-lg p-4 relative bg-white shadow-md transition-all duration-300`}>
       <div className="flex items-center justify-between">
         {backdrop && (
           <Image
@@ -84,13 +84,15 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
         )}
         <div>
           <h3
-            className="font-bold cursor-pointer truncate max-w-xs hover:overflow-visible hover:whitespace-normal"
+            className="font-bold cursor-pointer"
             onClick={() => setIsContentVisible(!isContentVisible)}
             title={displayName}
           >
             {displayName} ({approvedRegistrations.length}/{competition.content.length})
           </h3>
-          <p className="competition-description">{competition.description}</p>
+          <p className="competition-description whitespace-normal overflow-visible">
+            {competition.description}
+          </p>
         </div>
       </div>
       <div className="absolute top-2 right-2 flex items-center gap-2">
@@ -110,7 +112,10 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
           </button>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {competition.content.map((item, index) => (
-              <div key={index} className="border p-2 rounded hover:bg-gray-100">
+              <div
+                key={index}
+                className={`border p-2 rounded hover:bg-gray-100 ${item.onchain === false ? 'bg-yellow-100' : ''}`}
+              >
                 <strong
                   role="button"
                   onClick={() => item.comment && toggleCommentVisibility(index)}

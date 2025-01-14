@@ -1,98 +1,138 @@
 {
-  "competitionsData": [
-    {
-      "competitions": [
-        {
-          "name": "MOST EXCITING THING ON NEAR for 2025",
-          "description": "Discover the most groundbreaking developments on NEAR for 2025.",
-          "category": "Concepts",
-          "listLink": "",
-          "points": 10,
-          "content": [
-            { "name": "Chain Abstraction", "comment": "Innovative approach to blockchain interoperability" },
-            { "name": "AI", "comment": "Artificial Intelligence integration in NEAR" },
-            { "name": "Apps", "comment": "New applications built on NEAR" }
-          ]
-        },
-        {
-          "name": "BEST EVENT for NEAR in 2024",
-          "description": "Highlighting the top events that shaped NEAR in 2024.",
-          "category": "Concepts",
-          "listLink": "",
-          "points": 8,
-          "content": [
-            { "name": "Eth Denver", "comment": "Alice in wonderland theme with Chain Abstraction", "twitterLink": "https://twitter.com/EthereumDenver" },
-            { "name": "Consensys", "comment": "Chain Abstraction" },
-            { "name": "Redacted + Devcon", "comment": "NEARCON reimagined" },
-            { "name": "Token2049", "comment": "NEAR AI Showcase, return of Skidanov" },
-            { "name": "Eth CC", "comment": "NEAR AI Showcaase, Chain Abstraction Day, Nuffle first conference, Blackdragon x BluntDAO x WaffleDAO" }
-          ]
-        },
-        {
-          "name": "Best Tech Innovation",
-          "description": "Recognizing the most innovative technological advancements on NEAR.",
-          "category": "Concepts",
-          "listLink": "",
-          "points": 12,
-          "content": [
-            { "name": "Chain Signatures", "comment": "Uses MPC network and NEARs amount model to let near accounts sign transactions on any chain" },
-            { "name": "NEAR DA", "comment": "Uses NEAR smart contract to post l2 blobs with the markets cheapest solution" },
-            { "name": "NEAR Intents", "comment": "Using NEAR to provide a unified liquiity layer of Web3" },
-            { "name": "Nightshade 2.0", "comment": "Major upgrade to NEAR Protocol" }
-          ]
-        },
-        {
-          "name": "BEST JOKE in NEAR",
-          "description": "Celebrating the humor and light-hearted moments within the NEAR community.",
-          "category": "Concepts",
-          "listLink": "",
-          "points": 5,
-          "content": [
-            { "name": "Jensen touching Illia", "comment": "In Nvidia conference Jensen the found of Nvidia touches NEAR" },
-            { "name": "HiJack Twitter Account", "comment": "NEAR ofifficla account gets taken over by Hijacker making CoinDesk news before realizing its a stunt to promote redacted" },
-            { "name": "NEAR is a Doge L2", "comment": "NEAR changes to Doge coin logo for birthday introducing DogeSwap powered by NEAR Intents. Insider joke that NEAR is Doge L2" },
-            { "name": "Baby Blackdragon", "comment": "Baby Blackdragon coin emerges after announcement of Erika x Illia baby" }
-          ]
-        },
-        {
-          "name": "BEST NEW PROJECT",
-          "description": "Projects that launched major products on mainnet or started from scratch in 2024.",
-          "category": "Projects",
-          "listLink": "https://alpha.potlock.org/list/39",
-          "points": 15,
-          "content": [
-            { "name": "BlackDragon", "comment": "Emerging from NDC Meme token, Blackdragon becomes go to memecoin on NEAR" },
-            { "name": "NEAR AI 🟡", "comment": "Alex Skidanov makes a return to NEAR Ecosystme to lead its AI Arm" },
-            { "name": "Intear", "comment": "An NEARVidia knockoff emerges and becomes the go to meme community that powers essential NEAR Infra." },
-            { "name": "NEAR Intents 🟡", "comment": "Open source CHain Abstracted liquidity layer built by Aurora" },
-            { "name": "Omnilane 🟡", "comment": "Part of Chain Abstraction cohort, multichain liquiidty" },
-            { "name": "FastNEAR", "comment": "Evgeny from NEAR Social focused on making NEAR Fast, becoming go to RPC on NEAR" },
-            { "name": "Meme.cooking", "comment": "Shitzu launches pump fun on NEAR" },
-            { "name": "$Purge 🟡", "comment": "AI coin where community confesses their sins" },
-            { "name": "POTLOCK", "comment": "the open funding stack and go to funding platform" },
-            { "name": "Mitte 🟡", "comment": "NFT orderbook and bonding curve launchpad on NEAR" },
-            { "name": "Race of Sloths 🟡", "comment": "Rewarding open source contributions on NEAR" },
-            { "name": "DeFi Shardz 🟡", "comment": "" },
-            { "name": "NEAR Catalog", "comment": "The open source NEAR Ecosystem directory" },
-            { "name": "Deltabot", "comment": "Mutlichain trading bot" }          ]
-        },
-        {
-          "name": "BEST DeFI Project",
-          "description": "Live projects based on activity, unlock, and handling funds or leveraging wallets.",
-          "category": "Projects",
-          "listLink": "https://alpha.potlock.org/list/28",
-          "points": 15,
-          "content": [
-            { "name": "Ref", "comment": "OG Defi Swap on NEAR also pushing chain abstraction" },
-            { "name": "Burrow 🟡", "comment": "Our OG lending protocol" },
-            { "name": "NEAR Intents 🟡", "comment": "Redefining Cross Chain liquidity" },
-            { "name": "Linear", "comment": "Liquid staking on NEAR" },
-            { "name": "Meta Pool", "comment": "Multichain liquidity staking with community governance" },
-            { "name": "Meme.cooking", "comment": "go to launchpad for memes on NEAR leveraging bonding curves and Ref" },
-            { "name": "Mitte 🟡", "comment": "NFT orderbook and bonding curve launchpad on NEAR" },
-            { "name": "Veax 🟡", "comment": "Another DEX on NEAR, competitior to Ref" },
-            { "name": "Delta Bot", "comment": "Mutlichain trading bot" },
-            { "name": "Intear - 🔵", "comment": "" }
+  "competitionsData": [{
+    "competitions": [
+      {
+        "name": "MOST EXCITING THING ON NEAR for 2025",
+        "description": "Discover the most groundbreaking developments on NEAR for 2025.",
+        "category": "Concepts",
+        "listLink": "",
+        "content": [
+          { "name": "Chain Abstraction", "comment": "Innovative approach to blockchain interoperability", "onchain": true },
+          { "name": "AI", "comment": "Artificial Intelligence integration in NEAR", "onchain": true },
+          { "name": "Apps", "comment": "New applications built on NEAR", "onchain": true }
+        ]
+      },
+      {
+        "name": "BEST EVENT for NEAR in 2024",
+        "description": "Highlighting the top events that shaped NEAR in 2024.",
+        "category": "Concepts",
+        "listLink": "",
+        "content": [
+          { "name": "Eth Denver", "comment": "Alice in wonderland theme with Chain Abstraction", "twitterLink": "https://twitter.com/EthereumDenver", "onchain": true },
+          { "name": "Consensys", "comment": "Chain Abstraction", "onchain": true },
+          { "name": "Redacted + Devcon", "comment": "NEARCON reimagined", "onchain": true },
+          { "name": "Token2049", "comment": "NEAR AI Showcase, return of Skidanov", "onchain": true },
+          { "name": "Eth CC", "comment": "NEAR AI Showcaase, Chain Abstraction Day, Nuffle first conference, Blackdragon x BluntDAO x WaffleDAO", "onchain": true }
+        ]
+      },
+      {
+        "name": "Best Tech Innovation",
+        "description": "Recognizing the most innovative technological advancements on NEAR.",
+        "category": "Concepts",
+        "listLink": "",
+        "content": [
+          { "name": "Chain Signatures", "comment": "Uses MPC network and NEARs amount model to let near accounts sign transactions on any chain", "onchain": true },
+          { "name": "NEAR DA", "comment": "Uses NEAR smart contract to post l2 blobs with the markets cheapest solution", "onchain": true },
+          { "name": "NEAR Intents", "comment": "Using NEAR to provide a unified liquiity layer of Web3", "onchain": true },
+          { "name": "Nightshade 2.0", "comment": "Major upgrade to NEAR Protocol", "onchain": true }
+        ]
+      },
+      {
+        "name": "BEST JOKE in NEAR",
+        "description": "Celebrating the humor and light-hearted moments within the NEAR community.",
+        "category": "Concepts",
+        "listLink": "",
+        "content": [
+          { "name": "Jensen touching Illia", "comment": "In Nvidia conference Jensen the found of Nvidia touches NEAR", "onchain": true },
+          { "name": "HiJack Twitter Account", "comment": "NEAR ofifficla account gets taken over by Hijacker making CoinDesk news before realizing its a stunt to promote redacted", "onchain": true },
+          { "name": "NEAR is a Doge L2", "comment": "NEAR changes to Doge coin logo for birthday introducing DogeSwap powered by NEAR Intents. Insider joke that NEAR is Doge L2", "onchain": true },
+          { "name": "Baby Blackdragon", "comment": "Baby Blackdragon coin emerges after announcement of Erika x Illia baby", "onchain": true }
+        ]
+      },
+      {
+        "name": "BEST NEW PROJECT",
+        "description": "Projects that launched major products on mainnet or started from scratch in 2024.",
+        "category": "Projects",
+        "listLink": "https://alpha.potlock.org/list/39",
+        "content": [
+          { "name": "BlackDragon", "comment": "Emerging from NDC Meme token, Blackdragon becomes go to memecoin on NEAR", "onchain": true },
+          { "name": "NEAR AI", "comment": "Alex Skidanov makes a return to NEAR Ecosystme to lead its AI Arm", "onchain": false },
+          { "name": "Intear", "comment": "An NEARVidia knockoff emerges and becomes the go to meme community that powers essential NEAR Infra.", "onchain": true },
+          { "name": "NEAR Intents", "comment": "Open source CHain Abstracted liquidity layer built by Aurora", "onchain": false },
+          { "name": "Omnilane", "comment": "Part of Chain Abstraction cohort, multichain liquiidty", "onchain": false },
+          { "name": "FastNEAR", "comment": "Evgeny from NEAR Social focused on making NEAR Fast, becoming go to RPC on NEAR", "onchain": true },
+          { "name": "Meme.cooking", "comment": "Shitzu launches pump fun on NEAR", "onchain": true },
+          { "name": "Purge", "comment": "AI coin where community confesses their sins", "onchain": false },
+          { "name": "POTLOCK", "comment": "the open funding stack and go to funding platform", "onchain": true },
+          { "name": "Mitte", "comment": "NFT orderbook and bonding curve launchpad on NEAR", "onchain": false },
+          { "name": "Race of Sloths", "comment": "Rewarding open source contributions on NEAR", "onchain": false },
+          { "name": "DeFi Shardz", "comment": "", "onchain": false },
+          { "name": "NEAR Catalog", "comment": "The open source NEAR Ecosystem directory", "onchain": true },
+          { "name": "Deltabot", "comment": "Mutlichain trading bot", "onchain": true }
+        ]
+      },
+      {
+        "name": "BEST DeFI Project",
+        "description": "Live projects based on activity, unlock, and handling funds or leveraging wallets.",
+        "category": "Projects",
+        "listLink": "https://alpha.potlock.org/list/28",
+        "content": [
+          { "name": "Ref", "comment": "OG Defi Swap on NEAR also pushing chain abstraction", "onchain": true },
+          { "name": "Burrow", "comment": "Our OG lending protocol", "onchain": false },
+          { "name": "NEAR Intents", "comment": "Redefining Cross Chain liquidity", "onchain": false },
+          { "name": "Linear", "comment": "Liquid staking on NEAR", "onchain": true },
+          { "name": "Meta Pool", "comment": "Multichain liquidity staking with community governance", "onchain": true },
+          { "name": "Meme.cooking", "comment": "go to launchpad for memes on NEAR leveraging bonding curves and Ref", "onchain": true },
+          { "name": "Mitte", "comment": "NFT orderbook and bonding curve launchpad on NEAR", "onchain": false },
+          { "name": "Veax", "comment": "Another DEX on NEAR, competitior to Ref", "onchain": false },
+          { "name": "Delta Bot", "comment": "Mutlichain trading bot", "onchain": true },
+          { "name": "Intear", "comment": "", "onchain": true }
+        ]
+      },
+      {
+        "name": "BEST NEW TOKEN",
+        "description": "Best new ecosystem token that launched this year.",
+        "category": "Projects",
+        "listLink": "https://alpha.potlock.org/list/32",
+        "content": [
+          { "name": "Asian Girl Boss", "comment": "", "onchain": true },
+          { "name": "Purge", "comment": "", "onchain": true },
+          { "name": "Intear", "comment": "", "onchain": true },
+          { "name": "Lonk", "comment": "", "onchain": true },
+          { "name": "BLACKDRAGON", "comment": "", "onchain": true },
+          { "name": "ASI", "comment": "", "onchain": true },
+          { "name": "TOUCH", "comment": "", "onchain": true },
+          { "name": "FAST", "comment": "", "onchain": true }
+        ]
+      },
+      {
+        "name": "Best NEAR Token 2024",
+        "description": "Best ecosystem token natively deployed on NEAR.",
+        "category": "Projects",
+        "listLink": "https://alpha.potlock.org/list/31",
+        "content": [
+          { "name": "Aurora ($AURORA)", "comment": "", "onchain": true },
+          { "name": "Burrow ($BRRR)", "comment": "", "onchain": true },
+          { "name": "Sweat ($SWEAT)", "comment": "" },
+          { "name": "ASI ($ASI)", "comment": "" },
+          { "name": "Black Dragon ($BLACKDRAGON)", "comment": "" },
+          { "name": "NEKO ($NEKO)", "comment": "" },
+          { "name": "Asian Girl Boss ($AGB)", "comment": "" },
+          { "name": "Forgive me Father ($PURGE)", "comment": "" },
+          { "name": "USDC Native ($USDC)", "comment": "" },
+          { "name": "USDT Native ($USDT)", "comment": "" },
+          { "name": "Linear ($LINA)", "comment": "" },
+          { "name": "Uwon $UWON", "comment": "" },
+          { "name": "stNEAR ($stNEAR)", "comment": "" },
+          { "name": "Shitzu", "comment": "" },
+          { "name": "Intear $INTEAR", "comment": "" },
+          { "name": "Ref ($REF)", "comment": "" },
+          { "name": "$KAT", "comment": "" },
+          { "name": "$TOUCHED", "comment": "" },
+          { "name": "NEAT", "comment": "" },
+          { "name": "Edge Video AI ($FAST)", "comment": "" },
+          { "name": "USMeme", "comment": "" },
+          { "name": "Gear ($GEAR)", "comment": "" }
           ]
         },
         {
