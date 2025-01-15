@@ -271,8 +271,14 @@ const NomineePage = () => {
             <Clock className="w-5 h-5" />
             <span>
               {timeLeft?.status === 'ACTIVE' && 'Voting Active'}
-              {timeLeft?.status === 'NOT_STARTED' && 'Voting Not Started'}
-              {timeLeft?.status === 'ENDED' && 'Voting Ended'}
+              {timeLeft?.status === 'NOT_STARTED' && (
+                <>
+                  Voting Not Started. 
+                  <a href="https://shard.dog/nearyear" target="_blank" rel="noopener noreferrer">
+                    Get On the Voter Whitelist Here
+                  </a>
+                </>
+              )}              {timeLeft?.status === 'ENDED' && 'Voting Ended'}
             </span>
           </div>
           {timeLeft?.timeLeft > 0 && (
