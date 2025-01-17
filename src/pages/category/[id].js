@@ -326,13 +326,11 @@ const NomineePage = () => {
                   timeLeft?.status !== 'ACTIVE' ||
                   hasVoted
                 }
-                className={`w-full ${
-                  hasVoted 
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : timeLeft?.status === 'ACTIVE'
-                      ? 'bg-blue-600 hover:bg-blue-700' 
-                      : 'bg-gray-400 cursor-not-allowed'
-                } text-white py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center`}
+                className={`w-full inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  timeLeft?.status !== 'ACTIVE' || hasVoted
+                    ? 'bg-gray-500 text-white opacity-75 cursor-not-allowed' 
+                    : 'bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform'
+                }`}
               >
                 {votingFor === nominee.account_id ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-white mr-2" />
@@ -341,9 +339,7 @@ const NomineePage = () => {
                 )}
                 {votingFor === nominee.account_id 
                   ? 'Voting...' 
-                  : hasVoted 
-                    ? `Vote for ${nominee.account_id}`
-                    : `Vote for ${nominee.account_id}`
+                  : `Vote for ${nominee.account_id}`
                 }
               </button>
             </div>
