@@ -36,6 +36,12 @@ const ProfileImage = ({ accountId }) => {
   );
 };
 
+const truncateAccountId = (accountId, maxLength = 20) => {
+  if (accountId.length <= maxLength) return accountId;
+  const start = accountId.slice(0, maxLength - 3);
+  return `${start}...`;
+};
+
 const NomineePage = () => {
   const router = useRouter();
   const { id, transactionHashes, errorCode, errorMessage } = router.query;
@@ -312,7 +318,9 @@ const NomineePage = () => {
               <div className="flex justify-center mb-4">
                 <ProfileImage accountId={nominee.account_id} />
               </div>
-              <h3 className="text-xl font-semibold text-center mb-2">{nominee.account_id}</h3>
+              <h3 className="text-xl font-semibold text-center mb-2 break-words overflow-wrap-anywhere px-2">
+                {nominee.account_id}
+              </h3>
               <div className="flex justify-center items-center mb-4">
                 <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
                   {nominee.votes_received} votes
@@ -338,7 +346,7 @@ const NomineePage = () => {
                 )}
                 {votingFor === nominee.account_id 
                   ? 'Voting...' 
-                  : `Vote for ${nominee.account_id}`
+                  : `Vote for ${truncateAccountId(nominee.account_id)}`
                 }
               </button>
             </div>
