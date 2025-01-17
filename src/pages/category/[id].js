@@ -47,21 +47,22 @@ const NomineePage = () => {
   const [hasVoted, setHasVoted] = useState(false);
   const [winners, setWinners] = useState([]);
 
+  const checkVoteStatus = async () => {
+    if (!wallet || !id || !signedAccountId) return;
+    
+    const hasParticipated = await wallet.viewMethod({
+      contractId: VoteContract,
+      method: 'has_voter_participated',
+      args: { 
+        election_id: Number(id),
+        voter: signedAccountId
+      },
+    });
+    setHasVoted(hasParticipated);
+  };
+
   useEffect(() => {
     if (!wallet || !id || !signedAccountId) return;
-
-    const checkVoteStatus = async () => {
-      const hasParticipated = await wallet.viewMethod({
-        contractId: VoteContract,
-        method: 'has_voter_participated',
-        args: { 
-          election_id: Number(id),
-          voter: signedAccountId
-        },
-      });
-      setHasVoted(hasParticipated);
-    };
-
     checkVoteStatus();
   }, [wallet, id, signedAccountId]);
 
@@ -78,11 +79,9 @@ const NomineePage = () => {
         position: 'top-center',
       });
 
-      if (wallet && id && signedAccountId) {
-        checkVoteStatus();
-      }
+      checkVoteStatus();
     }
-  }, [transactionHashes, errorCode, id, signedAccountId, wallet]);
+  }, [transactionHashes, errorCode]);
 
   useEffect(() => {
     if (errorCode && errorMessage) {
