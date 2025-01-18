@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ListContract } from '../config';
-import { FaTwitter } from 'react-icons/fa';
+import { FaTwitter, FaExternalLinkAlt } from 'react-icons/fa';
 
 const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllCommentsVisible }) => {
   const [listDetails, setListDetails] = useState(null);
@@ -28,7 +28,7 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
               list_id: Number(listId),
             },
           });
-          setBackdrop(list.cover_image_url || null);
+          setBackdrop(list.cover_image_url || '/default.webp');
           const registrations = await wallet.viewMethod({
             contractId: ListContract,
             method: 'get_registrations_for_list',
@@ -42,10 +42,10 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
           setApprovedRegistrations(registrations.map(reg => reg.registrant_id));
         } catch (error) {
           console.error('Error fetching list details:', error);
-          setBackdrop(null);
+          setBackdrop('/default.webp');
         }
       } else {
-        setBackdrop(null);
+        setBackdrop('/default.webp');
       }
     };
 
@@ -59,15 +59,16 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
 
   const displayName = listDetails?.name || competition.name;
 
-  const getCategoryColor = (category) => {
-    const colors = {
+  const getCategoryColorClass = (category) => {
+    const colorClasses = {
       "Concepts": "bg-yellow-500",
       "Projects": "bg-green-500",
       "Downbad": "bg-red-500",
       "2025": "bg-blue-500",
       "People": "bg-purple-500"
     };
-    return colors[category] || "bg-gray-200";
+    console.log(`Category: ${category}, Class: ${colorClasses[category] || "bg-gray-200"}`);
+    return colorClasses[category] || "bg-gray-200";
   };
 
   const toggleCommentVisibility = (index) => {
@@ -83,19 +84,24 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
 
   return (
     <div className={`flex-1 border border-gray-200 rounded-lg p-4 relative bg-white shadow-md transition-all duration-300 hover:shadow-lg`}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap">
         {backdrop && (
-          <Image
-            src={backdrop}
-            alt="backdrop"
-            width={50}
-            height={50}
-            className="rounded-full mr-2"
-          />
+          <div className="relative">
+            <Image
+              src={backdrop}
+              alt="backdrop"
+              width={50}
+              height={50}
+              className="rounded-full mr-2"
+            />
+            <a href={listLink} target="_blank" rel="noopener noreferrer" className="absolute top-0 right-0 p-1 bg-white rounded-full">
+              <FaExternalLinkAlt size={12} className="text-gray-600" />
+            </a>
+          </div>
         )}
-        <div>
+        <div className="flex-1 min-w-0">
           <h3
-            className="font-bold cursor-pointer"
+            className="font-bold cursor-pointer block overflow-hidden text-ellipsis whitespace-nowrap"
             onClick={() => setIsContentVisible(!isContentVisible)}
             title={displayName}
           >
@@ -107,12 +113,10 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
         </div>
       </div>
       <div className="absolute top-2 right-2 flex items-center gap-2">
-        {listLink && backdrop && (
-          <a href={listLink} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-            🔗
-          </a>
-        )}
-        <div className={`${getCategoryColor(competition.category)} text-white px-2 py-1 rounded`}>
+
+        <div
+          className={`text-white px-2 py-1 rounded ${getCategoryColorClass(competition.category)}`}
+        >
           {competition.category}
         </div>
       </div>

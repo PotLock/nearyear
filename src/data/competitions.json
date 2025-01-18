@@ -136,54 +136,6 @@
           ]
         },
         {
-          "name": "BEST NEW TOKEN",
-          "description": "Best new ecosystem token that launched this year.",
-          "category": "Projects",
-          "listLink": "https://alpha.potlock.org/list/32",
-          "points": 15,
-          "content": [
-            { "name": "Asian Girl Boss", "comment": "" },
-            { "name": "Purge", "comment": "" },
-            { "name": "Intear", "comment": "" },
-            { "name": "Lonk", "comment": "" },
-            { "name": "BLACKDRAGON", "comment": "" },
-            { "name": "ASI", "comment": "" },
-            { "name": "TOUCH", "comment": "" },
-            { "name": "FAST", "comment": "" }
-          ]
-        },
-        {
-          "name": "Best NEAR Token 2024",
-          "description": "Best ecosystem token natively deployed on NEAR.",
-          "category": "Projects",
-          "listLink": "https://alpha.potlock.org/list/31",
-          "points": 15,
-          "content": [
-            { "name": "Aurora ($AURORA)", "comment": "" },
-            { "name": "Burrow ($BRRR)", "comment": "" },
-            { "name": "Sweat ($SWEAT)", "comment": "" },
-            { "name": "ASI ($ASI)", "comment": "" },
-            { "name": "Black Dragon ($BLACKDRAGON)", "comment": "" },
-            { "name": "NEKO ($NEKO)", "comment": "" },
-            { "name": "Asian Girl Boss ($AGB)", "comment": "" },
-            { "name": "Forgive me Father ($PURGE)", "comment": "" },
-            { "name": "USDC Native ($USDC)", "comment": "" },
-            { "name": "USDT Native ($USDT)", "comment": "" },
-            { "name": "Linear ($LINA)", "comment": "" },
-            { "name": "Uwon $UWON", "comment": "" },
-            { "name": "stNEAR ($stNEAR)", "comment": "" },
-            { "name": "Shitzu", "comment": "" },
-            { "name": "Intear $INTEAR", "comment": "", "twitterLink": "https://twitter.com/intelnear" },
-            { "name": "Ref ($REF)", "comment": "", "twitterLink": "https://twitter.com/finance_ref" },
-            { "name": "$KAT", "comment": "" },
-            { "name": "$TOUCHED", "comment": "" },
-            { "name": "NEAT", "comment": "" },
-            { "name": "Edge Video AI ($FAST)", "comment": "" },
-            { "name": "USMeme", "comment": "" },
-            { "name": "Gear ($GEAR)", "comment": "" }
-          ]
-        },
-        {
           "name": "Best New PFP Collection",
           "description": "Generative PFP collection that launched in 2024.",
           "category": "Projects",
