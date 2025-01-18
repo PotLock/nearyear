@@ -10,6 +10,7 @@ import { Footer } from '@/components/footer';
 import Select from 'react-select';
 import { TwitterTweetEmbed } from 'react-twitter-embed';
 import tweetData from '../data/tweets.json';
+import TweetWall from '../components/TweetWall';
 
 // Use the imported data
 const importedCompetitionsData = competitionsData.competitionsData;
@@ -476,17 +477,7 @@ const LandingPage = () => {
 
         <section style={{ marginBottom: '60px', width: '100%' }}>
           <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>What People Are Saying</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginTop: '20px' }}>
-            {tweetData.tweetIds.map((tweetId, index) => (
-              <div key={index} style={{ flex: '1 1 calc(33% - 20px)', maxWidth: '400px' }}>
-                <TwitterTweetEmbed
-                  tweetId={tweetId}
-                  options={{ cards: 'hidden' }}
-                  onClick={() => window.open(`https://x.com/${tweetId}`, '_blank')}
-                />
-              </div>
-            ))}
-          </div>
+          <TweetWall />
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <p>Share your opinions on Twitter with #NEARYearAwards and tag us!</p>
             <button style={{ 
