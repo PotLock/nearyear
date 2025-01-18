@@ -318,3 +318,11 @@
     display: flex;
   }
 }
+
+.heading {
+  font-family: 'Londrina Solid', sans-serif;
+}
+
+.navbar, .hero {
+  font-family: 'Londrina Solid', sans-serif;
+}

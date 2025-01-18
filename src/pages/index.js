@@ -8,6 +8,8 @@ import { getProfile } from './nomination';
 import competitionsData from '../data/competitions.json';
 import { Footer } from '@/components/footer';
 import Select from 'react-select';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
+import tweetData from '../data/tweets.json';
 
 // Use the imported data
 const importedCompetitionsData = competitionsData.competitionsData;
@@ -109,6 +111,7 @@ const LandingPage = () => {
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="NEAR YEAR Awards" />
+        <link href="https://fonts.googleapis.com/css2?family=Lodrina+Solid&display=swap" rel="stylesheet" />
       </Head>
       <div style={{ 
         backgroundColor: '#f5f5f5', 
@@ -161,7 +164,7 @@ const LandingPage = () => {
         </header>
 
         <section style={{ maxWidth: '800px', textAlign: 'left', marginTop: '40px' }}>
-          <h2 style={{ fontSize: '2em', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>How It Works</h2>
+          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>How It Works</h2>
           <div style={{ 
             display: 'flex', 
             flexDirection: 'column', 
@@ -214,7 +217,7 @@ const LandingPage = () => {
         </section>
 
         <section style={{ marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>Brought to you by</h2>
+          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>Brought to you by</h2>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginTop: '20px', flexWrap: 'wrap' }}>
             <a href="http://potlock.org" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
               <Image src="/potlock.png" alt="Potlock Logo" width={100} height={100} />
@@ -237,7 +240,7 @@ const LandingPage = () => {
           </div>
         </section>
         <section style={{ marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>All Categories</h2>
+          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>All Categories</h2>
           <p>All of the shortlisted nominations. If a project isnt an on-chain nominee they need to <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">create a project</a></p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
             <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory('All')}>All</button>
@@ -308,7 +311,7 @@ const LandingPage = () => {
         )}
 
         <section style={{ marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Timeline</h2>
+          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Timeline</h2>
           <div style={{ 
             marginTop: '20px', 
             display: 'flex', 
@@ -332,7 +335,7 @@ const LandingPage = () => {
                   justifyContent: 'space-between'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h3 style={{ fontWeight: 'bold', color: '#333', margin: '0' }}>{event.title}</h3>
+                    <h3 className="heading" style={{ fontWeight: 'bold', color: '#333', margin: '0' }}>{event.title}</h3>
                     <span style={{ fontSize: '0.9em', color: '#666' }}>
                       📅 {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}
                     </span>
@@ -377,7 +380,7 @@ const LandingPage = () => {
         `}</style>
 
         <section style={{ marginBottom: '60px' }}>
-          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>🚀 How to Participate</h2>
+          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>🚀 How to Participate</h2>
           <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
             
             <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
@@ -429,7 +432,7 @@ const LandingPage = () => {
         </section>
 
         <section style={{ marginBottom: '60px', width: "100%" }}>
-          <h2 style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>FAQ</h2>
+          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>FAQ</h2>
           <div style={{ marginTop: '20px' }}>
             {[
               {
@@ -459,7 +462,7 @@ const LandingPage = () => {
               }
             ].map((faq) => (
               <div key={faq.id} style={{ marginBottom: '10px', border: '1px solid #ccc', borderRadius: '8px', padding: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-                <h3 style={{ fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => toggleCompetition(faq.id)}>
+                <h3 className="heading" style={{ fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => toggleCompetition(faq.id)}>
                   {faq.question}
                   <span>{expandedCompetition === faq.id ? '-' : '+'}</span>
                 </h3>
@@ -468,6 +471,37 @@ const LandingPage = () => {
                 )}
               </div>
             ))}
+          </div>
+        </section>
+
+        <section style={{ marginBottom: '60px', width: '100%' }}>
+          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>What People Are Saying</h2>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginTop: '20px' }}>
+            {tweetData.tweetIds.map((tweetId, index) => (
+              <div key={index} style={{ flex: '1 1 calc(33% - 20px)', maxWidth: '400px' }}>
+                <TwitterTweetEmbed
+                  tweetId={tweetId}
+                  options={{ cards: 'hidden' }}
+                  onClick={() => window.open(`https://x.com/${tweetId}`, '_blank')}
+                />
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <p>Share your opinions on Twitter with #NEARYearAwards and tag us!</p>
+            <button style={{ 
+              backgroundColor: '#333', 
+              color: '#fff', 
+              padding: '10px 20px', 
+              fontSize: '1em', 
+              border: 'none', 
+              borderRadius: '5px', 
+              cursor: 'pointer', 
+              transition: 'background-color 0.3s' 
+            }} 
+            onClick={() => window.open('https://x.com/intent/tweet?hashtags=NEARYearAwards', '_blank')}>
+              Share Your Opinion
+            </button>
           </div>
         </section>
 
