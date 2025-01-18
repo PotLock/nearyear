@@ -1,8 +1,36 @@
-@import 'bootstrap';
-@import 'bootstrap-icons';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Londrina Solid';
+  src: url('/fonts/LondrinaSolid-Regular.woff2') format('woff2'),
+       url('/fonts/LondrinaSolid-Regular.woff') format('woff'),
+       url('/fonts/LondrinaSolid-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Londrina Solid';
+  src: url('/fonts/LondrinaSolid-NNS.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Londrina Solid';
+  src: url('/fonts/LondrinaSolid-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Londrina Solid';
+  src: url('/fonts/LondrinaSolid-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
 
 :root {
   --max-width: 1100px;
@@ -68,4 +96,8 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+h1, h2, h3, h4, h5, h6, .hero {
+  font-family: 'Londrina Solid', sans-serif;
 }

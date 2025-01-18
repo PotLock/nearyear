@@ -319,10 +319,7 @@
   }
 }
 
-.heading {
-  font-family: 'Londrina Solid', sans-serif;
-}
 
-.navbar, .hero {
+.navbar, .hero, .heading {
   font-family: 'Londrina Solid', sans-serif;
 }

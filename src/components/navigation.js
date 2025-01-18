@@ -22,45 +22,45 @@ export const Navigation = () => {
   }, [signedAccountId, wallet]);
 
   return (
-    <nav style={{ position: 'sticky', top: 0, backgroundColor: '#ffffff', color: '#333', padding: '10px 20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', zIndex: 1000 }}>
-      <div id="desktop-menu" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333', whiteSpace: 'nowrap' }}>
-          <span style={{ fontSize: '1.5em' }}>🏆</span>
-          <span style={{ marginLeft: '10px', fontWeight: 'bold', fontSize: '1.2em' }}>NEAR YEAR</span>
+    <nav className="sticky top-0 bg-white text-gray-800 p-4 shadow-md z-50">
+      <div className="flex justify-between items-center">
+        <Link href="/" className="flex items-center text-gray-800 no-underline whitespace-nowrap">
+          <span className="text-2xl">🏆</span>
+          <span className="ml-2 font-bold text-lg">NEAR YEAR</span>
         </Link>
-        <div id="desktop-menu" className="hidden md:flex items-center gap-5" style={{ flexGrow: 1, justifyContent: 'center' }}>
-          <Link href="/vote" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
-            Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
+        <div className="hidden md:flex items-center gap-5 flex-grow justify-center">
+          <Link href="/vote" className="text-gray-800 font-bold no-underline">
+            Vote <span className="ml-1 bg-yellow-400 rounded-full px-2 py-1 text-xs">Soon</span>
           </Link>
-          <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', textAlign: 'center' }}>
+          <Link href="https://shard.dog/nearyear" target="_blank" className="text-gray-800 font-bold no-underline">
             Voter NFT
           </Link>
-          <Link href="/nomination" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
+          <Link href="/nomination" className="text-gray-800 font-bold no-underline">
             Nominate
           </Link>
-          <Link href="https://alpha.potlock.org/register" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
+          <Link href="https://alpha.potlock.org/register" target="_blank" className="text-gray-800 font-bold no-underline">
             Create Project
           </Link>
         </div>
-        <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={action}>
+        <button className="bg-gray-200 border-none px-4 py-2 rounded cursor-pointer" onClick={action}>
           {label}
         </button>
       </div>
       {menuOpen && (
-        <div className="mobile-menu" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '10px', borderTop: '1px solid #ccc' }}>
-          <Link href="/vote" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
-            Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
+        <div className="flex flex-col items-center gap-2 mt-2 border-t border-gray-300">
+          <Link href="/vote" className="text-gray-800 font-bold no-underline py-2 border-b border-gray-300 w-full text-center">
+            Vote <span className="ml-1 bg-yellow-400 rounded-full px-2 py-1 text-xs">Soon</span>
           </Link>
-          <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
+          <Link href="https://shard.dog/nearyear" target="_blank" className="text-gray-800 font-bold no-underline py-2 border-b border-gray-300 w-full text-center">
             Voter Registration
           </Link>
-          <Link href="/nomination" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
+          <Link href="/nomination" className="text-gray-800 font-bold no-underline py-2 border-b border-gray-300 w-full text-center">
             Nominate w List
           </Link>
-          <Link href="https://alpha.potlock.org/register" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', borderBottom: '1px solid #ccc', width: '100%', textAlign: 'center' }}>
+          <Link href="https://alpha.potlock.org/register" target="_blank" className="text-gray-800 font-bold no-underline py-2 border-b border-gray-300 w-full text-center">
             Create Project
           </Link>
-          <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', width: '100%', textAlign: 'center' }} onClick={action}>
+          <button className="bg-gray-200 border-none px-4 py-2 rounded cursor-pointer w-full text-center" onClick={action}>
             {label}
           </button>
         </div>

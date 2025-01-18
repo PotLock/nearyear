@@ -23,6 +23,10 @@ const categoryColors = {
   "People": "#FF69B4"
 };
 
+// Define a default background and backdrop image
+const DEFAULT_BACKGROUND = '/images/default-background.jpg';
+const DEFAULT_BACKDROP = '/images/default-backdrop.jpg';
+
 const LandingPage = () => {
   const { wallet } = useContext(NearContext);
   const [profiles, setProfiles] = useState({});
@@ -112,163 +116,101 @@ const LandingPage = () => {
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="NEAR YEAR Awards" />
-        <link href="https://fonts.googleapis.com/css2?family=Lodrina+Solid&display=swap" rel="stylesheet" />
       </Head>
-      <div style={{ 
-        backgroundColor: '#f5f5f5', 
-        color: '#333', 
-        minHeight: '100vh', 
-        padding: '60px 20px', 
-        fontFamily: 'Arial, sans-serif', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        justifyContent: 'center' 
-      }}>
-        <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h1 style={{ fontSize: '4em', fontWeight: 'bold', margin: '0', color: '#333' }}>NEAR YEAR</h1>
-          <p style={{ fontSize: '1.5em', margin: '10px 0 20px', color: '#666' }}>
+      <div className="bg-gray-100 text-gray-800 min-h-screen py-16 px-5 font-sans flex flex-col items-center justify-center">
+        <header id="hero"className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-gray-800 font-lodrina">NEAR YEAR</h1>
+          <p className="text-xl text-gray-600 mt-2 mb-5">
             The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming year
           </p>
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-            <button style={{ 
-              backgroundColor: '#333', 
-              color: '#fff', 
-              padding: '15px 30px', 
-              fontSize: '1em', 
-              border: 'none', 
-              borderRadius: '5px', 
-              cursor: 'pointer', 
-              transition: 'background-color 0.3s' 
-            }} 
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#555'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#333'}
-            onClick={() => window.location.href = '/nomination'}>
+          <div className="flex gap-5 justify-center">
+            <button className="bg-gray-800 text-white py-3 px-6 text-lg rounded transition hover:bg-gray-700" onClick={() => window.location.href = '/nomination'}>
               Nominate
             </button>
-            <button style={{ 
-              backgroundColor: '#666', 
-              color: '#fff', 
-              padding: '15px 30px', 
-              fontSize: '1em', 
-              border: 'none', 
-              borderRadius: '5px', 
-              cursor: 'pointer', 
-              transition: 'background-color 0.3s' 
-            }} 
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#888'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#666'}
-            onClick={() => window.location.href = 'https://alpha.potlock.org/register'}>
+            <button className="bg-gray-600 text-white py-3 px-6 text-lg rounded transition hover:bg-gray-700" onClick={() => window.location.href = 'https://alpha.potlock.org/register'}>
               Create Profile
             </button>
           </div>
         </header>
 
-        <section style={{ maxWidth: '800px', textAlign: 'left', marginTop: '40px' }}>
-          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>How It Works</h2>
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            gap: '20px',
-            '@media (min-width: 768px)': { flexDirection: 'row' }
-          }}>
-            <div style={{ 
-              backgroundColor: '#fff', 
-              borderRadius: '8px', 
-              padding: '20px', 
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
-              display: 'flex', 
-              alignItems: 'center',
-              flex: '1'
-            }}>
-              <span style={{ fontSize: '2em', marginRight: '15px' }}>📜</span>
-              <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
+        <section className="max-w-full text-left mt-10 px-4">
+          <h1 className="text-2xl font-bold mb-5 text-center font-lodrina">How It Works</h1>
+          <div className="flex flex-col gap-5 md:flex-row">
+            <div className="bg-white rounded-lg p-5 shadow-md flex items-center flex-1">
+              <span className="text-2xl mr-4">📜</span>
+              <p className="text-lg text-gray-600">
                 On-chain lists are created for different categories, with projects and profiles that have existing on-chain accounts automatically added.
               </p>
             </div>
-            <div style={{ 
-              backgroundColor: '#fff', 
-              borderRadius: '8px', 
-              padding: '20px', 
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
-              display: 'flex', 
-              alignItems: 'center',
-              flex: '1'
-            }}>
-              <span style={{ fontSize: '2em', marginRight: '15px' }}>🗳️</span>
-              <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
+            <div className="bg-white rounded-lg p-5 shadow-md flex items-center flex-1">
+              <span className="text-2xl mr-4">🗳️</span>
+              <p className="text-lg text-gray-600">
                 During the nomination period, nominated projects are onboarded to the chain, and curators can create their own lists to boost new nominees. This is also the time to debate and advocate for 2024 achievements.
               </p>
             </div>
-            <div style={{ 
-              backgroundColor: '#fff', 
-              borderRadius: '8px', 
-              padding: '20px', 
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
-              display: 'flex', 
-              alignItems: 'center',
-              flex: '1'
-            }}>
-              <span style={{ fontSize: '2em', marginRight: '15px' }}>🏆</span>
-              <p style={{ fontSize: '1.2em', color: '#666', margin: '0' }}>
+            <div className="bg-white rounded-lg p-5 shadow-md flex items-center flex-1">
+              <span className="text-2xl mr-4">🏆</span>
+              <p className="text-lg text-gray-600">
                 During the voting period, verified humans with ShardDog NFTs choose the top winners, followed by an awards show.
               </p>
             </div>
           </div>
         </section>
 
-        <section style={{ marginBottom: '60px' }}>
-          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>Brought to you by</h2>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginTop: '20px', flexWrap: 'wrap' }}>
-            <a href="http://potlock.org" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+        <section className="mb-15 w-full px-4">
+          <h1 className="text-2xl font-bold text-center text-gray-800 font-lodrina">Brought to you by</h1>
+          <div className="flex justify-center items-center gap-5 mt-5 flex-wrap">
+            <a href="http://potlock.org" target="_blank" rel="noopener noreferrer" className="transition-transform transform hover:scale-105">
               <Image src="/potlock.png" alt="Potlock Logo" width={100} height={100} />
             </a>
-            <a href="https://near.foundation" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+            <a href="https://near.foundation" target="_blank" rel="noopener noreferrer" className="transition-transform transform hover:scale-105">
               <Image src="/near-logo.svg" alt="NEAR Foundation Logo" width={100} height={100} />
             </a>
-            <a href="http://shard.dog" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+            <a href="http://shard.dog" target="_blank" rel="noopener noreferrer" className="transition-transform transform hover:scale-105">
               <Image src="/sharddog.png" alt="Sharddog Logo" width={100} height={100} />
             </a>
-            <a href="https://blackdragon.meme/" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+            <a href="https://blackdragon.meme/" target="_blank" rel="noopener noreferrer" className="transition-transform transform hover:scale-105">
               <Image src="/blackdragon.png" alt="Blackdragon Logo" width={100} height={100} />
             </a>
-            <a href="https://nearcatalog.xyz/" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+            <a href="https://nearcatalog.xyz/" target="_blank" rel="noopener noreferrer" className="transition-transform transform hover:scale-105">
               <Image src="/nearcatalog.png" alt="NEAR Catalog Logo" width={100} height={100} />
             </a>
-            <a href="http://nearweek.com" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }}>
+            <a href="http://nearweek.com" target="_blank" rel="noopener noreferrer" className="transition-transform transform hover:scale-105">
               <Image src="/nearweek.png" alt="NEARWEEK Logo" width={100} height={100} />
             </a>
           </div>
         </section>
-        <section style={{ marginBottom: '60px' }}>
-          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>All Categories</h2>
+        <section className="mb-15">
+          <h1 className="text-2xl font-bold text-center text-gray-800">All Categories</h1>
           <p>All of the shortlisted nominations. If a project isnt an on-chain nominee they need to <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">create a project</a></p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
-            <button style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory('All')}>All</button>
+          <div className="flex justify-center gap-5 mt-5">
+            <button className="bg-gray-200 text-gray-800 py-2 px-4 rounded cursor-pointer" onClick={() => setSelectedCategory('All')}>All</button>
             {categories.map((category, index) => (
-              <button key={index} style={{ backgroundColor: '#e0e0e0', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} onClick={() => setSelectedCategory(category)}>{category}</button>
+              <button key={index} className="bg-gray-200 text-gray-800 py-2 px-4 rounded cursor-pointer" onClick={() => setSelectedCategory(category)}>{category}</button>
             ))}
           </div>
         </section>
 
-        <section style={{ marginBottom: '60px', width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <input 
-            type="text" 
-            placeholder={`Showing ${filteredCompetitions.length} out of ${totalCompetitions} competitions...`} 
-            value={searchTerm} 
-            onChange={(e) => setSearchTerm(e.target.value)} 
-            style={{ width: '100%', padding: '10px', fontSize: '1em', backgroundColor: '#e0e0e0', border: 'none', borderRadius: '5px' }}
-          />
+        <section className="mb-15">
+          <div className="mb-4">
+            <input 
+              type="text" 
+              placeholder={`Showing ${filteredCompetitions.length} out of ${totalCompetitions} competitions...`} 
+              value={searchTerm} 
+              onChange={(e) => setSearchTerm(e.target.value)} 
+              className="w-full p-2 bg-gray-200 text-gray-800 border border-gray-300 rounded"
+            />
+          </div>
           <Select
             isMulti
             options={competitors.map(competitor => ({ value: competitor, label: competitor }))}
             value={selectedCompetitors.map(competitor => ({ value: competitor, label: competitor }))}
             onChange={handleCompetitorChange}
-            className="mb-4"
+            className="mb-4 w-full"
             styles={{
               container: (provided) => ({
                 ...provided,
-                width: '100%',
+                width: '100vw',
               }),
               control: (provided) => ({
                 ...provided,
@@ -287,62 +229,51 @@ const LandingPage = () => {
           {isAllCommentsVisible ? 'Collapse All Details' : 'Expand All Details'}
         </button>
         {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+          <div className="flex justify-center items-center min-h-[200px]">
             <p>Loading...</p>
           </div>
         ) : (
           filteredCompetitions.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredCompetitions.map((competition, idx) => (
-                <CompetitionCard
-                  key={idx}
-                  competition={competition}
-                  listLink={competition.listLink}
-                  profiles={profiles}
-                  wallet={wallet}
-                  isAllCommentsVisible={isAllCommentsVisible}
-                />
-              ))}
+              {filteredCompetitions.map((competition, idx) => {
+                const coverImageUrl = competition.cover_img_url || 'https://i.near.social/magic/large/https://near.social/magic/img/account/null.near';
+                return (
+                  <CompetitionCard
+                    key={idx}
+                    competition={competition}
+                    listLink={competition.listLink}
+                    profiles={profiles}
+                    wallet={wallet}
+                    isAllCommentsVisible={isAllCommentsVisible}
+                    backdrop={coverImageUrl}
+                  />
+                );
+              })}
             </div>
           ) : (
-            <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+            <div className="text-c enter text-gray-600 py-5">
               <p>No competitions found.</p>
             </div>
           )
         )}
 
-        <section style={{ marginBottom: '60px' }}>
-          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center', color: '#333' }}>Timeline</h2>
-          <div style={{ 
-            marginTop: '20px', 
-            display: 'flex', 
-            flexWrap: 'wrap', 
-            justifyContent: 'center', 
-            gap: '20px' 
-          }}>
+        <section className="mb-15 w-full px-4">
+          <h1 className="text-2xl font-bold text-center text-gray-800 font-lodrina">Timeline</h1>
+          <div className="mt-5 flex flex-wrap justify-center gap-5">
             {timelineEvents.map((event, index) => {
               const isActive = currentDate >= event.start && currentDate <= event.end;
               return (
-                <div key={index} style={{
-                  flex: '1 1 calc(33% - 20px)', 
-                  border: '1px solid #ccc', 
-                  borderRadius: '8px', 
-                  padding: '20px', 
-                  backgroundColor: isActive ? '#e0f7fa' : '#fff',
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
-                  position: 'relative',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h3 className="heading" style={{ fontWeight: 'bold', color: '#333', margin: '0' }}>{event.title}</h3>
-                    <span style={{ fontSize: '0.9em', color: '#666' }}>
+                <div key={index} className={`flex-1 flex flex-col border border-gray-300 rounded-lg p-5 bg-white shadow-md ${isActive ? 'bg-yellow-100' : ''}`}>
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-bold text-gray-800">
+                      {event.title}
+                    </h3>
+                    <span className="text-sm text-gray-600">
                       📅 {event.start.toLocaleDateString()} to {event.end.toLocaleDateString()}
                     </span>
                   </div>
-                  <hr style={{ margin: '10px 0', borderColor: '#ccc' }} />
-                  <ul style={{ paddingLeft: '0', color: '#666', margin: '0' }}>
+                  <hr className="my-2 border-gray-300" />
+                  <ul className="list-disc text-gray-600 pl-6">
                     {event.title === "ANNOUNCEMENT" && (
                       <>
                         <li>Official nominations, announcement article and call for nominations</li>
@@ -378,52 +309,61 @@ const LandingPage = () => {
               box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
             }
           }
+          section {
+            margin-bottom: 30px;
+          }
+          header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+          }
         `}</style>
 
-        <section style={{ marginBottom: '60px' }}>
-          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>🚀 How to Participate</h2>
-          <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
+        <section className="mb-15">
+          <h1 className="text-2xl font-bold text-center text-gray-800">🚀 How to Participate</h1>
+          <div className="mt-5 flex flex-wrap justify-center gap-5">
             
-            <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-              <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>👥 For Voters</h3>
-              <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
-                <li style={{ marginBottom: '10px' }}>
+            <div className="flex-1 flex flex-col border border-gray-300 rounded-lg p-5 bg-white shadow-md transition transform hover:scale-105">
+              <h3 className="text-lg font-bold text-center mb-4">👥 For Voters</h3>
+              <ol className="list-decimal pl-6">
+                <li className="mb-2">
                   <strong>Get Verified:</strong> Obtain a Sharddog I Voted NFT for verification.
                 </li>
-                <li style={{ marginBottom: '10px' }}>
+                <li className="mb-2">
                   <strong>Vote:</strong> Participate in the voting process during the designated period.
                 </li>
-                <li style={{ marginBottom: '10px' }}>
+                <li className="mb-2">
                   <strong>Earn Rewards:</strong> Receive an exclusive NEAR YEAR Sharddog NFT for participating.
                 </li>
               </ol>
             </div>
 
-            <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-              <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>🏆 For Curators</h3>
-              <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
-                <li style={{ marginBottom: '10px' }}>
+            <div className="flex-1 flex flex-col border border-gray-300 rounded-lg p-5 bg-white shadow-md transition transform hover:scale-105">
+              <h3 className="text-lg font-bold text-center mb-4">🏆 For Curators</h3>
+              <ol className="list-decimal pl-6">
+                <li className="mb-2">
                   <strong>Nominate:</strong> Duplicate the <a href="https://potlock.org/list-docs" target="_blank" rel="noopener noreferrer">list</a> on Potlock and keep the same name.
                 </li>
-                <li style={{ marginBottom: '10px' }}>
+                <li className="mb-2">
                   <strong>Include Details:</strong> Add project account names from <a href="http://near.social" target="_blank" rel="noopener noreferrer">near.social</a>.
                 </li>
-                <li style={{ marginBottom: '10px' }}>
+                <li className="mb-2">
                   <strong>Share:</strong> Post your list on Twitter tagging @potlock_ @nearweek @nearprotocol @nearcatalog.
                 </li>
-                <li style={{ marginBottom: '10px' }}>
+                <li className="mb-2">
                   <strong>Self-Nominate:</strong> Create a list entry and notify <a href="https://x.com/plugrel" target="_blank" rel="noopener noreferrer">plugrel</a> on Twitter.
                 </li>
               </ol>
             </div>
 
-            <div style={{ flex: '1 1 calc(33% - 20px)', border: '1px solid #ccc', borderRadius: '8px', padding: '20px', backgroundColor: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', transition: 'transform 0.3s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-              <h3 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '20px' }}>🏗️ For Projects</h3>
-              <ol style={{ paddingLeft: '20px', listStyleType: 'decimal' }}>
-                <li style={{ marginBottom: '10px' }}>
+            <div className="flex-1 flex flex-col border border-gray-300 rounded-lg p-5 bg-white shadow-md transition transform hover:scale-105">
+              <h3 className="text-lg font-bold text-center mb-4">🏗️ For Projects</h3>
+              <ol className="list-decimal pl-6">
+                <li className="mb-2">
                   <strong>Create Project:</strong> <a href="https://alpha.potlock.org/register" target="_blank" rel="noopener noreferrer">Register</a> on Potlock with a named account that represents your project.
                 </li>
-                <li style={{ marginBottom: '10px' }}>
+                <li className="mb-2">
                   <strong>Apply to List:</strong> Tweet at <a href="https://x.com/plugrel" target="_blank" rel="noopener noreferrer">@plugrel</a> with your Potlock profile and the category name you are applying for.
                 </li>
               </ol>
@@ -432,9 +372,9 @@ const LandingPage = () => {
           </div>
         </section>
 
-        <section style={{ marginBottom: '60px', width: "100%" }}>
-          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>FAQ</h2>
-          <div style={{ marginTop: '20px' }}>
+        <section className="mb-15 w-full px-4">
+          <h1 className="text-2xl font-bold text-center text-gray-800">FAQ</h1>
+          <div className="mt-5 w-full">
             {[
               {
                 id: 1,
@@ -462,38 +402,31 @@ const LandingPage = () => {
                 answer: "This means you need to create a profile on Potlock and then apply to list and tag @plugrel on Twitter. All the existing people on onchain list already had profiles (see who doesn’t with the indicated 🟡 emoji)."
               }
             ].map((faq) => (
-              <div key={faq.id} style={{ marginBottom: '10px', border: '1px solid #ccc', borderRadius: '8px', padding: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-                <h3 className="heading" style={{ fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => toggleCompetition(faq.id)}>
+              <div key={faq.id} className="mb-4 border border-gray-300 rounded-lg p-4 w-full">
+                <h3 className="text-lg font-bold cursor-pointer flex justify-between items-center" onClick={() => toggleCompetition(faq.id)}>
                   {faq.question}
                   <span>{expandedCompetition === faq.id ? '-' : '+'}</span>
                 </h3>
                 {expandedCompetition === faq.id && (
-                  <p style={{ marginTop: '5px', transition: 'max-height 0.3s ease-in-out', overflow: 'hidden' }}>{faq.answer}</p>
+                  <p className="mt-2 transition max-height-0.3s ease-in-out overflow-hidden">
+                    {faq.answer}
+                  </p>
                 )}
               </div>
             ))}
           </div>
         </section>
 
-        <section style={{ marginBottom: '60px', width: '100%' }}>
-          <h2 className="heading" style={{ fontSize: '2em', fontWeight: 'bold', textAlign: 'center' }}>What People Are Saying</h2>
-          <TweetWall />
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <p>Share your opinions on Twitter with #NEARYearAwards and tag us!</p>
-            <button style={{ 
-              backgroundColor: '#333', 
-              color: '#fff', 
-              padding: '10px 20px', 
-              fontSize: '1em', 
-              border: 'none', 
-              borderRadius: '5px', 
-              cursor: 'pointer', 
-              transition: 'background-color 0.3s' 
-            }} 
-            onClick={() => window.open('https://x.com/intent/tweet?hashtags=NEARYearAwards', '_blank')}>
-              Share Your Opinion
+        <section className="mb-15 w-full px-4">
+          <h1 className="text-2xl font-bold text-center text-gray-800 font-lodrina">What People Are Saying</h1>
+          <div className="text-center mt-5">
+            <p>Share your opinions on who you think should win the NEAR YEAR Awards</p>
+            <button className="bg-gray-800 text-white py-2 px-4 text-sm rounded transition hover:bg-gray-700" onClick={() => window.open('https://x.com/intent/tweet?text=Here%20are%20my%20picks%20for%20the%20NEAR%20Year%20Awards&url=https://x.com/potlock_/status/1877665379318632900', '_blank')}>
+              Tweet About NEAR YEAR
             </button>
           </div>
+          <TweetWall />
+
         </section>
 
         <Footer />

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import '@/styles/globals.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Navigation } from '@/components/navigation';
 
 import { Wallet, NearContext } from '@/wallets/near';

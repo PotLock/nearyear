@@ -10,6 +10,7 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
   const [commentVisibility, setCommentVisibility] = useState(
     Array(competition.content.length).fill(false)
   );
+  const [backdrop, setBackdrop] = useState(null);
 
   useEffect(() => {
     const fetchListDetails = async () => {
@@ -20,6 +21,14 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
             console.error('List ID not found');
             return;
           }
+          const list = await wallet.viewMethod({
+            contractId: ListContract,
+            method: 'get_list',
+            args: {
+              list_id: Number(listId),
+            },
+          });
+          setBackdrop(list.cover_image_url || null);
           const registrations = await wallet.viewMethod({
             contractId: ListContract,
             method: 'get_registrations_for_list',
@@ -33,7 +42,10 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
           setApprovedRegistrations(registrations.map(reg => reg.registrant_id));
         } catch (error) {
           console.error('Error fetching list details:', error);
+          setBackdrop(null);
         }
+      } else {
+        setBackdrop(null);
       }
     };
 
@@ -46,15 +58,14 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
   }, [isAllCommentsVisible, competition.content.length]);
 
   const displayName = listDetails?.name || competition.name;
-  const backdrop = listDetails?.cover_image_url || '';
 
   const getCategoryColor = (category) => {
     const colors = {
-      "Concepts": "bg-gold",
-      "Projects": "bg-green",
-      "Downbad": "bg-red",
-      "2025": "bg-blue",
-      "People": "bg-purple"
+      "Concepts": "bg-yellow-500",
+      "Projects": "bg-green-500",
+      "Downbad": "bg-red-500",
+      "2025": "bg-blue-500",
+      "People": "bg-purple-500"
     };
     return colors[category] || "bg-gray-200";
   };
@@ -71,7 +82,7 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
   };
 
   return (
-    <div className={`flex-1 border border-gray-200 rounded-lg p-4 relative bg-white shadow-md transition-all duration-300`}>
+    <div className={`flex-1 border border-gray-200 rounded-lg p-4 relative bg-white shadow-md transition-all duration-300 hover:shadow-lg`}>
       <div className="flex items-center justify-between">
         {backdrop && (
           <Image
@@ -96,7 +107,7 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
         </div>
       </div>
       <div className="absolute top-2 right-2 flex items-center gap-2">
-        {listLink && (
+        {listLink && backdrop && (
           <a href={listLink} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
             🔗
           </a>
