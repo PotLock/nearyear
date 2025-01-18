@@ -18,9 +18,15 @@ export const CategoryList = () => {
   const [isListCreator, setIsListCreator] = useState(false);
 
   useEffect(() => {
-    if (!wallet) {
-      toast.error("You need to login to vote.");
-      return;
+    if (!wallet || !signedAccountId) {
+      toast("Please sign in to see your voter status.", {
+        icon: '⚠️',
+        style: {
+          border: '1px solid #ffcc00',
+          padding: '16px',
+          color: '#ffcc00',
+        },
+      });
     }
 
     const checkContractExists = async () => {
@@ -52,20 +58,31 @@ export const CategoryList = () => {
 
     const checkListCreator = async () => {
       try {
+        console.log('Signed Account ID:', signedAccountId);
+
+        if (!signedAccountId || typeof signedAccountId !== 'string' || !signedAccountId.match(/^[a-z0-9._-]+$/)) {
+          throw new Error('Invalid account ID format');
+        }
+        
         const lists = await wallet.viewMethod({
           contractId: ListContract,
-          method: 'list_ids_by_owner',
+          method: 'get_lists_for_owner',
           args: { owner_id: signedAccountId },
         });
+        console.log('Lists for account:', lists);
         setIsListCreator(lists.length > 0);
+        console.log('Is List Creator:', lists.length > 0);
       } catch (error) {
         console.error('Error checking list creator status:', error);
+        console.error('Contract ID:', ListContract);
+        console.error('Method:', 'get_lists_for_owner');
+        console.error('Signed Account ID:', signedAccountId);
       }
     };
 
     const checkQualifiedVoter = async () => {
       try {
-        const isValid = await isValidVoter(signedAccountId);
+        const isValid = await isValidVoter(wallet, signedAccountId);
         setIsQualifiedVoter(isValid);
       } catch (error) {
         console.error('Error checking voter eligibility:', error);
@@ -167,11 +184,29 @@ export const CategoryList = () => {
           )}
         </p>
         <div className="flex justify-center space-x-4 mt-4">
-          <span className={`badge ${isQualifiedVoter ? '' : 'unhighlighted'}`} title="You are a qualified voter.">
-            {isQualifiedVoter ? 'Qualified Voter' : <Link href="https://shard.dog/nearyear" target="_blank">Become a Qualified Voter</Link>}
+          <span className={`badge ${isQualifiedVoter ? 'bg-green-100 text-green-800' : 'unhighlighted'}`}>
+            {isQualifiedVoter ? (
+              <>
+                <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Qualified Voter
+              </>
+            ) : (
+              <Link href="https://shard.dog/nearyear" target="_blank">Become a Qualified Voter</Link>
+            )}
           </span>
-          <span className={`badge ${isListCreator ? '' : 'unhighlighted'}`} title="You are a list creator. Your votes are amplified by 2x.">
-            {isListCreator ? 'List Creator (2x vote)' : <Link href="/nomination" target="_blank">Create a List</Link>}
+          <span className={`badge ${isListCreator ? 'bg-green-100 text-green-800' : 'unhighlighted'}`}>
+            {isListCreator ? (
+              <>
+                <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                List Creator (2x vote)
+              </>
+            ) : (
+              <Link href="/nomination" target="_blank">Create a List</Link>
+            )}
           </span>
         </div>
       </header>
@@ -215,40 +250,18 @@ export const CategoryList = () => {
 };
 
 // Function to check if the user is a valid voter
-async function isValidVoter(accountId) {
-  const query = `
-    query CheckOwnership {
-      mb_views_nft_tokens(
-        limit: 1
-        where: {
-          nft_contract_id: { _eq: "${CONTRACT_ID}" },
-          token_id: { _regex: "^${SERIES_ID}:" },
-          owner: { _eq: "${accountId}" }
-        }
-      ) {
-        token_id
-      }
-    }
-  `;
-
+async function isValidVoter(wallet, accountId) {
   try {
-    const response = await fetch("https://graph.mintbase.xyz/mainnet", {
-      method: "POST",
-      headers: {
-        "mb-api-key": "omni-site",
-        "Content-Type": "application/json",
-        "x-hasura-role": "anonymous",
+    const result = await wallet.viewMethod({
+      contractId: CONTRACT_ID,
+      method: 'get_holders_by_series',
+      args: {
+        series_id: parseInt(SERIES_ID, 10),
       },
-      body: JSON.stringify({ query }),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('NFT ownership data:', data);
-    return data.data.mb_views_nft_tokens.length > 0;
+    console.log('NFT ownership result:', result);
+    return result.includes(accountId);
   } catch (error) {
     console.error("Error checking voter eligibility:", error);
     throw error;
