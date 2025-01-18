@@ -117,8 +117,15 @@ const LandingPage = () => {
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="NEAR YEAR Awards" />
       </Head>
-      <div className="bg-gray-100 text-gray-800 min-h-screen py-16 px-5 font-sans flex flex-col items-center justify-center">
-        <header id="hero"className="text-center mb-10">
+      <div className="bg-gray-100 text-gray-800 min-h-screen py-16 px-5 font-sans flex flex-col items-center justify-center relative">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="emoji-container">
+            <span className="emoji">🏆</span>
+            <span className="emoji">🥇</span>
+            <span className="emoji">✨</span>
+          </div>
+        </div>
+        <header id="hero" className="text-center mb-10 relative z-10">
           <h1 className="text-4xl font-bold text-gray-800 font-lodrina">NEAR YEAR</h1>
           <p className="text-xl text-gray-600 mt-2 mb-5">
             The first annual on-chain awards show celebrating the people and projects of NEAR and predicting achievements in the upcoming year
@@ -317,6 +324,42 @@ const LandingPage = () => {
             top: 0;
             z-index: 1000;
             background-color: white;
+          }
+          .emoji-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            animation: moveEmojis 10s linear infinite;
+            opacity: 0.2;
+            z-index: -1;
+          }
+
+          .emoji {
+            font-size: 3rem;
+            animation: float 5s ease-in-out infinite;
+          }
+
+          @keyframes moveEmojis {
+            0% {
+              transform: translateX(-100%);
+            }
+            100% {
+              transform: translateX(100%);
+            }
+          }
+
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-20px);
+            }
           }
         `}</style>
 
