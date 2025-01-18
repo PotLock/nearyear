@@ -153,6 +153,17 @@ const WhitelistedVoters = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7"></path>
           </svg>
         </button>
+        {!signedAccountId && (
+          <div className="mt-4">
+            <p className="text-red-600">Please log in to see your status.</p>
+            <button
+              onClick={() => window.open('https://shard.dog/nearyear', '_blank')}
+              className="mt-2 p-2 bg-blue-500 text-white rounded transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Get your Sharddog NFT
+            </button>
+          </div>
+        )}
         {signedAccountId && isWhitelisted && (
           <div className="badge bg-green-100 text-green-800 mt-2">
             <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
