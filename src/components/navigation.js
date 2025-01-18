@@ -30,7 +30,7 @@ export const Navigation = () => {
         </Link>
         <div id="desktop-menu" className="hidden md:flex items-center gap-5" style={{ flexGrow: 1, justifyContent: 'center' }}>
           <Link href="/vote" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold' }}>
-            Vote
+            Vote <span style={{ marginLeft: '5px', backgroundColor: '#ffcc00', borderRadius: '10px', padding: '2px 8px', fontSize: '0.8em' }}>Soon</span>
           </Link>
           <Link href="https://shard.dog/nearyear" target="_blank" style={{ textDecoration: 'none', color: '#333', fontWeight: 'bold', padding: '10px 0', textAlign: 'center' }}>
             Voter NFT

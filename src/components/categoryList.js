@@ -2,15 +2,103 @@ import { useEffect, useState, useContext } from 'react';
 import { NearContext } from '@/wallets/near';
 import styles from '@/styles/app.module.css';
 import Link from 'next/link';
-import { VoteContract } from '../config';
+import { VoteContract, ListContract } from '../config';
 import { Podcast, ClockIcon, Award, Zap, Briefcase, Smile, Network, LineChart, Crown, HeartHandshake, Video, Rocket, DollarSign, Frame, Shield, Coins, Sparkles, GitBranch, Users, BookOpen, RefreshCcw, Database, Boxes, Paintbrush, ImagePlus, Image, Smartphone, Palette, Anchor, MessageCircle, GraduationCap, Flame, Building2, Scale, Wallet, Heart, Brain, Globe, Skull, CloudRain, RocketIcon, FileCode } from 'lucide-react';
 import { NotFound } from './NotFound';
+import toast from 'react-hot-toast';
+
+const CONTRACT_ID = "claim.sharddog.near";
+const SERIES_ID = "151";
 
 export const CategoryList = () => {
-  const { wallet } = useContext(NearContext);
+  const { wallet, signedAccountId } = useContext(NearContext);
   const [categories, setCategories] = useState([]);
   const [contractExists, setContractExists] = useState(true);
+  const [isQualifiedVoter, setIsQualifiedVoter] = useState(false);
+  const [isListCreator, setIsListCreator] = useState(false);
 
+  useEffect(() => {
+    if (!wallet) {
+      toast.error("You need to login to vote.");
+      return;
+    }
+
+    const checkContractExists = async () => {
+      try {
+        await wallet.viewMethod({
+          contractId: VoteContract,
+          method: 'get_elections',
+        });
+      } catch (error) {
+        console.error('Error checking contract existence:', error);
+        if (error.message.includes("account") && error.message.includes("doesn't exist")) {
+          setContractExists(false);
+        }
+      }
+    };
+
+    const fetchCategories = async () => {
+      try {
+        const categories = await wallet.viewMethod({
+          contractId: VoteContract,
+          method: 'get_elections',
+        });
+        console.log('Fetched categories:', categories);
+        setCategories(categories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    const checkListCreator = async () => {
+      try {
+        const lists = await wallet.viewMethod({
+          contractId: ListContract,
+          method: 'list_ids_by_owner',
+          args: { owner_id: signedAccountId },
+        });
+        setIsListCreator(lists.length > 0);
+      } catch (error) {
+        console.error('Error checking list creator status:', error);
+      }
+    };
+
+    const checkQualifiedVoter = async () => {
+      try {
+        const isValid = await isValidVoter(signedAccountId);
+        setIsQualifiedVoter(isValid);
+      } catch (error) {
+        console.error('Error checking voter eligibility:', error);
+      }
+    };
+
+    checkContractExists();
+    fetchCategories();
+    checkListCreator();
+    checkQualifiedVoter();
+  }, [wallet, signedAccountId]);
+
+  const getVotingStatus = (startDate, endDate) => {
+    const now = Date.now();
+    if (now < parseInt(startDate)) {
+      return { status: 'NOT_STARTED', color: 'yellow' };
+    } else if (now > parseInt(endDate)) {
+      return { status: 'ENDED', color: 'red' };
+    }
+    return { status: 'ACTIVE', color: 'green' };
+  };
+
+  if (!contractExists) {
+    return <NotFound />;
+  }
+
+  if (categories.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="loader"></div>
+      </div>
+    );
+  }
   const categoryIcons = {
     1: Podcast,    // Top NEAR Yapper
     2: Zap,            // Most Cracked NEAR Dev
@@ -24,7 +112,7 @@ export const CategoryList = () => {
     10: Rocket,          // MOST ANTICIPATED TOKEN LAUNCH
     11: DollarSign,      // BEST DeFI Project
     12: Frame,           // BEST NFT Platform
-    13: Shield,          // BEST PRIVACY PROJECT
+    13: Shield,          // BEST PRIVACY PROJECT 
     14: Coins,           // Best NEAR Token
     15: Sparkles,        // Best New Token
     16: GitBranch,       // BEST Multichain Expansion
@@ -54,81 +142,39 @@ export const CategoryList = () => {
     40: FileCode,        // Best New Smart Contract
   };
 
-  useEffect(() => {
-    if (!wallet) return;
-
-    const checkContractExists = async () => {
-      try {
-        await wallet.viewMethod({
-          contractId: VoteContract,
-          method: 'get_elections',
-        });
-      } catch (error) {
-        console.error('Error checking contract existence:', error);
-        if (error.message.includes("account") && error.message.includes("doesn't exist")) {
-          setContractExists(false);
-        }
-      }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const categories = await wallet.viewMethod({
-          contractId: VoteContract,
-          method: 'get_elections',
-        });
-        setCategories(categories);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
-    checkContractExists();
-    fetchCategories();
-  }, [wallet]);
-
-  const getVotingStatus = (startDate, endDate) => {
-    const now = Date.now();
-    if (now < parseInt(startDate)) {
-      return { status: 'NOT_STARTED', color: 'yellow' };
-    } else if (now > parseInt(endDate)) {
-      return { status: 'ENDED', color: 'red' };
-    }
-    return { status: 'ACTIVE', color: 'green' };
-  };
-
-  if (!contractExists) {
-    return <NotFound />;
-  }
-
-  if (categories.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="loader"></div>
-      </div>
-    );
-  }
-
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <header className="text-center mb-12">
         <h1 className="text-5xl font-extrabold mb-4">NEAR YEAR Voting</h1>
         <p className="text-base md:text-lg text-gray-700">
           Real voting has not started. 
-          <Link href="/nomination" target="_blank" className="text-blue-600 hover:underline">
-            <strong> Create a list </strong>
-          </Link> 
-          to nominate new projects, or 
+          {!isListCreator && (
+            <>
+              <Link href="/nomination" target="_blank" className="text-blue-600 hover:underline">
+                <strong> Create a list </strong>
+              </Link> 
+              to nominate new projects, or 
+            </>
+          )}
           <Link href="https://alpha.potlock.org/register" target="_blank" className="text-blue-600 hover:underline">
             <strong> create a project </strong>
           </Link> 
           to qualify for nominations, and 
-          <Link href="https://shard.dog/nearyear" target="_blank" className="text-blue-600 hover:underline">
-            <strong> register to vote</strong>
-          </Link>
+          {!isQualifiedVoter && (
+            <Link href="https://shard.dog/nearyear" target="_blank" className="text-blue-600 hover:underline">
+              <strong> register to vote</strong>
+            </Link>
+          )}
         </p>
+        <div className="flex justify-center space-x-4 mt-4">
+          <span className={`badge ${isQualifiedVoter ? '' : 'unhighlighted'}`} title="You are a qualified voter.">
+            {isQualifiedVoter ? 'Qualified Voter' : <Link href="https://shard.dog/nearyear" target="_blank">Become a Qualified Voter</Link>}
+          </span>
+          <span className={`badge ${isListCreator ? '' : 'unhighlighted'}`} title="You are a list creator. Your votes are amplified by 2x.">
+            {isListCreator ? 'List Creator (2x vote)' : <Link href="/nomination" target="_blank">Create a List</Link>}
+          </span>
+        </div>
       </header>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category) => (
           <Link key={category.id} href={`/category/${category.id}`} aria-label={`Go to ${category.title}`}>
@@ -161,9 +207,50 @@ export const CategoryList = () => {
                 </p>
               </div>
             </div>
-          </Link>
+          </Link>  
         ))}
       </div>
     </div>
   );
 };
+
+// Function to check if the user is a valid voter
+async function isValidVoter(accountId) {
+  const query = `
+    query CheckOwnership {
+      mb_views_nft_tokens(
+        limit: 1
+        where: {
+          nft_contract_id: { _eq: "${CONTRACT_ID}" },
+          token_id: { _regex: "^${SERIES_ID}:" },
+          owner: { _eq: "${accountId}" }
+        }
+      ) {
+        token_id
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch("https://graph.mintbase.xyz/mainnet", {
+      method: "POST",
+      headers: {
+        "mb-api-key": "omni-site",
+        "Content-Type": "application/json",
+        "x-hasura-role": "anonymous",
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('NFT ownership data:', data);
+    return data.data.mb_views_nft_tokens.length > 0;
+  } catch (error) {
+    console.error("Error checking voter eligibility:", error);
+    throw error;
+  }
+}
