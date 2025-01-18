@@ -105,7 +105,8 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
             onClick={() => setIsContentVisible(!isContentVisible)}
             title={displayName}
           >
-            {displayName} ({approvedRegistrations.length}/{competition.content.length})
+            {displayName} 
+            {listLink && ` (${approvedRegistrations.length}/${competition.content.length})`}
           </h3>
           <p className="competition-description whitespace-normal overflow-visible">
             {competition.description}
