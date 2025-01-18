@@ -80,6 +80,9 @@ importers:
       react-select:
         specifier: ^5.9.0
         version: 5.9.0(@types/react@19.0.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-twitter-embed:
+        specifier: ^4.0.4
+        version: 4.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       wagmi:
         specifier: ^2.12.16
         version: 2.14.6(@tanstack/query-core@5.62.9)(@tanstack/react-query@5.62.10(react@18.3.1))(@types/react@19.0.4)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.3.1)(typescript@5.7.2)(utf-8-validate@5.0.10)(viem@2.16.2(bufferutil@4.0.8)(typescript@5.7.2)(utf-8-validate@5.0.10)(zod@3.22.4))(zod@3.22.4)
@@ -2951,6 +2954,13 @@ packages:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
 
+  react-twitter-embed@4.0.4:
+    resolution: {integrity: sha512-2JIL7qF+U62zRzpsh6SZDXNI3hRNVYf5vOZ1WRcMvwKouw+xC00PuFaD0aEp2wlyGaZ+f4x2VvX+uDadFQ3HVA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+
   react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -3053,6 +3063,9 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+
+  scriptjs@2.5.9:
+    resolution: {integrity: sha512-qGVDoreyYiP1pkQnbnFAUIS5AjenNwwQBdl7zeos9etl+hYKWahjRTfzAZZYBv5xNHx7vNKCmaLDQZ6Fr2AEXg==}
 
   secp256k1@5.0.0:
     resolution: {integrity: sha512-TKWX8xvoGHrxVdqbYeZM9w+izTF4b9z3NhSaDkdn81btvuh+ivbIMGT/zQvDtTFWhRlThpoz6LEYTr7n8A5GcA==}
@@ -7886,6 +7899,12 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  react-twitter-embed@4.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      scriptjs: 2.5.9
+
   react@18.2.0:
     dependencies:
       loose-envify: 1.4.0
@@ -8007,6 +8026,8 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
+
+  scriptjs@2.5.9: {}
 
   secp256k1@5.0.0:
     dependencies:
