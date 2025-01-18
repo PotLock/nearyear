@@ -82,7 +82,7 @@ export const CategoryList = () => {
 
     const checkQualifiedVoter = async () => {
       try {
-        const isValid = await isValidVoter(wallet, signedAccountId);
+        const isValid = await isValidVoter(signedAccountId);
         setIsQualifiedVoter(isValid);
       } catch (error) {
         console.error('Error checking voter eligibility:', error);
@@ -250,18 +250,40 @@ export const CategoryList = () => {
 };
 
 // Function to check if the user is a valid voter
-async function isValidVoter(wallet, accountId) {
+async function isValidVoter(accountId) {
+  const query = `
+    query MyQuery {
+      mb_views_nft_tokens(
+        limit: 1
+        where: {
+          nft_contract_id: { _eq: "${CONTRACT_ID}" },
+          token_id: { _regex: "^${SERIES_ID}:" },
+          owner: { _eq: "${accountId}" }
+        }
+      ) {
+        token_id
+      }
+    }
+  `;
+
   try {
-    const result = await wallet.viewMethod({
-      contractId: CONTRACT_ID,
-      method: 'get_holders_by_series',
-      args: {
-        series_id: parseInt(SERIES_ID, 10),
+    const response = await fetch("https://graph.mintbase.xyz/mainnet", {
+      method: "POST",
+      headers: {
+        "mb-api-key": "omni-site",
+        "Content-Type": "application/json",
+        "x-hasura-role": "anonymous",
       },
+      body: JSON.stringify({ query }),
     });
 
-    console.log('NFT ownership result:', result);
-    return result.includes(accountId);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('NFT ownership data:', data);
+    return data.data.mb_views_nft_tokens.length > 0;
   } catch (error) {
     console.error("Error checking voter eligibility:", error);
     throw error;
