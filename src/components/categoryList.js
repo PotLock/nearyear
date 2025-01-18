@@ -23,7 +23,7 @@ export const CategoryList = () => {
         icon: '⚠️',
         style: {
           border: '1px solid #ffcc00',
-          padding: '16px',
+          padding: '1em',
           color: '#ffcc00',
         },
       });
@@ -160,7 +160,7 @@ export const CategoryList = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6">
+    <div className="w-full max-w-7xl mx-auto">
       <header className="text-center mb-12">
         <h1 className="text-5xl font-extrabold mb-4">NEAR YEAR Voting</h1>
         <p className="text-base md:text-lg text-gray-700">
