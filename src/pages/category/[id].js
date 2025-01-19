@@ -6,6 +6,7 @@ import Link from 'next/link';
 import confetti from 'canvas-confetti';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
+import { FaShare } from 'react-icons/fa';
 
 import { VoteContract } from '../../config';
 
@@ -255,6 +256,22 @@ const NomineePage = () => {
     // };
   };
 
+  const getTweetText = () => {
+    const categoryName = electionData?.title || 'this category';
+    const votingStatus = timeLeft?.status === 'ACTIVE'
+      ? 'Voting is Live Now!'
+      : `Voting starts on Friday Jan 24`;
+
+    return `Check out the NEAR YEAR awards, the inaugural annual on-chain competition.   "${categoryName}": ${votingStatus}`;
+  };
+
+  const handleShareClick = () => {
+    const tweetText = encodeURIComponent(getTweetText());
+    const url = encodeURIComponent(`https://nearyear.com${router.asPath}`);
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
+    window.open(tweetUrl, '_blank');
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <div className="flex items-center mb-8">
@@ -283,7 +300,8 @@ const NomineePage = () => {
                     Get On the Voter Whitelist Here
                   </a>
                 </>
-              )}              {timeLeft?.status === 'ENDED' && 'Voting Ended'}
+              )}
+              {timeLeft?.status === 'ENDED' && 'Voting Ended'}
             </span>
           </div>
           {timeLeft?.timeLeft > 0 && (
@@ -293,6 +311,10 @@ const NomineePage = () => {
             </div>
           )}
         </div>
+        <button onClick={handleShareClick} className="mt-4 flex items-center text-blue-500 hover:text-blue-700">
+          <FaShare className="w-5 h-5 mr-2" />
+          Share on Twitter
+        </button>
       </header>
 
       {timeLeft?.status === 'ENDED' && renderWinnerAnnouncement()}

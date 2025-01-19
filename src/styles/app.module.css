@@ -3,8 +3,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding: 1em;
   min-height: 100vh;
+  width: 100vw;
 }
 
 .description {
@@ -41,7 +42,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(25%, auto));
+  grid-template-columns: 1fr;
   max-width: 100%;
   width: var(--max-width);
 }
@@ -319,7 +320,11 @@
   }
 }
 
-
 .navbar, .hero, .heading {
   font-family: 'Londrina Solid', sans-serif;
+}
+
+.section {
+  width: 100%;
+  max-width: none;
 }
