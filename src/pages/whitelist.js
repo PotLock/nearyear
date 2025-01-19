@@ -4,7 +4,7 @@ import { Footer } from '@/components/footer';
 import styles from '@/styles/app.module.css';
 import Image from 'next/image';
 import { isListCreator } from '@/utils/voterUtils';
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaShare } from 'react-icons/fa';
 
 const WhitelistedVoters = () => {
   const { wallet, signedAccountId } = useContext(NearContext);
@@ -149,6 +149,26 @@ const WhitelistedVoters = () => {
       }
     });
 
+  const generateTweetText = () => {
+    let tweetText = "";
+    if (isWhitelisted) {
+      tweetText = "I am a registered voter";
+      if (listCreators[signedAccountId]) {
+        tweetText += " (with 2x voter power as a list creator)";
+      }
+      tweetText += ". ";
+    }
+    tweetText += "Sign up to vote for the first on-chain NEAR awards, NEAR YEAR at shard.dog/nearyear @sharddog @Nearweek @potlock_ @nearcatalog @dragonisnear @nearprotocol.";
+
+    return tweetText;
+  };
+
+  const shareOnTwitter = () => {
+    const tweetText = generateTweetText();
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+    window.open(twitterUrl, '_blank');
+  };
+
   return (
     <div className={styles.main}>
       <header className="text-center m-0 p-0">
@@ -234,6 +254,14 @@ const WhitelistedVoters = () => {
               You are not a list creator. Please <a href="/nomination" target="_blank" className="text-blue-600 hover:underline">create a list</a>.
             </p>
           </div>
+        )}
+        {signedAccountId && (
+          <button
+            onClick={shareOnTwitter}
+            className="mt-2 p-2 bg-blue-500 text-white rounded transition duration-300 ease-in-out transform hover:scale-105 flex items-center"
+          >
+            <FaShare className="mr-2" /> Share as Tweet
+          </button>
         )}
       </header>
       <div className="w-full max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
