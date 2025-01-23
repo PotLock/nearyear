@@ -43,6 +43,15 @@ const truncateAccountId = (accountId, maxLength = 20) => {
   return `${start}...`;
 };
 
+const formatAccountId = (accountId) => {
+  const suffix = '.candidate.nearawards.near';
+  if (accountId.endsWith(suffix)) {
+    const baseId = accountId.slice(0, -suffix.length);
+    return baseId.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+  }
+  return accountId;
+};
+
 const NomineePage = () => {
   const router = useRouter();
   const { id, transactionHashes, errorCode, errorMessage } = router.query;
@@ -341,7 +350,7 @@ const NomineePage = () => {
                 <ProfileImage accountId={nominee.account_id} />
               </div>
               <h3 className="text-xl font-semibold text-center mb-2 break-words overflow-wrap-anywhere px-2">
-                {nominee.account_id}
+                {formatAccountId(nominee.account_id)}
               </h3>
               <div className="flex justify-center items-center mb-4">
                 <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
