@@ -20,11 +20,11 @@ export default function RegisterPage() {
 
   return (
     // <PageWithBanner>
-      <div>
+      <div className="h-lvh">
           <section
             className={cn(
-              "flex w-full flex-col items-center gap-8 md:px-10 md:py-16",
-              "2xl-rounded-lg bg-hero border-[#f8d3b0] px-5 py-12",
+              "flex w-full flex-col items-center gap-3 md:px-10 md:py-8",
+              "2xl-rounded-lg bg-hero border-[#f8d3b0] px-5 py-6",
             )}
           >
             <h1 className="prose font-500 font-lora text-[32px] leading-[120%] md:text-[40px]">
