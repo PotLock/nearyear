@@ -44,9 +44,11 @@ const truncateAccountId = (accountId, maxLength = 20) => {
 };
 
 const formatAccountId = (accountId) => {
-  const suffix = '.nearawards.near';
-  if (accountId.endsWith(suffix)) {
-    const baseId = accountId.slice(0, -suffix.length);
+  const suffixes = ['.candidate.nearawards.near', '.nearawards.near'];
+  const matchedSuffix = suffixes.find(suffix => accountId.endsWith(suffix));
+  
+  if (matchedSuffix) {
+    const baseId = accountId.slice(0, -matchedSuffix.length);
     return baseId.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   }
   return accountId;
