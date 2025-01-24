@@ -1,37 +1,30 @@
-import { useForm } from "react-hook-form";
-import Input from "./Input";
+import { use, useEffect } from "react";
+import { FormField } from "./FormField";
+import { useProjectForm } from "@/hooks/useProjectForm";
 
 export const ProjectEditor = () => {
+  const { form, profile, isLoading, onSubmit } = useProjectForm();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      // categories: [],
-      // publicGoodReason: "",
-    },
-  });
+  } = form;
 
-  errors && console.log(errors);
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
-  };
+  const values = form.watch();
+
+  useEffect(() => {
+    if (profile) {
+      form.setValue("name", profile.name);
+      form.setValue("description", profile.description);
+    }
+  }, [profile, form]);
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div className="m-auto flex w-full max-w-[816px] flex-col p-[3rem_0px] md:p-[4rem_0px]">
         <div className="space-y-4">
-          <div className="mb-4">
-            <label
-              className="block text-sm font-medium mb-2"
-              htmlFor="projectName"
-            >
-              Project Name{" "}
-                <span className="text-red-500 ml-1">*</span>
-            </label>
+          <FormField label="Project Name" error={errors.name?.message}>
             <input
               {...register("name", {
                 required: "Project name is required",
@@ -39,28 +32,19 @@ export const ProjectEditor = () => {
                   value: 3,
                   message: "Project name must be at least 3 characters",
                 },
-                maxLength: {
-                  value: 50,
-                  message: "Project name cannot exceed 50 characters",
-                },
               })}
               className="w-full input"
-              id="projectName"
+              defaultValue={values.name}
+              onChange={(e) => {
+                form.setValue("name", e.target.value);
+              }}
             />
-            {errors.name && (
-              <span className="text-red-500 text-sm mt-1">
-                {errors.name.message}
-              </span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-sm font-medium mb-2"
-              htmlFor="projectDescription"
-            >
-              Project Description
-              <span className="text-red-500 ml-1">*</span>
-            </label>
+          </FormField>
+
+          <FormField
+            label="Project Description"
+            error={errors.description?.message}
+          >
             <textarea
               {...register("description", {
                 required: "Project description is required",
@@ -69,44 +53,21 @@ export const ProjectEditor = () => {
                   message: "Description must be at least 10 characters",
                 },
               })}
-              id="projectDescription"
               className="w-full input"
-            ></textarea>
-            {errors.description && (
-              <span className="text-red-500 text-sm mt-1">
-                {errors.description.message}
-              </span>
-            )}
-          </div>
+              defaultValue={values.description}
+              onChange={(e) => {
+                form.setValue("description", e.target.value);
+              }}
+            />
+          </FormField>
 
-          {/* <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">
-              Categories<span className="text-red-500 ml-1">*</span>
-            </label>
-            <select
-              {...register("categories", {
-                required: "Please select at least one category"
-              })}
-              multiple
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[120px]"
-            >
-              <option value="web">Web Development</option>
-              <option value="mobile">Mobile Development</option>
-              <option value="ai">Artificial Intelligence</option>
-              <option value="blockchain">Blockchain</option>
-            </select>
-            {errors.categories && (
-              <span className="text-red-500 text-sm mt-1">
-                {errors.categories.message}
-              </span>
-            )}
-          </div> */}
-
-          <input
+          <button
             type="submit"
             className="btn align-self-center"
-            value={"Create Project"}
-          />
+            disabled={isLoading}
+          >
+            {isLoading ? "Creating..." : "Create Project"}
+          </button>
         </div>
       </div>
     </form>
