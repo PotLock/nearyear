@@ -1,26 +1,27 @@
 import { use, useEffect } from "react";
 import { FormField } from "./FormField";
 import { useProjectForm } from "@/hooks/useProjectForm";
+import { useWatch } from "react-hook-form";
 
 export const ProjectEditor = () => {
-  const { form, profile, isLoading, onSubmit } = useProjectForm();
+  const { form, socialProfileSnapshot, isLoading, onSubmit, isThereChanges } = useProjectForm();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = form;
 
-  const values = form.watch();
+  const values = useWatch(form);
 
   useEffect(() => {
-    if (profile) {
-      form.setValue("name", profile.name);
-      form.setValue("description", profile.description);
+    if (socialProfileSnapshot) {
+      form.setValue("name", socialProfileSnapshot.name);
+      form.setValue("description", socialProfileSnapshot.description);
     }
-  }, [profile, form]);
+  }, [socialProfileSnapshot, form]);
 
 
-  if (!profile) {
+  if (!socialProfileSnapshot) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
       <div className="text-center">Loading...</div>
@@ -71,7 +72,7 @@ export const ProjectEditor = () => {
             <button
               type="submit"
               className="btn align-self-center"
-              disabled={isLoading}
+              disabled={isLoading || !isThereChanges}
             >
               {isLoading ? "Creating..." : "Create Project"}
             </button>

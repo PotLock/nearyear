@@ -24,6 +24,7 @@
     "@near-wallet-selector/my-near-wallet": "^8.9.13",
     "@near-wallet-selector/sender": "^8.9.13",
     "@web3modal/wagmi": "^5.1.10",
+    "big.js": "^6.2.2",
     "bootstrap": "^5",
     "bootstrap-icons": "^1.11.3",
     "canvas-confetti": "^1.9.3",
