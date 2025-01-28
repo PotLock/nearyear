@@ -38,7 +38,7 @@ export const Navigation = () => {
           <Link href="/nomination" className="text-gray-800 font-bold no-underline">
             Nominate
           </Link>
-          <Link href="https://alpha.potlock.org/register" target="_blank" className="text-gray-800 font-bold no-underline">
+          <Link href="/register" className="text-gray-800 font-bold no-underline">
             Create Project
           </Link>
         </div>
