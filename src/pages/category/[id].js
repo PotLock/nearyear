@@ -365,7 +365,7 @@ const NomineePage = () => {
 
       {timeLeft?.status === "ENDED" && renderWinnerAnnouncement()}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {nominees.map((nominee) => (
           <div
             key={nominee.account_id}
@@ -397,7 +397,18 @@ const NomineePage = () => {
                   {nominee.votes_received} votes
                 </div>
               </div>
-              <div class="flex gap-2 items-center justify-around w-full">
+              <div class="flex gap-2 items-center justify-between w-full mt-6">
+                <button
+                  onClick={() => handleAddToQueue(nominee)}
+                  disabled={timeLeft?.status !== "ACTIVE" || hasVoted}
+                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    timeLeft?.status !== "ACTIVE" || hasVoted
+                      ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
+                      : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
+                  }`}
+                >
+                  + Queue
+                </button>
                 <button
                   onClick={() =>
                     handleVoting({
@@ -425,17 +436,6 @@ const NomineePage = () => {
                     <Award className="w-4 h-4 mr-2" />
                   )}
                   {votingFor === nominee.account_id ? "Voting..." : `Vote`}
-                </button>
-                <button
-                  onClick={() => handleAddToQueue(nominee)}
-                  disabled={timeLeft?.status !== "ACTIVE" || hasVoted}
-                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    timeLeft?.status !== "ACTIVE" || hasVoted
-                      ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
-                      : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
-                  }`}
-                >
-                  Add to Voting List
                 </button>
               </div>
             </div>
