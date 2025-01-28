@@ -30,7 +30,7 @@ export const Navigation = () => {
         </Link>
         <div className="hidden md:flex items-center gap-5 flex-grow justify-center">
           <Link href="/vote" className="text-gray-800 font-bold no-underline">
-            Vote <span className="ml-1 bg-yellow-400 rounded-full px-2 py-1 text-xs">Soon</span>
+            Vote
           </Link>
           <Link href="https://shard.dog/nearyear" target="_blank" className="text-gray-800 font-bold no-underline">
             Voter NFT
@@ -49,7 +49,7 @@ export const Navigation = () => {
       {menuOpen && (
         <div className="flex flex-col items-center gap-2 mt-2 border-t border-gray-300">
           <Link href="/vote" className="text-gray-800 font-bold no-underline py-2 border-b border-gray-300 w-full text-center">
-            Vote <span className="ml-1 bg-yellow-400 rounded-full px-2 py-1 text-xs">Soon</span>
+            Vote
           </Link>
           <Link href="https://shard.dog/nearyear" target="_blank" className="text-gray-800 font-bold no-underline py-2 border-b border-gray-300 w-full text-center">
             Voter Registration
