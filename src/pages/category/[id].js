@@ -1,17 +1,18 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState, useContext } from 'react';
-import { NearContext } from '@/wallets/near';
-import styles from '@/styles/app.module.css';
-import Link from 'next/link';
-import confetti from 'canvas-confetti';
-import { toast } from 'react-hot-toast';
-import Image from 'next/image';
-import { FaShare } from 'react-icons/fa';
+import { useRouter } from "next/router";
+import { useEffect, useState, useContext } from "react";
+import { NearContext } from "@/wallets/near";
+import styles from "@/styles/app.module.css";
+import Link from "next/link";
+import confetti from "canvas-confetti";
+import { toast } from "react-hot-toast";
+import Image from "next/image";
+import { FaShare } from "react-icons/fa";
 
-import { VoteContract } from '../../config';
+import { VoteContract } from "../../config";
 
-import { ChevronLeft, Clock, Award } from 'lucide-react';
-
+import { ChevronLeft, Clock, Award } from "lucide-react";
+import { voteForNominees } from "@/utils/voting";
+import { useVotingQueue } from "@/context/VotingQueueContext";
 
 const ProfileImage = ({ accountId }) => {
   const [isError, setIsError] = useState(false);
@@ -24,9 +25,10 @@ const ProfileImage = ({ accountId }) => {
 
   return (
     <Image
-      src={isError 
-        ? `https://robohash.org/${accountId}.png`
-        : `https://i.near.social/magic/thumbnail/https://near.social/magic/img/account/${accountId}`
+      src={
+        isError
+          ? `https://robohash.org/${accountId}.png`
+          : `https://i.near.social/magic/thumbnail/https://near.social/magic/img/account/${accountId}`
       }
       alt={accountId}
       width={96}
@@ -44,10 +46,12 @@ const truncateAccountId = (accountId, maxLength = 20) => {
 };
 
 const formatAccountId = (accountId) => {
-  const suffix = '.nearawards.near';
+  const suffix = ".nearawards.near";
   if (accountId.endsWith(suffix)) {
     const baseId = accountId.slice(0, -suffix.length);
-    return baseId.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+    return baseId
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   }
   return accountId;
 };
@@ -62,16 +66,17 @@ const NomineePage = () => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [winners, setWinners] = useState([]);
+  const { addToQueue } = useVotingQueue();
 
   const checkVoteStatus = async () => {
     if (!wallet || !id || !signedAccountId) return;
-    
+
     const hasParticipated = await wallet.viewMethod({
       contractId: VoteContract,
-      method: 'has_voter_participated',
-      args: { 
+      method: "has_voter_participated",
+      args: {
         election_id: Number(id),
-        voter: signedAccountId
+        voter: signedAccountId,
       },
     });
     setHasVoted(hasParticipated);
@@ -87,12 +92,12 @@ const NomineePage = () => {
       confetti({
         particleCount: 100,
         spread: 70,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
       });
-      
-      toast.success('Vote submitted successfully!', {
+
+      toast.success("Vote submitted successfully!", {
         duration: 4000,
-        position: 'top-center',
+        position: "top-center",
       });
 
       checkVoteStatus();
@@ -103,7 +108,7 @@ const NomineePage = () => {
     if (errorCode && errorMessage) {
       toast.error(decodeURIComponent(errorMessage), {
         duration: 4000,
-        position: 'bottom-center',
+        position: "bottom-center",
       });
     }
   }, [errorCode, errorMessage]);
@@ -114,7 +119,7 @@ const NomineePage = () => {
     const fetchElectionData = async () => {
       const data = await wallet.viewMethod({
         contractId: VoteContract,
-        method: 'get_election',
+        method: "get_election",
         args: { election_id: Number(id) },
       });
       setElectionData(data);
@@ -123,7 +128,7 @@ const NomineePage = () => {
     const fetchNominees = async () => {
       const nominees = await wallet.viewMethod({
         contractId: VoteContract,
-        method: 'get_election_candidates',
+        method: "get_election_candidates",
         args: { election_id: Number(id) },
       });
       setNominees(nominees);
@@ -141,13 +146,13 @@ const NomineePage = () => {
       const now = Date.now();
       const endDate = parseInt(electionData.end_date);
       const startDate = parseInt(electionData.start_date);
-      
+
       if (now < startDate) {
-        return { status: 'NOT_STARTED', timeLeft: startDate - now };
+        return { status: "NOT_STARTED", timeLeft: startDate - now };
       } else if (now > endDate) {
-        return { status: 'ENDED', timeLeft: 0 };
+        return { status: "ENDED", timeLeft: 0 };
       }
-      return { status: 'ACTIVE', timeLeft: endDate - now };
+      return { status: "ACTIVE", timeLeft: endDate - now };
     };
 
     const timer = setInterval(() => {
@@ -159,11 +164,13 @@ const NomineePage = () => {
   }, [electionData]);
 
   useEffect(() => {
-    if (timeLeft?.status === 'ENDED' && nominees.length > 0) {
-      const maxVotes = Math.max(...nominees.map(n => n.votes_received));
+    if (timeLeft?.status === "ENDED" && nominees.length > 0) {
+      const maxVotes = Math.max(...nominees.map((n) => n.votes_received));
       // Only set winners if there were actual votes
       if (maxVotes > 0) {
-        const winningNominees = nominees.filter(n => n.votes_received === maxVotes);
+        const winningNominees = nominees.filter(
+          (n) => n.votes_received === maxVotes
+        );
         setWinners(winningNominees);
       }
     }
@@ -178,20 +185,27 @@ const NomineePage = () => {
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   };
 
-  const voteForNominee = async (candidateId) => {
-    setVotingFor(candidateId);
+  const handleVoting = async (candidates) => {
+    setVotingFor("multiple");
     try {
-      await wallet.callMethod({
-        contractId: VoteContract,
-        method: 'vote',
-        args: { election_id: Number(id), vote: [candidateId, 1] },
-        deposit: '10000000000000000000000',
+      await voteForNominees({
+        wallet,
+        VoteContract,
+        candidateData: candidates,
       });
     } catch (error) {
-      console.error('Voting failed:', error);
+      console.log(error);
     } finally {
       setVotingFor(null);
     }
+  };
+
+  const handleAddToQueue = (nominee) => {
+    addToQueue({
+      candidateId: nominee.account_id,
+      categoryId: id,
+      categoryTitle: electionData?.title,
+    });
   };
 
   const renderWinnerAnnouncement = () => {
@@ -217,11 +231,14 @@ const NomineePage = () => {
         <div className="flex flex-col items-center justify-center space-y-4">
           <Award className="w-12 h-12 text-yellow-600" />
           <h2 className="text-2xl font-bold text-yellow-800">
-            {winners.length === 1 ? 'Winner Announced!' : 'Tied Winners!'}
+            {winners.length === 1 ? "Winner Announced!" : "Tied Winners!"}
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
             {winners.map((winner) => (
-              <div key={winner.account_id} className="flex items-center space-x-4 bg-white p-4 rounded-lg">
+              <div
+                key={winner.account_id}
+                className="flex items-center space-x-4 bg-white p-4 rounded-lg"
+              >
                 <Image
                   src={`https://robohash.org/${winner.account_id}.png`}
                   alt={winner.account_id}
@@ -230,15 +247,20 @@ const NomineePage = () => {
                   className="w-16 h-16 rounded-full border-4 border-yellow-200"
                 />
                 <div className="text-center">
-                  <p className="text-lg font-semibold text-yellow-900">{winner.account_id}</p>
-                  <p className="text-yellow-700">{winner.votes_received} votes</p>
+                  <p className="text-lg font-semibold text-yellow-900">
+                    {winner.account_id}
+                  </p>
+                  <p className="text-yellow-700">
+                    {winner.votes_received} votes
+                  </p>
                 </div>
               </div>
             ))}
           </div>
           {winners.length > 1 && (
             <p className="text-yellow-700 text-center">
-              These nominees tied for first place with {winners[0].votes_received} votes each!
+              These nominees tied for first place with{" "}
+              {winners[0].votes_received} votes each!
             </p>
           )}
         </div>
@@ -248,16 +270,16 @@ const NomineePage = () => {
 
   const getWinners = (nominees) => {
     if (!nominees.length) return [];
-  
+
     // Get the highest vote count
-    const maxVotes = Math.max(...nominees.map(n => n.votes_received));
+    const maxVotes = Math.max(...nominees.map((n) => n.votes_received));
     if (maxVotes === 0) return [];
-    
+
     // Get all nominees with the highest vote count (could be multiple in case of tie)
-    const winners = nominees.filter(n => n.votes_received === maxVotes);
+    const winners = nominees.filter((n) => n.votes_received === maxVotes);
 
     return winners;
-    
+
     // return {
     //   winners,
     //   isTie: winners.length > 1,
@@ -266,10 +288,11 @@ const NomineePage = () => {
   };
 
   const getTweetText = () => {
-    const categoryName = electionData?.title || 'this category';
-    const votingStatus = timeLeft?.status === 'ACTIVE'
-      ? 'Voting is Live Now!'
-      : `Voting starts on Friday Jan 24`;
+    const categoryName = electionData?.title || "this category";
+    const votingStatus =
+      timeLeft?.status === "ACTIVE"
+        ? "Voting is Live Now!"
+        : `Voting starts on Friday Jan 24`;
 
     return `Check out the NEAR YEAR awards, the inaugural annual on-chain competition.   "${categoryName}": ${votingStatus}`;
   };
@@ -278,7 +301,7 @@ const NomineePage = () => {
     const tweetText = encodeURIComponent(getTweetText());
     const url = encodeURIComponent(`https://nearyear.com${router.asPath}`);
     const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`;
-    window.open(tweetUrl, '_blank');
+    window.open(tweetUrl, "_blank");
   };
 
   return (
@@ -293,58 +316,75 @@ const NomineePage = () => {
       </div>
 
       <header className="text-center mb-12">
-        <h1 className="text-3xl font-bold mb-4">{electionData?.title || 'Loading...'}</h1>
+        <h1 className="text-3xl font-bold mb-4">
+          {electionData?.title || "Loading..."}
+        </h1>
         <div className="flex flex-col items-center justify-center space-y-2">
-          <div className={`flex items-center justify-center space-x-2 ${
-            timeLeft?.status === 'ACTIVE' ? 'text-green-600' :
-            timeLeft?.status === 'NOT_STARTED' ? 'text-yellow-600' : 'text-red-600'
-          }`}>
+          <div
+            className={`flex items-center justify-center space-x-2 ${
+              timeLeft?.status === "ACTIVE"
+                ? "text-green-600"
+                : timeLeft?.status === "NOT_STARTED"
+                ? "text-yellow-600"
+                : "text-red-600"
+            }`}
+          >
             <Clock className="w-5 h-5" />
             <span>
-              {timeLeft?.status === 'ACTIVE' && 'Voting Active'}
-              {timeLeft?.status === 'NOT_STARTED' && (
+              {timeLeft?.status === "ACTIVE" && "Voting Active"}
+              {timeLeft?.status === "NOT_STARTED" && (
                 <>
-                  Voting Not Started. 
-                  <a href="https://shard.dog/nearyear" target="_blank" rel="noopener noreferrer">
+                  Voting Not Started.
+                  <a
+                    href="https://shard.dog/nearyear"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Get On the Voter Whitelist Here
                   </a>
                 </>
               )}
-              {timeLeft?.status === 'ENDED' && 'Voting Ended'}
+              {timeLeft?.status === "ENDED" && "Voting Ended"}
             </span>
           </div>
           {timeLeft?.timeLeft > 0 && (
             <div className="text-gray-600 font-mono">
-              {timeLeft?.status === 'NOT_STARTED' ? 'Starts in: ' : 'Ends in: '}
+              {timeLeft?.status === "NOT_STARTED" ? "Starts in: " : "Ends in: "}
               {formatTimeLeft(timeLeft.timeLeft)}
             </div>
           )}
         </div>
-        <button onClick={handleShareClick} className="mt-4 flex items-center text-blue-500 hover:text-blue-700">
+        <button
+          onClick={handleShareClick}
+          className="mt-4 flex items-center text-blue-500 hover:text-blue-700"
+        >
           <FaShare className="w-5 h-5 mr-2" />
           Share on Twitter
         </button>
       </header>
 
-      {timeLeft?.status === 'ENDED' && renderWinnerAnnouncement()}
-    
+      {timeLeft?.status === "ENDED" && renderWinnerAnnouncement()}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {nominees.map((nominee) => (
-          <div key={nominee.account_id} className={`bg-white rounded-xl shadow-lg overflow-hidden ${
-            timeLeft?.status === 'ENDED' && 
-            winners.some(w => w.account_id === nominee.account_id)
-              ? 'ring-2 ring-yellow-400'
-              : ''
-          }`}>
-            {timeLeft?.status === 'ENDED' && 
-             winners.some(w => w.account_id === nominee.account_id) && (
-              <div className="bg-yellow-100 py-2 px-4 text-center">
-                <span className="text-yellow-800 font-semibold flex items-center justify-center">
-                  <Award className="w-4 h-4 mr-2" />
-                  {winners.length === 1 ? 'Winner' : 'Tied Winner'}
-                </span>
-              </div>
-            )}
+          <div
+            key={nominee.account_id}
+            className={`bg-white rounded-xl shadow-lg overflow-hidden ${
+              timeLeft?.status === "ENDED" &&
+              winners.some((w) => w.account_id === nominee.account_id)
+                ? "ring-2 ring-yellow-400"
+                : ""
+            }`}
+          >
+            {timeLeft?.status === "ENDED" &&
+              winners.some((w) => w.account_id === nominee.account_id) && (
+                <div className="bg-yellow-100 py-2 px-4 text-center">
+                  <span className="text-yellow-800 font-semibold flex items-center justify-center">
+                    <Award className="w-4 h-4 mr-2" />
+                    {winners.length === 1 ? "Winner" : "Tied Winner"}
+                  </span>
+                </div>
+              )}
             <div className="p-6">
               <div className="flex justify-center mb-4">
                 <ProfileImage accountId={nominee.account_id} />
@@ -357,29 +397,47 @@ const NomineePage = () => {
                   {nominee.votes_received} votes
                 </div>
               </div>
-              <button
-                onClick={() => voteForNominee(nominee.account_id)}
-                disabled={
-                  votingFor === nominee.account_id || 
-                  timeLeft?.status !== 'ACTIVE' ||
-                  hasVoted
-                }
-                className={`w-full inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  timeLeft?.status !== 'ACTIVE' || hasVoted
-                    ? 'bg-gray-500 text-white opacity-75 cursor-not-allowed' 
-                    : 'bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform'
-                }`}
-              >
-                {votingFor === nominee.account_id ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white mr-2" />
-                ) : (
-                  <Award className="w-4 h-4 mr-2" />
-                )}
-                {votingFor === nominee.account_id 
-                  ? 'Voting...' 
-                  : `Vote for ${truncateAccountId(nominee.account_id)}`
-                }
-              </button>
+              <div class="flex gap-2 items-center justify-around w-full">
+                <button
+                  onClick={() =>
+                    handleVoting({
+                      candidateId: nominee.account_id,
+                      categoryId: id,
+                    })
+                  }
+                  disabled={
+                    votingFor === nominee.account_id ||
+                    timeLeft?.status !== "ACTIVE" ||
+                    hasVoted
+                  }
+                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    timeLeft?.status !== "ACTIVE" || hasVoted
+                      ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
+                      : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
+                  }`}
+                >
+                  {votingFor === nominee.account_id ? (
+                    <div
+                      className="animate-spin rounded-full h-4 w-4 border-2
+                      border-white mr-2"
+                    />
+                  ) : (
+                    <Award className="w-4 h-4 mr-2" />
+                  )}
+                  {votingFor === nominee.account_id ? "Voting..." : `Vote`}
+                </button>
+                <button
+                  onClick={() => handleAddToQueue(nominee)}
+                  disabled={timeLeft?.status !== "ACTIVE" || hasVoted}
+                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    timeLeft?.status !== "ACTIVE" || hasVoted
+                      ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
+                      : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
+                  }`}
+                >
+                  Add to Voting List
+                </button>
+              </div>
             </div>
           </div>
         ))}
