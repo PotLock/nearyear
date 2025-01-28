@@ -5,7 +5,7 @@ import { X, ChevronUp, ChevronDown, Award } from "lucide-react";
 
 export function VotingQueueDrawer({ wallet, VoteContract }) {
   const { votingQueue, removeFromQueue, clearQueue } = useVotingQueue();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [isVoting, setIsVoting] = useState(false);
 
   const handleVoteAll = async () => {
