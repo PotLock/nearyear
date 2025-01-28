@@ -5,18 +5,7 @@ import { cn } from "../lib/utils";
 import { ProjectEditor } from "@/components/projectEditor";
 
 export default function RegisterPage() {
-//   const { isAuthenticated } = useSessionReduxStore();
-//   useInitProjectState();
-
-  // state used to show spinner during the data post
-//   const { submissionStatus, checkRegistrationStatus, checkPreviousProjectDataStatus } =
-//     useGlobalStoreSelector((state) => state.projectEditor);
-
-//   const showSpinner = isAuthenticated
-//     ? submissionStatus === "sending" ||
-//       checkRegistrationStatus !== "ready" ||
-//       checkPreviousProjectDataStatus !== "ready"
-//     : false;
+  
 
   return (
     // <PageWithBanner>
