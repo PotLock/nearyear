@@ -134,7 +134,7 @@ const LandingPage = () => {
             <button className="bg-gray-800 text-white py-3 px-6 text-lg rounded transition hover:bg-gray-700" onClick={() => window.location.href = '/nomination'}>
               Nominate
             </button>
-            <button className="bg-gray-600 text-white py-3 px-6 text-lg rounded transition hover:bg-gray-700" onClick={() => window.location.href = 'https://alpha.potlock.org/register'}>
+            <button className="bg-gray-600 text-white py-3 px-6 text-lg rounded transition hover:bg-gray-700" onClick={() => window.location.href = '/register'}>
               Create Profile
             </button>
           </div>
