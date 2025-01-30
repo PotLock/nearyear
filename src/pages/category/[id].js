@@ -46,12 +46,14 @@ const truncateAccountId = (accountId, maxLength = 20) => {
 };
 
 const formatAccountId = (accountId) => {
-  const suffixes = ['.candidate.nearawards.near', '.nearawards.near'];
-  const matchedSuffix = suffixes.find(suffix => accountId.endsWith(suffix));
-  
+  const suffixes = [".candidate.nearawards.near", ".nearawards.near"];
+  const matchedSuffix = suffixes.find((suffix) => accountId.endsWith(suffix));
+
   if (matchedSuffix) {
     const baseId = accountId.slice(0, -matchedSuffix.length);
-    return baseId.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+    return baseId
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   }
   return accountId;
 };
@@ -66,7 +68,8 @@ const NomineePage = () => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [winners, setWinners] = useState([]);
-  const { addToQueue } = useVotingQueue();
+  const { addToQueue, removeFromQueue, queue } = useVotingQueue();
+  const [queuedNominee, setQueuedNominee] = useState(null);
 
   const checkVoteStatus = async () => {
     if (!wallet || !id || !signedAccountId) return;
@@ -176,6 +179,33 @@ const NomineePage = () => {
     }
   }, [timeLeft, nominees]);
 
+  useEffect(() => {
+    const handleQueueUpdate = () => {
+      if (!queue || queue.length === 0) {
+        // Explicitly handle empty queue case
+        setQueuedNominee(null);
+        return;
+      }
+
+      const alreadyQueued = queue.find((item) => item.categoryId === id);
+      if (alreadyQueued) {
+        setQueuedNominee(alreadyQueued.candidateId);
+      } else {
+        setQueuedNominee(null);
+      }
+    };
+
+    // Initial check
+    handleQueueUpdate();
+
+    // Subscribe to queue updates
+    window.addEventListener("queueUpdate", handleQueueUpdate);
+
+    return () => {
+      window.removeEventListener("queueUpdate", handleQueueUpdate);
+    };
+  }, [queue, id]);
+
   const formatTimeLeft = (ms) => {
     const days = Math.floor(ms / (1000 * 60 * 60 * 24));
     const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -206,6 +236,11 @@ const NomineePage = () => {
       categoryId: id,
       categoryTitle: electionData?.title,
     });
+    setQueuedNominee(nominee.account_id);
+  };
+
+  const handleUnqueue = (categoryId) => {
+    removeFromQueue(categoryId);
   };
 
   const renderWinnerAnnouncement = () => {
@@ -305,7 +340,7 @@ const NomineePage = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6">
+    <div className="w-full max-w-7xl mx-auto p-6 mb-16">
       <div className="flex items-center mb-8">
         <Link href="/vote" passHref>
           <button className="flex items-center text-gray-600 hover:text-gray-900">
@@ -397,17 +432,37 @@ const NomineePage = () => {
                   {nominee.votes_received} votes
                 </div>
               </div>
-              <div class="flex gap-2 items-center justify-between w-full mt-6">
+              <div className="flex gap-2 items-center justify-between w-full mt-6">
                 <button
-                  onClick={() => handleAddToQueue(nominee)}
-                  disabled={timeLeft?.status !== "ACTIVE" || hasVoted}
+                  onClick={() =>
+                    queuedNominee === nominee.account_id
+                      ? handleUnqueue(id)
+                      : handleAddToQueue(nominee)
+                  }
+                  disabled={
+                    timeLeft?.status !== "ACTIVE" ||
+                    hasVoted ||
+                    (queuedNominee !== null &&
+                      queuedNominee !== nominee.account_id)
+                  }
                   className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    timeLeft?.status !== "ACTIVE" || hasVoted
+                    queuedNominee === nominee.account_id
+                      ? "bg-red-500 hover:bg-red-600 text-white"
+                      : timeLeft?.status !== "ACTIVE" ||
+                        hasVoted ||
+                        queuedNominee !== null
                       ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
                       : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
                   }`}
                 >
-                  + Queue
+                  {queuedNominee === nominee.account_id ? (
+                    <>
+                      <span className="mr-2">×</span>
+                      Unqueue
+                    </>
+                  ) : (
+                    "+ Queue"
+                  )}
                 </button>
                 <button
                   onClick={() =>
@@ -419,10 +474,13 @@ const NomineePage = () => {
                   disabled={
                     votingFor === nominee.account_id ||
                     timeLeft?.status !== "ACTIVE" ||
-                    hasVoted
+                    hasVoted ||
+                    queuedNominee !== null
                   }
                   className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    timeLeft?.status !== "ACTIVE" || hasVoted
+                    timeLeft?.status !== "ACTIVE" ||
+                    hasVoted ||
+                    queuedNominee !== null
                       ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
                       : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
                   }`}
@@ -435,7 +493,7 @@ const NomineePage = () => {
                   ) : (
                     <Award className="w-4 h-4 mr-2" />
                   )}
-                  {votingFor === nominee.account_id ? "Voting..." : `Vote`}
+                  {votingFor === nominee.account_id ? "Voting..." : "Vote"}
                 </button>
               </div>
             </div>
