@@ -12,6 +12,7 @@ import { TwitterTweetEmbed } from "react-twitter-embed";
 import tweetData from "../data/tweets.json";
 import TweetWall from "../components/TweetWall";
 import { ChevronDown } from "lucide-react";
+import { useRouter } from "next/router";
 
 // Use the imported data
 const importedCompetitionsData = competitionsData.competitionsData;
@@ -37,6 +38,8 @@ const LandingPage = () => {
   const [selectedCompetitors, setSelectedCompetitors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAllCommentsVisible, setIsAllCommentsVisible] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -260,7 +263,7 @@ const LandingPage = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
-                  onClick={() => (window.location.href = "/nomination")}
+                  onClick={() => router.push("/nomination")}
                   className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <span>Nominate</span>
@@ -269,7 +272,7 @@ const LandingPage = () => {
                   </span>
                 </button>
                 <button
-                  onClick={() => (window.location.href = "/register")}
+                  onClick={() => router.push("/register")}
                   className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-gray-700 bg-white border-2 border-gray-200 rounded-xl shadow-md hover:border-blue-300 hover:text-blue-600 transform hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <span>Create Profile</span>
