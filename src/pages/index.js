@@ -894,7 +894,8 @@ const LandingPage = () => {
                 onClick={() =>
                   window.open(
                     "https://x.com/intent/tweet?text=Here%20are%20my%20picks%20for%20the%20NEAR%20Year%20Awards&url=https://x.com/potlock_/status/1877665379318632900",
-                    "_blank"
+                    "_blank",
+                    "noopener,noreferrer"
                   )
                 }
                 className="inline-flex items-center px-6 py-3 bg-[#1DA1F2] text-white font-medium rounded-xl hover:bg-[#1a8cd8] transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
@@ -927,7 +928,7 @@ const LandingPage = () => {
                 <a
                   href="https://twitter.com/search?q=%23NEARYearAwards"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                 >
                   View More Discussions
