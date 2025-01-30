@@ -3,13 +3,17 @@ import { voteForNominees } from "@/utils/voting";
 import { useState } from "react";
 import { X, ChevronUp, ChevronDown, Award } from "lucide-react";
 import Image from "next/image";
+import { useContext } from "react";
+import { NearContext } from "@/wallets/near";
 
 export function VotingQueueDrawer({ wallet, VoteContract }) {
   const { queue, removeFromQueue, clearQueue } = useVotingQueue();
+  const { signedAccountId } = useContext(NearContext);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isVoting, setIsVoting] = useState(false);
 
   const handleVoteAll = async () => {
+    if (!signedAccountId) return;
     setIsVoting(true);
     try {
       await voteForNominees({
@@ -63,7 +67,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
               onError={handleImageError}
             />
           </div>
-          
+
           <div className="flex-1 min-w-0">
             <p className="font-medium text-sm truncate">
               {candidate.candidateId}
@@ -72,7 +76,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
               {candidate.categoryTitle}
             </p>
           </div>
-          
+
           <button
             onClick={() => handleRemove(candidate.categoryId)}
             className="text-red-500 hover:text-red-600 transition-colors duration-200 flex-shrink-0"
@@ -85,7 +89,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 transition-all duration-300">
+    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 transition-all duration-300 z-50">
       <div className="max-w-7xl mx-auto">
         {/* Header Bar */}
         <div className="p-4 flex items-center justify-between border-b">
@@ -100,7 +104,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
           <div className="flex items-center space-x-4">
             <button
               onClick={handleVoteAll}
-              disabled={isVoting}
+              disabled={isVoting || !signedAccountId}
               className="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-2 rounded-full flex items-center hover:shadow-lg transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
             >
               {isVoting ? (

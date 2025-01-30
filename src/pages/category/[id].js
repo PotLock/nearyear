@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { NearContext } from "@/wallets/near";
 import styles from "@/styles/app.module.css";
@@ -7,6 +6,7 @@ import confetti from "canvas-confetti";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { FaShare } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 import { VoteContract } from "../../config";
 
@@ -58,7 +58,7 @@ const formatAccountId = (accountId) => {
   return accountId;
 };
 
-const NomineePage = () => {
+const NomineePage = ({ onBackClick, isMobileView }) => {
   const router = useRouter();
   const { id, transactionHashes, errorCode, errorMessage } = router.query;
   const { wallet, signedAccountId } = useContext(NearContext);
@@ -104,6 +104,7 @@ const NomineePage = () => {
       });
 
       checkVoteStatus();
+      window.dispatchEvent(new Event("voteUpdate"));
     }
   }, [transactionHashes, errorCode]);
 
@@ -119,28 +120,30 @@ const NomineePage = () => {
   useEffect(() => {
     if (!wallet || !id) return;
 
-    const fetchElectionData = async () => {
-      const data = await wallet.viewMethod({
-        contractId: VoteContract,
-        method: "get_election",
-        args: { election_id: Number(id) },
-      });
-      setElectionData(data);
+    const fetchData = async () => {
+      try {
+        const electionData = await wallet.viewMethod({
+          contractId: VoteContract,
+          method: "get_election",
+          args: { election_id: Number(id) },
+        });
+        setElectionData(electionData);
+
+        const nominees = await wallet.viewMethod({
+          contractId: VoteContract,
+          method: "get_election_candidates",
+          args: { election_id: Number(id) },
+        });
+        setNominees(nominees);
+        setWinners(getWinners(nominees));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
-    const fetchNominees = async () => {
-      const nominees = await wallet.viewMethod({
-        contractId: VoteContract,
-        method: "get_election_candidates",
-        args: { election_id: Number(id) },
-      });
-      setNominees(nominees);
-      setWinners(getWinners(nominees));
-    };
-
-    fetchElectionData();
-    fetchNominees();
-  }, [wallet, id]);
+    fetchData();
+    checkVoteStatus();
+  }, [wallet, id, signedAccountId]);
 
   useEffect(() => {
     if (!electionData) return;
@@ -339,173 +342,207 @@ const NomineePage = () => {
     window.open(tweetUrl, "_blank");
   };
 
-  return (
-    <div className="w-full max-w-7xl mx-auto p-6 mb-16">
-      <div className="flex items-center mb-8">
-        <Link href="/vote" passHref>
-          <button className="flex items-center text-gray-600 hover:text-gray-900">
-            <ChevronLeft className="w-6 h-6 mr-2" />
-            Back to Categories
-          </button>
-        </Link>
-      </div>
+  if (!id) return null;
 
-      <header className="text-center mb-12">
-        <h1 className="text-3xl font-bold mb-4">
-          {electionData?.title || "Loading..."}
-        </h1>
-        <div className="flex flex-col items-center justify-center space-y-2">
-          <div
-            className={`flex items-center justify-center space-x-2 ${
-              timeLeft?.status === "ACTIVE"
-                ? "text-green-600"
-                : timeLeft?.status === "NOT_STARTED"
-                ? "text-yellow-600"
-                : "text-red-600"
-            }`}
-          >
-            <Clock className="w-5 h-5" />
-            <span>
-              {timeLeft?.status === "ACTIVE" && "Voting Active"}
-              {timeLeft?.status === "NOT_STARTED" && (
-                <>
-                  Voting Not Started.
-                  <a
-                    href="https://shard.dog/nearyear"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Get On the Voter Whitelist Here
-                  </a>
-                </>
-              )}
-              {timeLeft?.status === "ENDED" && "Voting Ended"}
-            </span>
-          </div>
-          {timeLeft?.timeLeft > 0 && (
-            <div className="text-gray-600 font-mono">
-              {timeLeft?.status === "NOT_STARTED" ? "Starts in: " : "Ends in: "}
-              {formatTimeLeft(timeLeft.timeLeft)}
-            </div>
+  return (
+    <div className="w-full max-w-7xl mx-auto bg-gray-50">
+      <header className="mb-6 px-4 lg:px-6">
+        <div className="flex flex-col gap-4 mb-4">
+          {/* Back button - Only show on mobile */}
+          {isMobileView && (
+            <button
+              onClick={onBackClick}
+              className="lg:hidden flex items-center text-gray-600 hover:text-gray-900"
+            >
+              <ChevronLeft className="w-5 h-5 mr-1" />
+              Back to Categories
+            </button>
           )}
+
+          {/* Title and Share button container */}
+          <div className="flex flex-col items-center sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h1 className="text-xl lg:text-2xl font-bold text-center sm:text-left">
+              {electionData?.title || "Loading..."}
+            </h1>
+            <button
+              onClick={handleShareClick}
+              className="flex items-center text-blue-500 hover:text-blue-700"
+            >
+              <FaShare className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+              Share on Twitter
+            </button>
+          </div>
+
+          {/* Status information */}
+          <div className="flex flex-col items-center sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <div
+              className={`flex items-center space-x-2 ${
+                timeLeft?.status === "ACTIVE"
+                  ? "text-green-600"
+                  : timeLeft?.status === "NOT_STARTED"
+                  ? "text-yellow-600"
+                  : "text-red-600"
+              }`}
+            >
+              <Clock className="w-4 h-4 lg:w-5 lg:h-5" />
+              <span className="text-sm lg:text-base">
+                {timeLeft?.status === "ACTIVE" && "Voting Active"}
+                {timeLeft?.status === "NOT_STARTED" && (
+                  <>
+                    Voting Not Started.
+                    <a
+                      href="https://shard.dog/nearyear"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-1 underline"
+                    >
+                      Get On the Voter Whitelist Here
+                    </a>
+                  </>
+                )}
+                {timeLeft?.status === "ENDED" && "Voting Ended"}
+              </span>
+            </div>
+            {timeLeft?.timeLeft > 0 && (
+              <div className="text-gray-600 font-mono text-sm lg:text-base">
+                {timeLeft?.status === "NOT_STARTED"
+                  ? "Starts in: "
+                  : "Ends in: "}
+                {formatTimeLeft(timeLeft.timeLeft)}
+              </div>
+            )}
+          </div>
         </div>
-        <button
-          onClick={handleShareClick}
-          className="mt-4 flex items-center text-blue-500 hover:text-blue-700"
-        >
-          <FaShare className="w-5 h-5 mr-2" />
-          Share on Twitter
-        </button>
       </header>
 
       {timeLeft?.status === "ENDED" && renderWinnerAnnouncement()}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {nominees.map((nominee) => (
-          <div
-            key={nominee.account_id}
-            className="relative bg-white rounded-xl shadow-lg overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100"
-          >
-            {/* Winner banner */}
-            {timeLeft?.status === "ENDED" &&
-              winners.some((w) => w.account_id === nominee.account_id) && (
-                <div className="bg-yellow-100 py-2 px-4 text-center">
-                  <span className="text-yellow-800 font-semibold flex items-center justify-center">
-                    <Award className="w-4 h-4 mr-2" />
-                    {winners.length === 1 ? "Winner" : "Tied Winner"}
-                  </span>
-                </div>
-              )}
+      <div className="grid grid-cols-1 gap-4 lg:gap-6 px-4 lg:px-6 pb-[72px] lg:pb-0 auto-rows-auto">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 lg:gap-6 w-full max-w-[1400px] mx-auto">
+          {nominees.map((nominee) => (
+            <div
+              key={nominee.account_id}
+              className="relative bg-white rounded-xl shadow-lg overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100 w-full"
+            >
+              {/* Winner banner */}
+              {timeLeft?.status === "ENDED" &&
+                winners.some((w) => w.account_id === nominee.account_id) && (
+                  <div className="bg-yellow-100 py-2 px-4 text-center">
+                    <span className="text-yellow-800 font-semibold flex items-center justify-center">
+                      <Award className="w-4 h-4 mr-2" />
+                      {winners.length === 1 ? "Winner" : "Tied Winner"}
+                    </span>
+                  </div>
+                )}
 
-            {/* Gradient top border */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400" />
-
-            <div className="p-6">
-              {/* Profile section */}
-              <div className="flex justify-center mb-4 relative">
-                <div className="relative">
-                  <ProfileImage accountId={nominee.account_id} />
-                </div>
+              {/* Gradient borders */}
+              <div className="absolute inset-0">
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400" />
+                <div className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-blue-400 via-purple-400 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400 to-teal-400" />
+                <div className="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-blue-400 via-purple-400 to-transparent" />
               </div>
 
-              {/* Name and votes */}
-              <h3 className="text-xl font-semibold text-center mb-2 break-words overflow-wrap-anywhere px-2">
-                {formatAccountId(nominee.account_id)}
-              </h3>
-              <div className="flex justify-center items-center mb-4">
-                <div className="bg-gradient-to-r from-blue-50 to-teal-50 text-blue-800 px-4 py-1.5 rounded-full text-sm border border-blue-100">
-                  {nominee.votes_received} votes
+              <div className="p-4 lg:p-6 relative">
+                {/* Profile section */}
+                <div className="flex justify-center mb-4">
+                  <div className="relative">
+                    <ProfileImage accountId={nominee.account_id} />
+                  </div>
                 </div>
-              </div>
 
-              {/* Action buttons */}
-              <div className="flex gap-2 items-center justify-between w-full mt-6">
-                <button
-                  onClick={() =>
-                    queuedNominee === nominee.account_id
-                      ? handleUnqueue(id)
-                      : handleAddToQueue(nominee)
-                  }
-                  disabled={
-                    timeLeft?.status !== "ACTIVE" ||
-                    hasVoted ||
-                    (queuedNominee !== null &&
-                      queuedNominee !== nominee.account_id)
-                  }
-                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 backdrop-blur-sm ${
-                    queuedNominee === nominee.account_id
-                      ? "bg-gradient-to-r from-red-500 to-red-600 text-white"
-                      : timeLeft?.status !== "ACTIVE" ||
-                        hasVoted ||
-                        queuedNominee !== null
-                      ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-50 to-teal-50 border-2 border-gray-800 hover:border-gray-600 hover:shadow-lg"
-                  }`}
-                >
-                  {queuedNominee === nominee.account_id ? (
-                    <>
-                      <span className="mr-2">×</span>
-                      Unqueue
-                    </>
-                  ) : (
-                    "+ Queue"
-                  )}
-                </button>
-                <button
-                  onClick={() =>
-                    handleVoting({
-                      candidateId: nominee.account_id,
-                      categoryId: id,
-                    })
-                  }
-                  disabled={
-                    votingFor === nominee.account_id ||
-                    timeLeft?.status !== "ACTIVE" ||
-                    hasVoted ||
-                    queuedNominee !== null
-                  }
-                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    timeLeft?.status !== "ACTIVE" ||
-                    hasVoted ||
-                    queuedNominee !== null
-                      ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-50 to-teal-50 border-2 border-gray-800 hover:border-gray-600 hover:shadow-lg"
-                  }`}
-                >
-                  {votingFor === nominee.account_id ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-800 mr-2" />
-                  ) : (
-                    <Award className="w-4 h-4 mr-2" />
-                  )}
-                  {votingFor === nominee.account_id ? "Voting..." : "Vote"}
-                </button>
+                {/* Name and votes */}
+                <h3 className="text-xl font-semibold text-center mb-2 break-words overflow-wrap-anywhere px-2">
+                  {formatAccountId(nominee.account_id)}
+                </h3>
+                <div className="flex justify-center items-center mb-4">
+                  <div className="bg-gradient-to-r from-blue-50 to-teal-50 text-blue-800 px-4 py-1.5 rounded-full text-sm border border-blue-100">
+                    {nominee.votes_received} votes
+                  </div>
+                </div>
+
+                {/* Action buttons */}
+                <div className="flex gap-2 lg:gap-3 items-center justify-between w-full mt-4 lg:mt-6">
+                  <button
+                    onClick={() =>
+                      queuedNominee === nominee.account_id
+                        ? handleUnqueue(id)
+                        : handleAddToQueue(nominee)
+                    }
+                    disabled={
+                      !signedAccountId ||
+                      timeLeft?.status !== "ACTIVE" ||
+                      hasVoted ||
+                      (queuedNominee !== null &&
+                        queuedNominee !== nominee.account_id)
+                    }
+                    className={`flex-1 px-3 lg:px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${
+                      !signedAccountId
+                        ? "bg-gray-100 text-gray-400"
+                        : queuedNominee === nominee.account_id
+                        ? "bg-gradient-to-r from-red-500 to-red-600 text-white hover:shadow-lg"
+                        : timeLeft?.status !== "ACTIVE" ||
+                          hasVoted ||
+                          queuedNominee !== null
+                        ? "bg-gray-100 text-gray-400"
+                        : "bg-white border-2 border-gray-200 text-gray-700 hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
+                    }`}
+                  >
+                    <span className="flex items-center justify-center whitespace-nowrap">
+                      {queuedNominee === nominee.account_id ? (
+                        <>
+                          <span className="mr-2">×</span>
+                          <span>Unqueue</span>
+                        </>
+                      ) : (
+                        <span>+ Queue</span>
+                      )}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      handleVoting({
+                        candidateId: nominee.account_id,
+                        categoryId: id,
+                      })
+                    }
+                    disabled={
+                      !signedAccountId ||
+                      votingFor === nominee.account_id ||
+                      timeLeft?.status !== "ACTIVE" ||
+                      hasVoted ||
+                      queuedNominee !== null
+                    }
+                    className={`flex-1 px-3 lg:px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${
+                      !signedAccountId
+                        ? "bg-gray-100 text-gray-400"
+                        : timeLeft?.status !== "ACTIVE" ||
+                          hasVoted ||
+                          queuedNominee !== null
+                        ? "bg-gray-100 text-gray-400"
+                        : "bg-gradient-to-r from-blue-500 to-teal-500 text-white hover:shadow-lg"
+                    }`}
+                  >
+                    <span className="flex items-center justify-center whitespace-nowrap">
+                      {votingFor === nominee.account_id ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white mr-2" />
+                          <span>Voting...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Award className="w-4 h-4 mr-2" />
+                          <span>Vote</span>
+                        </>
+                      )}
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
-
-            {/* Side gradient accent */}
-            <div className="absolute top-0 right-0 w-[1px] h-full bg-gradient-to-b from-blue-400 via-purple-400 to-transparent" />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
