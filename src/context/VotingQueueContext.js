@@ -1,49 +1,48 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 
 const VotingQueueContext = createContext();
 
-export const VotingQueueProvider = ({ children }) => {
-  // Initialize queue from localStorage if it exists
-  const [queue, setQueue] = useState(() => {
-    if (typeof window !== "undefined") {
-      const savedQueue = localStorage.getItem("votingQueue");
-      return savedQueue ? JSON.parse(savedQueue) : [];
-    }
-    return [];
-  });
+export function VotingQueueProvider({ children }) {
+  const [queue, setQueue] = useState([]);
 
-  // Update localStorage whenever queue changes
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("votingQueue", JSON.stringify(queue));
+    const savedQueue = localStorage.getItem("votingQueue");
+    if (savedQueue) {
+      setQueue(JSON.parse(savedQueue));
     }
-  }, [queue]);
+  }, []);
 
-  const clearQueue = () => {
-    setQueue([]);
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("votingQueue");
-    }
-    window.dispatchEvent(new Event("queueUpdate"));
-  };
+  const addToQueue = useCallback((nominee) => {
+    setQueue((prevQueue) => {
+      const newQueue = [...prevQueue, nominee];
+      localStorage.setItem("votingQueue", JSON.stringify(newQueue));
+      window.dispatchEvent(new Event("queueUpdate"));
+      return newQueue;
+    });
+  }, []);
 
-  const removeFromQueue = (categoryId) => {
+  const removeFromQueue = useCallback((categoryId) => {
     setQueue((prevQueue) => {
       const newQueue = prevQueue.filter(
         (item) => item.categoryId !== categoryId
       );
+      localStorage.setItem("votingQueue", JSON.stringify(newQueue));
       window.dispatchEvent(new Event("queueUpdate"));
       return newQueue;
     });
-  };
+  }, []);
 
-  const addToQueue = (nominee) => {
-    setQueue((prevQueue) => {
-      const newQueue = [...prevQueue, nominee];
-      window.dispatchEvent(new Event("queueUpdate"));
-      return newQueue;
-    });
-  };
+  const clearQueue = useCallback(() => {
+    setQueue([]);
+    localStorage.removeItem("votingQueue");
+    window.dispatchEvent(new Event("queueUpdate"));
+  }, []);
 
   const value = {
     queue,
@@ -57,6 +56,6 @@ export const VotingQueueProvider = ({ children }) => {
       {children}
     </VotingQueueContext.Provider>
   );
-};
+}
 
 export const useVotingQueue = () => useContext(VotingQueueContext);
