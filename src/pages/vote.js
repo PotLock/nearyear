@@ -190,11 +190,23 @@ export default function VotePage() {
   const getVotingStatus = (startDate, endDate) => {
     const now = Date.now();
     if (now < parseInt(startDate)) {
-      return { status: "NOT_STARTED", color: "yellow" };
+      return {
+        status: "NOT_STARTED",
+        color: "yellow",
+        text: "Coming Soon",
+      };
     } else if (now > parseInt(endDate)) {
-      return { status: "ENDED", color: "red" };
+      return {
+        status: "ENDED",
+        color: "red",
+        text: "Voting Closed",
+      };
     }
-    return { status: "ACTIVE", color: "green" };
+    return {
+      status: "ACTIVE",
+      color: "green",
+      text: "Vote Now",
+    };
   };
 
   const getCategoryStatus = (categoryId) => {
@@ -207,14 +219,14 @@ export default function VotePage() {
     if (hasVoted) {
       return {
         icon: "✓",
-        text: "Voted",
+        text: "Vote Cast",
         className: "bg-emerald-100 border border-emerald-200 text-emerald-700",
       };
     }
     if (isQueued) {
       return {
         icon: "●",
-        text: "Queued",
+        text: "In Queue",
         className: "bg-blue-100 border border-blue-200 text-blue-700",
       };
     }
@@ -230,10 +242,12 @@ export default function VotePage() {
             ${showCategoriesOnMobile ? "block" : "hidden lg:block"}`}
         >
           <div className="p-4 lg:p-6">
-            <h2 className="text-xl font-semibold mb-4 lg:mb-6">Categories</h2>
+            <h2 className="text-xl font-semibold mb-4 lg:mb-6">
+              Award Categories
+            </h2>
             <nav className="space-y-2 max-w-lg mx-auto pb-[72px] lg:pb-0">
               {categories.map((category) => {
-                const { status, color } = getVotingStatus(
+                const { status, color, text } = getVotingStatus(
                   category.start_date,
                   category.end_date
                 );
@@ -245,7 +259,7 @@ export default function VotePage() {
                     href={`/vote?id=${category.id}`}
                     className={`flex flex-col p-3 lg:p-4 rounded-lg transition-colors ${
                       id === category.id.toString()
-                        ? "bg-blue-50 text-blue-600"
+                        ? "bg-blue-50 text-blue-600 ring-1 ring-blue-200"
                         : "hover:bg-gray-50"
                     }`}
                   >
@@ -284,11 +298,7 @@ export default function VotePage() {
                       <div
                         className={`w-2 h-2 rounded-full bg-${color}-500 mr-2`}
                       />
-                      <span className="whitespace-nowrap">
-                        {status === "ACTIVE" && "Voting Active"}
-                        {status === "NOT_STARTED" && "Voting Not Started"}
-                        {status === "ENDED" && "Voting Ended"}
-                      </span>
+                      <span className="whitespace-nowrap">{text}</span>
                     </div>
                   </Link>
                 );
