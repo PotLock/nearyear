@@ -404,13 +404,9 @@ const NomineePage = () => {
         {nominees.map((nominee) => (
           <div
             key={nominee.account_id}
-            className={`bg-white rounded-xl shadow-lg overflow-hidden ${
-              timeLeft?.status === "ENDED" &&
-              winners.some((w) => w.account_id === nominee.account_id)
-                ? "ring-2 ring-yellow-400"
-                : ""
-            }`}
+            className="relative bg-white rounded-xl shadow-lg overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100"
           >
+            {/* Winner banner */}
             {timeLeft?.status === "ENDED" &&
               winners.some((w) => w.account_id === nominee.account_id) && (
                 <div className="bg-yellow-100 py-2 px-4 text-center">
@@ -420,18 +416,29 @@ const NomineePage = () => {
                   </span>
                 </div>
               )}
+
+            {/* Gradient top border */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400" />
+
             <div className="p-6">
-              <div className="flex justify-center mb-4">
-                <ProfileImage accountId={nominee.account_id} />
+              {/* Profile section */}
+              <div className="flex justify-center mb-4 relative">
+                <div className="relative">
+                  <ProfileImage accountId={nominee.account_id} />
+                </div>
               </div>
+
+              {/* Name and votes */}
               <h3 className="text-xl font-semibold text-center mb-2 break-words overflow-wrap-anywhere px-2">
                 {formatAccountId(nominee.account_id)}
               </h3>
               <div className="flex justify-center items-center mb-4">
-                <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                <div className="bg-gradient-to-r from-blue-50 to-teal-50 text-blue-800 px-4 py-1.5 rounded-full text-sm border border-blue-100">
                   {nominee.votes_received} votes
                 </div>
               </div>
+
+              {/* Action buttons */}
               <div className="flex gap-2 items-center justify-between w-full mt-6">
                 <button
                   onClick={() =>
@@ -445,14 +452,14 @@ const NomineePage = () => {
                     (queuedNominee !== null &&
                       queuedNominee !== nominee.account_id)
                   }
-                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`w-fit inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 backdrop-blur-sm ${
                     queuedNominee === nominee.account_id
-                      ? "bg-red-500 hover:bg-red-600 text-white"
+                      ? "bg-gradient-to-r from-red-500 to-red-600 text-white"
                       : timeLeft?.status !== "ACTIVE" ||
                         hasVoted ||
                         queuedNominee !== null
                       ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
-                      : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
+                      : "bg-gradient-to-r from-blue-50 to-teal-50 border-2 border-gray-800 hover:border-gray-600 hover:shadow-lg"
                   }`}
                 >
                   {queuedNominee === nominee.account_id ? (
@@ -482,14 +489,11 @@ const NomineePage = () => {
                     hasVoted ||
                     queuedNominee !== null
                       ? "bg-gray-500 text-white opacity-75 cursor-not-allowed"
-                      : "bg-white border-2 border-black hover:text-gray-400 hover:scale-105 transform"
+                      : "bg-gradient-to-r from-blue-50 to-teal-50 border-2 border-gray-800 hover:border-gray-600 hover:shadow-lg"
                   }`}
                 >
                   {votingFor === nominee.account_id ? (
-                    <div
-                      className="animate-spin rounded-full h-4 w-4 border-2
-                      border-white mr-2"
-                    />
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-800 mr-2" />
                   ) : (
                     <Award className="w-4 h-4 mr-2" />
                   )}
@@ -497,6 +501,9 @@ const NomineePage = () => {
                 </button>
               </div>
             </div>
+
+            {/* Side gradient accent */}
+            <div className="absolute top-0 right-0 w-[1px] h-full bg-gradient-to-b from-blue-400 via-purple-400 to-transparent" />
           </div>
         ))}
       </div>
