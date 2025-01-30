@@ -470,13 +470,16 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
                         : handleAddToQueue(nominee)
                     }
                     disabled={
+                      !signedAccountId ||
                       timeLeft?.status !== "ACTIVE" ||
                       hasVoted ||
                       (queuedNominee !== null &&
                         queuedNominee !== nominee.account_id)
                     }
                     className={`flex-1 px-3 lg:px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${
-                      queuedNominee === nominee.account_id
+                      !signedAccountId
+                        ? "bg-gray-100 text-gray-400"
+                        : queuedNominee === nominee.account_id
                         ? "bg-gradient-to-r from-red-500 to-red-600 text-white hover:shadow-lg"
                         : timeLeft?.status !== "ACTIVE" ||
                           hasVoted ||
@@ -505,15 +508,18 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
                       })
                     }
                     disabled={
+                      !signedAccountId ||
                       votingFor === nominee.account_id ||
                       timeLeft?.status !== "ACTIVE" ||
                       hasVoted ||
                       queuedNominee !== null
                     }
                     className={`flex-1 px-3 lg:px-4 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${
-                      timeLeft?.status !== "ACTIVE" ||
-                      hasVoted ||
-                      queuedNominee !== null
+                      !signedAccountId
+                        ? "bg-gray-100 text-gray-400"
+                        : timeLeft?.status !== "ACTIVE" ||
+                          hasVoted ||
+                          queuedNominee !== null
                         ? "bg-gray-100 text-gray-400"
                         : "bg-gradient-to-r from-blue-500 to-teal-500 text-white hover:shadow-lg"
                     }`}

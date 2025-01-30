@@ -3,13 +3,17 @@ import { voteForNominees } from "@/utils/voting";
 import { useState } from "react";
 import { X, ChevronUp, ChevronDown, Award } from "lucide-react";
 import Image from "next/image";
+import { useContext } from "react";
+import { NearContext } from "@/wallets/near";
 
 export function VotingQueueDrawer({ wallet, VoteContract }) {
   const { queue, removeFromQueue, clearQueue } = useVotingQueue();
+  const { signedAccountId } = useContext(NearContext);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isVoting, setIsVoting] = useState(false);
 
   const handleVoteAll = async () => {
+    if (!signedAccountId) return;
     setIsVoting(true);
     try {
       await voteForNominees({
@@ -100,7 +104,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
           <div className="flex items-center space-x-4">
             <button
               onClick={handleVoteAll}
-              disabled={isVoting}
+              disabled={isVoting || !signedAccountId}
               className="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-2 rounded-full flex items-center hover:shadow-lg transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
             >
               {isVoting ? (

@@ -29,6 +29,7 @@ import {
   Database,
 } from "lucide-react";
 import { useVotingQueue } from "@/context/VotingQueueContext";
+import toast from "react-hot-toast";
 
 // Dynamically import the NomineePage component
 const NomineePage = dynamic(() => import("./category/[id]"), {
@@ -49,17 +50,22 @@ export default function VotePage() {
     if (!wallet) return;
 
     const fetchCategories = async () => {
-      const data = await wallet.viewMethod({
-        contractId: VoteContract,
-        method: "get_elections",
-      });
-      setCategories(data);
+      try {
+        const data = await wallet.viewMethod({
+          contractId: VoteContract,
+          method: "get_elections",
+        });
+        setCategories(data);
 
-      // Always default to first category if no id is selected
-      if (!router.query.id) {
-        router.push("/vote?id=1");
+        // Always default to first category if no id is selected
+        if (!router.query.id) {
+          router.push("/vote?id=1");
+        }
+      } catch (error) {
+        console.log("Error fetching categories", error);
+      toast.error("Failed to fetch categories. Please try again later.");
       }
-    };
+    }
 
     fetchCategories();
   }, [wallet]);
@@ -149,8 +155,8 @@ export default function VotePage() {
   }, [wallet, categories, signedAccountId]);
 
   useEffect(() => {
-    // When a category is selected on mobile, show the nominees
-    if (id && window.innerWidth < 1024) {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    if (id && isMobile) {
       setShowCategoriesOnMobile(false);
     }
   }, [id]);
@@ -211,7 +217,10 @@ export default function VotePage() {
 
   const getCategoryStatus = (categoryId) => {
     const hasVoted = votedCategories.has(categoryId.toString());
-    const queueData = JSON.parse(localStorage.getItem("votingQueue") || "[]");
+    const queueData =
+      typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("votingQueue") || "[]")
+        : [];
     const isQueued = queueData.some(
       (item) => Number(item.categoryId) === Number(categoryId)
     );
@@ -293,10 +302,22 @@ export default function VotePage() {
 
                     {/* Voting Status */}
                     <div
-                      className={`ml-11 lg:ml-14 mt-2 inline-flex items-center text-${color}-600 text-xs lg:text-sm`}
+                      className={`ml-11 lg:ml-14 mt-2 inline-flex items-center ${
+                        color === "yellow"
+                          ? "text-yellow-600"
+                          : color === "red"
+                          ? "text-red-600"
+                          : "text-green-600"
+                      } text-xs lg:text-sm`}
                     >
                       <div
-                        className={`w-2 h-2 rounded-full bg-${color}-500 mr-2`}
+                        className={`w-2 h-2 rounded-full ${
+                          color === "yellow"
+                            ? "bg-yellow-500"
+                            : color === "red"
+                            ? "bg-red-500"
+                            : "bg-green-500"
+                        } mr-2`}
                       />
                       <span className="whitespace-nowrap">{text}</span>
                     </div>
