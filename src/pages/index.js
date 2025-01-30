@@ -266,9 +266,9 @@ const LandingPage = () => {
                   onClick={() => router.push("/vote")}
                   className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  <span>Cast Vote</span>
+                  <span>Vote Now</span>
                   <span className="ml-2 group-hover:rotate-12 transition-transform duration-200">
-                    ✨
+                     🗳️
                   </span>
                 </button>
                 <button
