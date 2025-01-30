@@ -1,42 +1,62 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const VotingQueueContext = createContext();
 
-export function VotingQueueProvider({ children }) {
-  const [votingQueue, setVotingQueue] = useState([]);
+export const VotingQueueProvider = ({ children }) => {
+  // Initialize queue from localStorage if it exists
+  const [queue, setQueue] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedQueue = localStorage.getItem("votingQueue");
+      return savedQueue ? JSON.parse(savedQueue) : [];
+    }
+    return [];
+  });
 
-  const addToQueue = (nominee) => {
-    setVotingQueue((prev) => {
-      // Prevent duplicates based on categoryId
-      const filtered = prev.filter(
-        (item) => item.categoryId !== nominee.categoryId
-      );
-      return [...filtered, nominee];
-    });
+  // Update localStorage whenever queue changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("votingQueue", JSON.stringify(queue));
+    }
+  }, [queue]);
+
+  const clearQueue = () => {
+    setQueue([]);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("votingQueue");
+    }
+    window.dispatchEvent(new Event("queueUpdate"));
   };
 
   const removeFromQueue = (categoryId) => {
-    setVotingQueue((prev) =>
-      prev.filter((item) => item.categoryId !== categoryId)
-    );
+    setQueue((prevQueue) => {
+      const newQueue = prevQueue.filter(
+        (item) => item.categoryId !== categoryId
+      );
+      window.dispatchEvent(new Event("queueUpdate"));
+      return newQueue;
+    });
   };
 
-  const clearQueue = () => {
-    setVotingQueue([]);
+  const addToQueue = (nominee) => {
+    setQueue((prevQueue) => {
+      const newQueue = [...prevQueue, nominee];
+      window.dispatchEvent(new Event("queueUpdate"));
+      return newQueue;
+    });
+  };
+
+  const value = {
+    queue,
+    addToQueue,
+    removeFromQueue,
+    clearQueue,
   };
 
   return (
-    <VotingQueueContext.Provider
-      value={{
-        votingQueue,
-        addToQueue,
-        removeFromQueue,
-        clearQueue,
-      }}
-    >
+    <VotingQueueContext.Provider value={value}>
       {children}
     </VotingQueueContext.Provider>
   );
-}
+};
 
 export const useVotingQueue = () => useContext(VotingQueueContext);

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { X, ChevronUp, ChevronDown, Award } from "lucide-react";
 
 export function VotingQueueDrawer({ wallet, VoteContract }) {
-  const { votingQueue, removeFromQueue, clearQueue } = useVotingQueue();
+  const { queue, removeFromQueue, clearQueue } = useVotingQueue();
   const [isExpanded, setIsExpanded] = useState(true);
   const [isVoting, setIsVoting] = useState(false);
 
@@ -14,9 +14,10 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
       await voteForNominees({
         wallet,
         VoteContract,
-        candidateData: votingQueue,
+        candidateData: queue,
       });
       clearQueue();
+      window.dispatchEvent(new Event("queueUpdate"));
     } catch (error) {
       console.error("Failed to submit votes:", error);
     } finally {
@@ -24,7 +25,11 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
     }
   };
 
-  if (votingQueue.length === 0) return null;
+  const handleRemove = (categoryId) => {
+    removeFromQueue(categoryId);
+  };
+
+  if (!queue || queue.length === 0) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 transition-all duration-300">
@@ -36,7 +41,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
             className="flex items-center space-x-2"
           >
             {isExpanded ? <ChevronDown /> : <ChevronUp />}
-            <span>{votingQueue.length} Nominees Selected</span>
+            <span>{queue.length} Nominees Selected</span>
           </button>
           <div className="flex items-center space-x-4">
             <button
@@ -64,7 +69,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
         {/* Expanded Content */}
         {isExpanded && (
           <div className="p-4 max-h-[40vh] overflow-y-auto">
-            {votingQueue.map((nominee) => (
+            {queue.map((nominee) => (
               <div
                 key={`${nominee.categoryId}-${nominee.candidateId}`}
                 className="flex items-center justify-between p-2 hover:bg-gray-50 rounded"
@@ -76,7 +81,7 @@ export function VotingQueueDrawer({ wallet, VoteContract }) {
                   </p>
                 </div>
                 <button
-                  onClick={() => removeFromQueue(nominee.categoryId)}
+                  onClick={() => handleRemove(nominee.categoryId)}
                   className="text-red-500 hover:text-red-700"
                 >
                   <X className="w-4 h-4" />
