@@ -131,7 +131,7 @@ const LandingPage = () => {
     {
       title: "VOTING ACTIVE",
       start: new Date("2025-01-25"),
-      end: new Date("2025-02-02"),
+      end: new Date("2025-02-04"),
       icon: "🗳️",
       description:
         "Cast your votes for each category with your verified ShardDog NFT",
@@ -263,10 +263,10 @@ const LandingPage = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
-                  onClick={() => router.push("/nomination")}
+                  onClick={() => router.push("/vote")}
                   className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  <span>Nominate</span>
+                  <span>Cast Vote</span>
                   <span className="ml-2 group-hover:rotate-12 transition-transform duration-200">
                     ✨
                   </span>
@@ -748,8 +748,19 @@ const LandingPage = () => {
                     <div>
                       <span className="font-medium">Share</span>
                       <p className="text-gray-600 text-sm mt-1">
-                        Post your list on Twitter tagging @potlock_ @nearweek
-                        @nearprotocol @nearcatalog
+                        Post your list on Twitter tagging{" "}
+                        <em>
+                          <strong>@potlock_ </strong>
+                        </em>
+                        <em>
+                          <strong>@nearweek </strong>
+                        </em>
+                        <em>
+                          <strong>@nearprotocol </strong>
+                        </em>
+                        <em>
+                          <strong>@nearcatalog </strong>
+                        </em>
                       </p>
                     </div>
                   </li>
@@ -760,7 +771,11 @@ const LandingPage = () => {
                     <div>
                       <span className="font-medium">Self-Nominate</span>
                       <p className="text-gray-600 text-sm mt-1">
-                        Create a list entry and notify @plugrel on Twitter
+                        Create a list entry and notify{" "}
+                        <strong>
+                          <em>@plugrel</em>
+                        </strong>{" "}
+                        on Twitter
                       </p>
                     </div>
                   </li>
@@ -795,8 +810,12 @@ const LandingPage = () => {
                     <div>
                       <span className="font-medium">Apply to List</span>
                       <p className="text-gray-600 text-sm mt-1">
-                        Tweet at @plugrel with your Potlock profile and the
-                        category name you are applying for
+                        Tweet at{" "}
+                        <em>
+                          <strong>@plugrel</strong>
+                        </em>{" "}
+                        with your Potlock profile and the category name you are
+                        applying for
                       </p>
                     </div>
                   </li>
@@ -914,11 +933,6 @@ const LandingPage = () => {
 
             <div className="bg-gray-50 rounded-2xl p-6 shadow-sm">
               <div className="relative">
-                <div className="absolute -top-3 left-6 z-10">
-                  <span className="inline-block px-4 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">
-                    Featured
-                  </span>
-                </div>
                 <div className="pt-4">
                   <TweetWall />
                 </div>
