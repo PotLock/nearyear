@@ -15,11 +15,11 @@ export default function RegisterPage() {
         )}
       >
         <h1 className="prose font-500 font-lora text-[32px] leading-[120%] md:text-[40px] text-white">
-          {"Register New Project"}
+          {"Register or Edit Project"}
         </h1>
         <h2 className="prose max-w-[600px] text-center md:text-lg text-white">
           {
-            "Create a profile for your project to receive donations and qualify for funding rounds."
+            "Create or edit a profile for your project to receive donations and qualify for funding rounds."
           }
         </h2>
       </section>
