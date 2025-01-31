@@ -196,7 +196,6 @@ const NominationPage = () => {
       ) : (
         <p>No lists match the selected criteria.</p>
       )}
-      <Footer />
     </div>
   );
 };

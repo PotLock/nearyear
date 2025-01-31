@@ -63,9 +63,9 @@ export default function VotePage() {
         }
       } catch (error) {
         console.log("Error fetching categories", error);
-      toast.error("Failed to fetch categories. Please try again later.");
+        toast.error("Failed to fetch categories. Please try again later.");
       }
-    }
+    };
 
     fetchCategories();
   }, [wallet]);
@@ -155,7 +155,7 @@ export default function VotePage() {
   }, [wallet, categories, signedAccountId]);
 
   useEffect(() => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
     if (id && isMobile) {
       setShowCategoriesOnMobile(false);
     }
@@ -247,7 +247,7 @@ export default function VotePage() {
       <div className="flex flex-col lg:flex-row flex-1">
         {/* Left Sidebar - Now toggleable on mobile */}
         <div
-          className={`lg:w-96 bg-white border-b lg:border-r border-gray-200 lg:fixed lg:h-[calc(100vh-144px)] overflow-y-auto
+          className={`lg:w-[400px] bg-white border-b lg:border-r border-gray-200 relative lg:h-[calc(100vh-214px)] overflow-y-auto
             ${showCategoriesOnMobile ? "block" : "hidden lg:block"}`}
         >
           <div className="p-4 lg:p-6">
@@ -330,11 +330,11 @@ export default function VotePage() {
 
         {/* Main Content Area */}
         <div
-          className={`w-full lg:ml-96 ${
+          className={`w-full lg:ml-4 ${
             !showCategoriesOnMobile ? "block" : "hidden lg:block"
           }`}
         >
-          <div className="lg:fixed lg:w-[calc(100%-24rem)] lg:h-[calc(100vh-144px)] overflow-y-auto bg-gray-50">
+          <div className="lg:fixed lg:w-[calc(100%-24rem)] lg:h-[calc(100vh-214px)] overflow-y-auto bg-gray-50">
             <div className="p-4 lg:p-8 pb-16">
               <NomineePage
                 key={id}
@@ -343,13 +343,6 @@ export default function VotePage() {
               />
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="h-16 bg-white border-t border-gray-200 fixed bottom-0 w-full z-40">
-        <div className="w-full mx-auto px-4">
-          <Footer />
         </div>
       </div>
     </div>

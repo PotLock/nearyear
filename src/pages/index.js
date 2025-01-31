@@ -6,7 +6,6 @@ import CompetitionCard from "../components/CompetitionCard";
 import { NearContext } from "@/wallets/near";
 import { getProfile } from "./nomination";
 import competitionsData from "../data/competitions.json";
-import { Footer } from "@/components/footer";
 import Select from "react-select";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import tweetData from "../data/tweets.json";
@@ -247,10 +246,7 @@ const LandingPage = () => {
               {/* Title - Responsive */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 font-lodrina">
                 <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-500 to-teal-500 animate-shimmer">
-                  NEAR YEAR
-                </span>
-                <span className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-3 sm:mt-4 text-gray-800">
-                  Awards 2024
+                  NEAR YEAR AWARDS
                 </span>
               </h1>
 
@@ -268,7 +264,7 @@ const LandingPage = () => {
                 >
                   <span>Vote Now</span>
                   <span className="ml-2 group-hover:rotate-12 transition-transform duration-200">
-                     🗳️
+                    🗳️
                   </span>
                 </button>
                 <button
@@ -964,8 +960,6 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-
-        <Footer />
       </div>
 
       {/* Updated styles */}

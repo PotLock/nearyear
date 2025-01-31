@@ -3,7 +3,8 @@ import { Toaster } from "react-hot-toast";
 
 import "@/styles/globals.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Navigation } from "@/components/navigation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/footer";
 
 import { Wallet, NearContext } from "@/wallets/near";
 import { NetworkId, VoteContract } from "@/config";
@@ -23,9 +24,10 @@ export default function MyApp({ Component, pageProps }) {
     <VotingQueueProvider>
       <Toaster />
       <NearContext.Provider value={{ wallet, signedAccountId }}>
-        <Navigation />
+        <Navbar />
         <Component {...pageProps} />
         <VotingQueueDrawer wallet={wallet} VoteContract={VoteContract} />
+        <Footer />
       </NearContext.Provider>
     </VotingQueueProvider>
   );

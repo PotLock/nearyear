@@ -6,59 +6,49 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full flex flex-col md:flex-row justify-between items-center p-4 bg-gray-100 footer">
-      <div className="flex justify-center md:justify-start gap-2 mb-2 md:mb-0">
-        <a
-          href="https://github.com/potlock/nearyear"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="m-1 no-underline"
-        >
-          <FaGithub size={20} />
-        </a>
-        <a
-          href="https://x.com/potlock_"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="m-1 no-underline"
-        >
-          <FaTwitter size={20} />
-        </a>
+    <footer className="bg-gradient-to-r from-blue-50 to-teal-50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-600 text-sm mb-4 md:mb-0">
+            &copy; {currentYear} NEAR YEAR Awards. All rights reserved.
+          </p>
+          <div className="flex space-x-4 mb-4 md:mb-0">
+            <a
+              href="https://twitter.com/potlock_"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center"
+            >
+              <FaTwitter size={20} />
+              <span className="ml-1">Twitter</span>
+            </a>
+            <a
+              href="https://github.com/potlock"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center"
+            >
+              <FaGithub size={20} />
+              <span className="ml-1">GitHub</span>
+            </a>
+          </div>
+        </div>
+        <div className="text-center mt-4">
+          <p>
+            Built with ❤️ by{" "}
+            <a
+              href="https://potlock.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="no-underline text-gray-800"
+            >
+              🫕 POTLOCK
+            </a>
+          </p>
+        </div>
       </div>
-      <div className="text-center m-2">
-        <p>
-          Built with ❤️ by{" "}
-          <a
-            href="https://potlock.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="no-underline"
-          >
-            🫕 POTLOCK
-          </a>
-        </p>
-      </div>
-      <div className="flex justify-center md:justify-end gap-2">
-        <Link
-          href="https://alpha.potlock.org/register"
-          target="_blank"
-          className="m-1 no-underline"
-        >
-          Create Project
-        </Link>
-        <Link href="/vote" className="m-1 no-underline">
-          Vote
-        </Link>
-        <Link href="/nomination" className="m-1 no-underline">
-          Nominees
-        </Link>
-        <Link href="/#categories" className="m-1 no-underline">
-          Categories
-        </Link>
-      </div>
-      <p className="text-gray-600 text-sm">
-        &copy; {currentYear} NEAR YEAR Awards. All rights reserved.
-      </p>
     </footer>
   );
 };
+
+export default Footer;
