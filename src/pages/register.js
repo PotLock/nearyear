@@ -7,7 +7,7 @@ import { ProjectEditor } from "@/components/projectEditor";
 export default function RegisterPage() {
   return (
     // <PageWithBanner>
-    <div className="h-[calc(100vh-214px)] bg-gradient-to-b from-gray-100 to-white">
+    <div className="h-[calc(100vh-144px)] bg-gradient-to-b from-gray-100 to-white">
       <section
         className={cn(
           "flex w-full flex-col items-center gap-3 md:px-10 md:py-8",
