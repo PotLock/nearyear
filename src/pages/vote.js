@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { useVotingQueue } from "@/context/VotingQueueContext";
 import toast from "react-hot-toast";
+import { isListCreator, isValidVoter } from "@/utils/voterUtils";
 
 // Dynamically import the NomineePage component
 const NomineePage = dynamic(() => import("./category/[id]"), {
@@ -45,6 +46,9 @@ export default function VotePage() {
   const [categories, setCategories] = useState([]);
   const [showCategoriesOnMobile, setShowCategoriesOnMobile] = useState(true);
   const [votedCategories, setVotedCategories] = useState(new Set());
+  const [isQualifiedVoter, setIsQualifiedVoter] = useState(false);
+  const [hasCreatedList, setHasCreatedList] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     if (!wallet) return;
@@ -161,6 +165,29 @@ export default function VotePage() {
     }
   }, [id]);
 
+  // Add new useEffect for voter status checks
+  useEffect(() => {
+    if (!wallet || !signedAccountId) {
+      setShowNotification(true);
+    } else {
+      setShowNotification(false);
+    }
+
+    const checkListCreator = async (accountId) => {
+      if (!accountId) return;
+      const isCreator = await isListCreator(wallet, accountId);
+      setHasCreatedList(isCreator);
+    };
+
+    const checkQualifiedVoter = async () => {
+      const isValid = await isValidVoter(signedAccountId);
+      setIsQualifiedVoter(isValid);
+    };
+
+    checkListCreator(signedAccountId);
+    checkQualifiedVoter();
+  }, [wallet, signedAccountId]);
+
   const getCategoryIcon = (categoryId) => {
     const icons = {
       1: Podcast, // Top NEAR Yapper
@@ -244,6 +271,201 @@ export default function VotePage() {
 
   return (
     <div className="flex flex-col bg-gray-50">
+      <header className="py-4 bg-white border-b border-gray-200">
+        {/* Show message for non-qualified voters */}
+        {!isQualifiedVoter && (
+          <div className="text-center text-gray-600 mb-4 bg-blue-50 py-2 px-4 rounded-lg mx-auto max-w-2xl border border-blue-100">
+            <div className="flex items-center justify-center gap-2 text-blue-800">
+              <svg
+                className="w-5 h-5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>
+                To participate in voting, you need to
+                <Link
+                  href="https://shard.dog/nearyear"
+                  target="_blank"
+                  className="text-blue-600 hover:text-blue-800 font-medium hover:underline mx-1 transition-colors duration-200"
+                >
+                  register as a qualified voter
+                </Link>
+                first. List creators get 2x voting power!
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Show message for qualified voters who aren't list creators */}
+        {isQualifiedVoter && !hasCreatedList && (
+          <div className="text-center text-gray-600 mb-4 bg-blue-50 py-2 px-4 rounded-lg mx-auto max-w-2xl border border-blue-100">
+            <div className="flex items-center justify-center gap-2 text-blue-800">
+              <svg
+                className="w-5 h-5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>
+                Want to double your voting power?
+                <Link
+                  href="/nomination"
+                  target="_blank"
+                  className="text-blue-600 hover:text-blue-800 font-medium hover:underline mx-1 transition-colors duration-200"
+                >
+                  Create a list
+                </Link>
+                to get 2x voting power!
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Show message for list creators who aren't qualified voters */}
+        {!isQualifiedVoter && hasCreatedList && (
+          <div className="text-center text-gray-600 mb-4 bg-blue-50 py-2 px-4 rounded-lg mx-auto max-w-2xl border border-blue-100">
+            <div className="flex items-center justify-center gap-2 text-blue-800">
+              <svg
+                className="w-5 h-5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>
+                You&apos;re a list creator!
+                <Link
+                  href="https://shard.dog/nearyear"
+                  target="_blank"
+                  className="text-blue-600 hover:text-blue-800 font-medium hover:underline mx-1 transition-colors duration-200"
+                >
+                  Register as a qualified voter
+                </Link>
+                to start using your 2x voting power.
+              </span>
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 px-4">
+          <span
+            className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 w-full sm:w-auto justify-center ${
+              isQualifiedVoter
+                ? "bg-green-100 text-green-800 border border-green-200"
+                : "bg-gray-100 text-gray-600 border border-gray-200 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 hover:shadow-sm cursor-pointer group"
+            }`}
+          >
+            {isQualifiedVoter ? (
+              <>
+                <svg
+                  className="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span>Qualified Voter</span>
+              </>
+            ) : (
+              <Link
+                href="https://shard.dog/nearyear"
+                target="_blank"
+                className="flex items-center justify-center w-full"
+              >
+                <svg
+                  className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+                <span>Become a Qualified Voter</span>
+              </Link>
+            )}
+          </span>
+          <span
+            className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 w-full sm:w-auto justify-center ${
+              hasCreatedList
+                ? "bg-green-100 text-green-800 border border-green-200"
+                : "bg-gray-100 text-gray-600 border border-gray-200 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 hover:shadow-sm cursor-pointer group"
+            }`}
+          >
+            {hasCreatedList ? (
+              <>
+                <svg
+                  className="w-4 h-4 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span>List Creator (2x voting power)</span>
+              </>
+            ) : (
+              <Link
+                href="/nomination"
+                target="_blank"
+                className="flex items-center justify-center w-full"
+              >
+                <svg
+                  className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+                <span>Create a List</span>
+              </Link>
+            )}
+          </span>
+        </div>
+      </header>
+
       <div className="flex flex-col lg:flex-row flex-1">
         {/* Left Sidebar - Now toggleable on mobile */}
         <div

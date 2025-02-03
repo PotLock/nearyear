@@ -70,6 +70,8 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
   const [winners, setWinners] = useState([]);
   const { addToQueue, removeFromQueue, queue } = useVotingQueue();
   const [queuedNominee, setQueuedNominee] = useState(null);
+  const [sortByVotes, setSortByVotes] = useState("all");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const checkVoteStatus = async () => {
     if (!wallet || !id || !signedAccountId) return;
@@ -342,6 +344,22 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
     window.open(tweetUrl, "_blank");
   };
 
+  const getSortedNominees = () => {
+    let sortedNominees = [...nominees];
+    switch (sortByVotes) {
+      case "highest":
+        return sortedNominees.sort(
+          (a, b) => b.votes_received - a.votes_received
+        );
+      case "lowest":
+        return sortedNominees.sort(
+          (a, b) => a.votes_received - b.votes_received
+        );
+      default:
+        return sortedNominees;
+    }
+  };
+
   if (!id) return null;
 
   return (
@@ -360,13 +378,13 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
           )}
 
           {/* Title and Share button container */}
-          <div className="flex flex-col items-center sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <h1 className="text-xl lg:text-2xl font-bold text-center sm:text-left">
               {electionData?.title || "Loading..."}
             </h1>
             <button
               onClick={handleShareClick}
-              className="flex items-center text-blue-500 hover:text-blue-700"
+              className="flex items-center justify-center sm:justify-start text-blue-500 hover:text-blue-700"
             >
               <FaShare className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
               Share on Twitter
@@ -374,9 +392,9 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
           </div>
 
           {/* Status information */}
-          <div className="flex flex-col items-center sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <div
-              className={`flex items-center space-x-2 ${
+              className={`flex items-center justify-center sm:justify-start space-x-2 ${
                 timeLeft?.status === "ACTIVE"
                   ? "text-green-600"
                   : timeLeft?.status === "NOT_STARTED"
@@ -404,13 +422,111 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
               </span>
             </div>
             {timeLeft?.timeLeft > 0 && (
-              <div className="text-gray-600 font-mono text-sm lg:text-base">
+              <div className="text-gray-600 font-mono text-sm lg:text-base text-center sm:text-left">
                 {timeLeft?.status === "NOT_STARTED"
                   ? "Starts in: "
                   : "Ends in: "}
                 {formatTimeLeft(timeLeft.timeLeft)}
               </div>
             )}
+          </div>
+
+          {/* Sort/Filter controls with dropdown */}
+          <div className="flex items-center justify-end mt-4">
+            <div className="relative">
+              <button
+                onClick={() => setIsFilterOpen((prev) => !prev)}
+                className="flex items-center space-x-2 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 text-gray-700 font-medium"
+              >
+                <svg
+                  className="w-5 h-5 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                  />
+                </svg>
+                <span>
+                  {sortByVotes === "all" && "Filter by votes"}
+                  {sortByVotes === "highest" && "Most votes first"}
+                  {sortByVotes === "lowest" && "Least votes first"}
+                </span>
+                <svg
+                  className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                    isFilterOpen ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isFilterOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-10">
+                  <button
+                    onClick={() => {
+                      setSortByVotes("all");
+                      setIsFilterOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors duration-200 ${
+                      sortByVotes === "all"
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    Default order
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSortByVotes("highest");
+                      setIsFilterOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors duration-200 ${
+                      sortByVotes === "highest"
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    Most votes first
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSortByVotes("lowest");
+                      setIsFilterOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors duration-200 ${
+                      sortByVotes === "lowest"
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    Least votes first
+                  </button>
+                </div>
+              )}
+
+              {/* Active filter indicator */}
+              {sortByVotes !== "all" && (
+                <div className="absolute -top-2 -right-2">
+                  <span className="flex h-4 w-4 items-center justify-center bg-blue-500 text-white text-xs rounded-full">
+                    1
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -419,7 +535,7 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
 
       <div className="grid grid-cols-1 gap-4 lg:gap-6 px-4 lg:px-6 pb-[72px] lg:pb-0 auto-rows-auto">
         <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 lg:gap-6 w-full max-w-[1400px] mx-auto">
-          {nominees.map((nominee) => (
+          {getSortedNominees().map((nominee) => (
             <div
               key={nominee.account_id}
               className="relative bg-white rounded-xl shadow-lg overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100 w-full"
