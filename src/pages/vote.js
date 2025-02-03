@@ -556,8 +556,8 @@ export default function VotePage() {
             !showCategoriesOnMobile ? "block" : "hidden lg:block"
           }`}
         >
-          <div className="lg:fixed lg:w-[calc(100%-24rem)] lg:h-[calc(100vh-214px)] overflow-y-auto bg-gray-50">
-            <div className="p-4 lg:p-8 pb-16">
+          <div className="lg:fixed lg:w-[calc(100%-24rem)] lg:h-[calc(100vh-264px)] overflow-y-auto bg-gray-50">
+            <div className="p-4 lg:p-3 pb-16">
               <NomineePage
                 key={id}
                 onBackClick={() => setShowCategoriesOnMobile(true)}
