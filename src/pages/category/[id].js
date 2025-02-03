@@ -431,12 +431,12 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
             )}
           </div>
 
-          {/* Sort/Filter controls with dropdown */}
-          <div className="flex items-center justify-end mt-4">
-            <div className="relative">
+          {/* Sort/Filter controls with dropdown - centered on mobile */}
+          <div className="flex items-center justify-center sm:justify-end mt-4">
+            <div className="relative w-full sm:w-auto max-w-[280px] sm:max-w-none">
               <button
                 onClick={() => setIsFilterOpen((prev) => !prev)}
-                className="flex items-center space-x-2 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 text-gray-700 font-medium"
+                className="w-full sm:w-auto flex items-center justify-center space-x-2 bg-white px-4 py-2 rounded-lg border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 text-gray-700 font-medium"
               >
                 <svg
                   className="w-5 h-5 text-gray-500"
@@ -473,9 +473,9 @@ const NomineePage = ({ onBackClick, isMobileView }) => {
                 </svg>
               </button>
 
-              {/* Dropdown Menu */}
+              {/* Dropdown Menu - centered on mobile */}
               {isFilterOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-10">
+                <div className="absolute left-0 sm:left-auto right-0 mt-2 w-full sm:w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-10">
                   <button
                     onClick={() => {
                       setSortByVotes("all");
