@@ -12,6 +12,10 @@ import tweetData from "../data/tweets.json";
 import TweetWall from "../components/TweetWall";
 import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/router";
+import createSummaryData from "../data/summary"; // Import the summary data function
+import { fetchWhitelistedVoters } from "@/utils/fetchWhitelistedVoters"; // Import the function
+import toast from "react-hot-toast";
+import { VoteContract } from "@/config";
 
 // Use the imported data
 const importedCompetitionsData = competitionsData.competitionsData;
@@ -29,7 +33,7 @@ const DEFAULT_BACKGROUND = "/images/default-background.jpg";
 const DEFAULT_BACKDROP = "/images/default-backdrop.jpg";
 
 const LandingPage = () => {
-  const { wallet } = useContext(NearContext);
+  const { wallet, signedAccountId } = useContext(NearContext);
   const [profiles, setProfiles] = useState({});
   const [expandedCompetition, setExpandedCompetition] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -37,6 +41,7 @@ const LandingPage = () => {
   const [selectedCompetitors, setSelectedCompetitors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAllCommentsVisible, setIsAllCommentsVisible] = useState(false);
+  const [totalVoters, setTotalVoters] = useState(0); // State to hold total voters
 
   const router = useRouter();
 
@@ -67,6 +72,24 @@ const LandingPage = () => {
 
     fetchProfiles();
   }, [wallet]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (wallet) {
+        try {
+          const { owners } = await fetchWhitelistedVoters(
+            wallet,
+            signedAccountId
+          );
+          setTotalVoters(owners.length); // Set total voters from fetched data
+        } catch (error) {
+          console.error("Error fetching whitelisted voters:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [wallet, signedAccountId]);
 
   const toggleCompetition = (id) => {
     setExpandedCompetition(expandedCompetition === id ? null : id);
@@ -159,6 +182,35 @@ const LandingPage = () => {
   const handleCompetitorChange = (selectedOptions) => {
     setSelectedCompetitors(selectedOptions.map((option) => option.value));
   };
+
+  const [catCount, setCatCount] = useState(49);
+
+  const fetchCategories = async () => {
+    try {
+      const data = await wallet.viewMethod({
+        contractId: VoteContract,
+        method: "get_elections",
+      });
+      console.log("cats:", data);
+      setCatCount(data.length);
+    } catch (error) {
+      console.log("Error fetching categories", error);
+      toast.error("Failed to fetch categories. Please try again later.");
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+  // Assuming you have the dynamic values available
+  const totalCategories = catCount;
+  const totalNominees = 40; // Assuming profiles are the nominees
+
+  const summaryData = createSummaryData(
+    totalCategories,
+    totalNominees,
+    totalVoters
+  );
 
   return (
     <>
@@ -281,9 +333,21 @@ const LandingPage = () => {
               {/* Enhanced Stats Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-16">
                 {[
-                  { number: "20+", label: "Categories", icon: "🏆" },
-                  { number: "100+", label: "Nominees", icon: "⭐" },
-                  { number: "1000+", label: "Voters", icon: "👥" },
+                  {
+                    number: summaryData.totalCategories,
+                    label: "Categories",
+                    icon: "🏆",
+                  },
+                  {
+                    number: summaryData.totalNominees,
+                    label: "Nominees",
+                    icon: "⭐",
+                  },
+                  {
+                    number: summaryData.totalVoters,
+                    label: "Voters",
+                    icon: "👥",
+                  },
                   { number: "∞", label: "Possibilities", icon: "✨" },
                 ].map((stat, index) => (
                   <div

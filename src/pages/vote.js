@@ -50,27 +50,25 @@ export default function VotePage() {
   const [hasCreatedList, setHasCreatedList] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
+  const fetchCategories = async () => {
+    try {
+      const data = await wallet.viewMethod({
+        contractId: VoteContract,
+        method: "get_elections",
+      });
+      setCategories(data);
+
+      // Always default to first category if no id is selected
+      if (!router.query.id) {
+        router.push("/vote?id=1");
+      }
+    } catch (error) {
+      console.log("Error fetching categories", error);
+      toast.error("Failed to fetch categories. Please try again later.");
+    }
+  };
   useEffect(() => {
     if (!wallet) return;
-
-    const fetchCategories = async () => {
-      try {
-        const data = await wallet.viewMethod({
-          contractId: VoteContract,
-          method: "get_elections",
-        });
-        setCategories(data);
-
-        // Always default to first category if no id is selected
-        if (!router.query.id) {
-          router.push("/vote?id=1");
-        }
-      } catch (error) {
-        console.log("Error fetching categories", error);
-        toast.error("Failed to fetch categories. Please try again later.");
-      }
-    };
-
     fetchCategories();
   }, [wallet]);
 
