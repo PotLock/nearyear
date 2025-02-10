@@ -432,14 +432,13 @@ const LandingPage = () => {
             <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
               Browse and discover the categories celebrating excellence across
               the NEAR ecosystem. Projects need to{" "}
-              <a
-                href="https://alpha.potlock.org/register"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-700 underline"
+              <Link
+                href="/register"
+                className="text-blue-600
+                hover:text-blue-700 underline"
               >
                 create a profile
-              </a>{" "}
+              </Link>{" "}
               to be eligible.
             </p>
 
