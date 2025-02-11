@@ -48,7 +48,7 @@ const WhitelistedVoters = () => {
         setIsWhitelisted(isWhitelisted);
 
         // Calculate dynamic values
-        const totalCategories = 20; // Replace with actual logic if needed
+        const totalCategories = 49; // Replace with actual logic if needed
         const totalNominees = owners.length; // Assuming each owner is a nominee
         const totalVoters = owners.length; // Assuming each owner is a voter
 
@@ -58,7 +58,6 @@ const WhitelistedVoters = () => {
           totalNominees,
           totalVoters
         );
-        console.log(summaryData); // You can use this data as needed
 
         // Check if each owner is a list creator
         const listCreatorStatus = await Promise.all(
@@ -84,6 +83,15 @@ const WhitelistedVoters = () => {
 
     fetchVoters();
   }, [signedAccountId, wallet]);
+
+  console.log({
+    isWhitelisted,
+    whitelistedVoters,
+    listCreatorCount: Object.values(listCreators).filter(Boolean).length,
+    listCreators: Object.keys(listCreators).filter(
+      (owner) => listCreators[owner]
+    ),
+  }); // You can use this data as needed
 
   const ProfileCard = ({ accountId }) => {
     const [isError, setIsError] = useState(false);
@@ -277,7 +285,7 @@ const WhitelistedVoters = () => {
             </button>
           </div>
         )}
-        {signedAccountId && !isWhitelisted && (
+        {!isWhitelisted && (
           <p className="text-red-600">
             You are not whitelisted. Please get your NFT at{" "}
             <a
