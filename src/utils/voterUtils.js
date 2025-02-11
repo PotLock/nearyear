@@ -8,8 +8,6 @@ export const isListCreator = async (wallet, accountId) => {
       throw new Error('Invalid account ID format');
     }
 
-    console.log('Wallet object:', wallet); // Debugging line
-
     const lists = await wallet.viewMethod({
       contractId: ListContract,
       method: 'get_lists_for_owner',
