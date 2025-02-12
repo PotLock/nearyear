@@ -67,7 +67,6 @@ const CompetitionCard = ({ competition, listLink, profiles, wallet, isAllComment
       "2025": "bg-blue-500",
       "People": "bg-purple-500"
     };
-    console.log(`Category: ${category}, Class: ${colorClasses[category] || "bg-gray-200"}`);
     return colorClasses[category] || "bg-gray-200";
   };
 
