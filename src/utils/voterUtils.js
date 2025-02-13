@@ -1,22 +1,27 @@
-import { ListContract } from '@/config';
-import { useContext } from 'react';
-import { NearContext } from '@/wallets/near'; // Import NearContext
+import { ListContract, VoteContract } from "@/config";
+import { useContext } from "react";
+import { NearContext } from "@/wallets/near"; // Import NearContext
+import { fetchWhitelistedVoters } from "./fetchWhitelistedVoters";
 
 export const isListCreator = async (wallet, accountId) => {
   try {
-    if (!accountId || typeof accountId !== 'string' || !accountId.match(/^[a-z0-9._-]+$/)) {
-      throw new Error('Invalid account ID format');
+    if (
+      !accountId ||
+      typeof accountId !== "string" ||
+      !accountId.match(/^[a-z0-9._-]+$/)
+    ) {
+      throw new Error("Invalid account ID format");
     }
 
     const lists = await wallet.viewMethod({
       contractId: ListContract,
-      method: 'get_lists_for_owner',
+      method: "get_lists_for_owner",
       args: { owner_id: accountId },
     });
 
     return lists.length > 0;
   } catch (error) {
-    console.error('Error checking list creator status:', error);
+    console.error("Error checking list creator status:", error);
     return false;
   }
 };
@@ -62,19 +67,104 @@ export const isValidVoter = async (accountId) => {
 
 export const getListsByOwner = async (wallet, accountId) => {
   try {
-    if (!accountId || typeof accountId !== 'string' || !accountId.match(/^[a-z0-9._-]+$/)) {
-      throw new Error('Invalid account ID format');
+    if (
+      !accountId ||
+      typeof accountId !== "string" ||
+      !accountId.match(/^[a-z0-9._-]+$/)
+    ) {
+      throw new Error("Invalid account ID format");
     }
 
     const lists = await wallet.viewMethod({
       contractId: ListContract,
-      method: 'get_lists_for_owner',
+      method: "get_lists_for_owner",
       args: { owner_id: accountId },
     });
 
     return lists;
   } catch (error) {
-    console.error('Error retrieving lists for owner:', error);
+    console.error("Error retrieving lists for owner:", error);
     return [];
   }
-}; 
+};
+
+export const fetchVoters = async ({ wallet, signedAccountId }) => {
+  try {
+    const { owners, isWhitelisted } = await fetchWhitelistedVoters(
+      wallet,
+      signedAccountId
+    );
+    // setWhitelistedVoters(owners);
+    // setIsWhitelisted(isWhitelisted);
+
+    // Calculate dynamic values
+    const totalCategories = 49; // Replace with actual logic if needed
+    const totalNominees = owners.length; // Assuming each owner is a nominee
+    const totalVoters = owners.length; // Assuming each owner is a voter
+
+    // Create summary data
+    const summaryData = createSummaryData(
+      totalCategories,
+      totalNominees,
+      totalVoters
+    );
+
+    // Check if each owner is a list creator
+    const listCreatorStatus = await Promise.all(
+      owners.map(async (owner) => {
+        const isCreator = await isListCreator(wallet, owner);
+        return { owner, isListCreator: isCreator };
+      })
+    );
+
+    const listCreatorsMap = listCreatorStatus.reduce(
+      (acc, { owner, isListCreator }) => {
+        acc[owner] = isListCreator;
+        return acc;
+      },
+      {}
+    );
+
+    // setListCreators(listCreatorsMap);
+
+    return {
+      // owners,
+      isWhitelisted,
+      summaryData,
+      listCreatorsMap,
+    };
+  } catch (error) {
+    console.error("Error fetching whitelisted voters:", error);
+  }
+};
+
+export const getAllVotedCategories = async ({ voters, data }) => {
+  const voterCategories = [];
+
+  if (Array.isArray(voters)) {
+    for (const voter of voters) {
+      const promises = data.map((category) =>
+        wallet.viewMethod({
+          contractId: VoteContract,
+          method: "has_voter_participated",
+          args: {
+            election_id: Number(category.id),
+            voter: voter,
+          },
+        })
+      );
+
+      const results = await Promise.all(promises);
+
+      const votedCategories = data
+        .filter((_, index) => results[index])
+        .map((category) => category.id.toString());
+
+      console.log({ voter, votedCategories });
+
+      voterCategories.push({ voter, votedCategories });
+    }
+  }
+
+  return voterCategories;
+};
