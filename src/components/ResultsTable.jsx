@@ -12,6 +12,8 @@ const ResultsTable = ({
 }) => {
   const { wallet } = useContext(NearContext);
   const [voterResults, setVoterResults] = useState([]);
+  const [selectedVoter, setSelectedVoter] = useState("");
+  const [votedCategories, setVotedCategories] = useState([]);
 
   const checkVoteStatus = async ({ id, accountId }) => {
     if (!id || !accountId) return;
@@ -70,6 +72,13 @@ const ResultsTable = ({
     fetchVoterResults();
   }, [voterWithNFT, winnersPerCategory]);
 
+  const handleVoterChange = (event) => {
+    const voter = event.target.value;
+    setSelectedVoter(voter);
+    const voterResult = voterResults.find((result) => result.voter === voter);
+    setVotedCategories(voterResult ? voterResult.categories : []);
+  };
+
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4 mt-8">Winners Per Category</h2>
@@ -120,6 +129,38 @@ const ResultsTable = ({
         </table>
       </div>
 
+      <h2 className="text-2xl font-bold my-4">Categories Voted by Voter</h2>
+      <div className="mb-4">
+        <label htmlFor="voterDropdown" className="mr-2 text-gray-800">
+          Select Voter:
+        </label>
+        <select
+          id="voterDropdown"
+          value={selectedVoter}
+          onChange={handleVoterChange}
+          className="border border-gray-400 bg-white text-gray-800 p-2 rounded"
+        >
+          <option value="">Select a voter</option>
+          {voterWithNFT.map((voter, index) => (
+            <option key={index} value={voter.voter}>
+              {voter.voter}
+            </option>
+          ))}
+        </select>
+      </div>
+      {selectedVoter && (
+        <div>
+          <h3 className="text-xl font-bold mb-2">
+            Categories voted by {selectedVoter}:
+          </h3>
+          <ul>
+            {votedCategories.map((category, index) => (
+              <li key={index}>{category}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <h2 className="text-2xl font-bold my-4">Voters with NFT Qualification</h2>
       <div className="overflow-x-auto">
         {loadingVoters ? (
@@ -135,46 +176,33 @@ const ResultsTable = ({
                 <th className="py-2 px-4 border-b text-left">
                   Is List Creator
                 </th>
-                <th className="py-2 px-4 border-b text-left">
-                  Voted Categories
-                </th>
               </tr>
             </thead>
             <tbody>
-              {voterWithNFT.map((voter, index) => {
-                const voterResult = voterResults.find(
-                  (result) => result.voter === voter.voter
-                );
-                const votedCategories = voterResult
-                  ? voterResult.categories.join(", ")
-                  : "None";
-
-                return (
-                  <tr
-                    key={index}
-                    className={`hover:bg-gray-100 ${
-                      listCreators.find(
-                        (creator) => creator.voter === voter.voter
-                      )?.isCreator
-                        ? "bg-green-100"
-                        : ""
-                    }`}
-                  >
-                    <td className="py-2 px-4 border-b">{voter.voter}</td>
-                    <td className="py-2 px-4 border-b">
-                      {voter.isQualified ? "Yes" : "No"}
-                    </td>
-                    <td className="py-2 px-4 border-b">
-                      {listCreators.find(
-                        (creator) => creator.voter === voter.voter
-                      )?.isCreator
-                        ? "Yes"
-                        : "No"}
-                    </td>
-                    <td className="py-2 px-4 border-b">{votedCategories}</td>
-                  </tr>
-                );
-              })}
+              {voterWithNFT.map((voter, index) => (
+                <tr
+                  key={index}
+                  className={`hover:bg-gray-100 ${
+                    listCreators.find(
+                      (creator) => creator.voter === voter.voter
+                    )?.isCreator
+                      ? "bg-green-100"
+                      : ""
+                  }`}
+                >
+                  <td className="py-2 px-4 border-b">{voter.voter}</td>
+                  <td className="py-2 px-4 border-b">
+                    {voter.isQualified ? "Yes" : "No"}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    {listCreators.find(
+                      (creator) => creator.voter === voter.voter
+                    )?.isCreator
+                      ? "Yes"
+                      : "No"}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}
