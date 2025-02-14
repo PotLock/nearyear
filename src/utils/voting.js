@@ -10,14 +10,14 @@ export const voteForNominees = async ({
           receiverId: VoteContract,
           actions: [
             {
-              type: 'FunctionCall',
+              type: "FunctionCall",
               params: {
-                methodName: 'vote',
+                methodName: "vote",
                 args: {
                   election_id: Number(item.categoryId),
                   vote: [item.candidateId, 1],
                 },
-                gas: '30000000000000',
+                gas: "30000000000000",
                 deposit: "10000000000000000000000",
               },
             },
@@ -47,3 +47,5 @@ export const voteForNominees = async ({
     }
   }
 };
+
+
