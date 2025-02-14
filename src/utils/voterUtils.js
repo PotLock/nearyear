@@ -88,56 +88,6 @@ export const getListsByOwner = async (wallet, accountId) => {
   }
 };
 
-export const fetchVoters = async ({ wallet, signedAccountId }) => {
-  try {
-    const { owners, isWhitelisted } = await fetchWhitelistedVoters(
-      wallet,
-      signedAccountId
-    );
-    // setWhitelistedVoters(owners);
-    // setIsWhitelisted(isWhitelisted);
-
-    // Calculate dynamic values
-    const totalCategories = 49; // Replace with actual logic if needed
-    const totalNominees = owners.length; // Assuming each owner is a nominee
-    const totalVoters = owners.length; // Assuming each owner is a voter
-
-    // Create summary data
-    const summaryData = createSummaryData(
-      totalCategories,
-      totalNominees,
-      totalVoters
-    );
-
-    // Check if each owner is a list creator
-    const listCreatorStatus = await Promise.all(
-      owners.map(async (owner) => {
-        const isCreator = await isListCreator(wallet, owner);
-        return { owner, isListCreator: isCreator };
-      })
-    );
-
-    const listCreatorsMap = listCreatorStatus.reduce(
-      (acc, { owner, isListCreator }) => {
-        acc[owner] = isListCreator;
-        return acc;
-      },
-      {}
-    );
-
-    // setListCreators(listCreatorsMap);
-
-    return {
-      // owners,
-      isWhitelisted,
-      summaryData,
-      listCreatorsMap,
-    };
-  } catch (error) {
-    console.error("Error fetching whitelisted voters:", error);
-  }
-};
-
 export const getAllVotedCategories = async ({ voters, data }) => {
   const voterCategories = [];
 
