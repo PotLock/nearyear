@@ -16,17 +16,26 @@ const ResultsTable = ({
   const [votedCategories, setVotedCategories] = useState([]);
 
   const checkVoteStatus = async ({ id, accountId }) => {
-    if (!id || !accountId) return;
+    // Validate inputs
+    if (!id || !accountId) {
+      console.warn("checkVoteStatus: Missing id or accountId");
+      return null; // Return null if inputs are invalid
+    }
 
-    const hasParticipated = await wallet.viewMethod({
-      contractId: VoteContract,
-      method: "has_voter_participated",
-      args: {
-        election_id: Number(id),
-        voter: accountId,
-      },
-    });
-    return hasParticipated;
+    try {
+      const hasParticipated = await wallet.viewMethod({
+        contractId: VoteContract,
+        method: "has_voter_participated",
+        args: {
+          election_id: Number(id),
+          voter: accountId,
+        },
+      });
+      return hasParticipated;
+    } catch (error) {
+      console.error("checkVoteStatus: Error checking vote status:", error);
+      return null; // Return null in case of an error
+    }
   };
 
   useEffect(() => {
