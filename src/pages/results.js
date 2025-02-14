@@ -1,11 +1,7 @@
 import ResultsTable from "@/components/ResultsTable";
 import { VoteContract } from "@/config";
 import { fetchWhitelistedVoters } from "@/utils/fetchWhitelistedVoters";
-import {
-  getAllVotedCategories,
-  isListCreator,
-  isValidVoter,
-} from "@/utils/voterUtils";
+import { isListCreator, isValidVoter } from "@/utils/voterUtils";
 import { NearContext } from "@/wallets/near";
 import React, {
   useContext,
@@ -21,13 +17,11 @@ const ResultsPage = () => {
   const { wallet, signedAccountId } = useContext(NearContext);
   const [nomineesPerCategory, setNomineesPerCategory] = useState([]);
   const [winnersPerCategory, setWinnersPerCategory] = useState([]);
-  const [allUserVotedCategories, setAllUserVotedCategories] = useState([]);
-  const [voterWithNFT, setVoterWithNFT] = useState([]);
   const [tiesPerCategory, setTiesPerCategory] = useState([]);
+  const [voterWithNFT, setVoterWithNFT] = useState([]);
   const [listCreators, setListCreators] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [voterCategories, setVoterCategories] = useState(new Set());
   const [loadingVoters, setLoadingVoters] = useState(true);
 
   const fetchCategories = useCallback(async () => {
@@ -37,7 +31,6 @@ const ResultsPage = () => {
         method: "get_elections",
       });
       setCategories(data);
-      console.log({ categories: data });
     } catch (error) {
       console.error("Error fetching categories", error);
       toast.error("Failed to fetch categories. Please try again later.");
@@ -50,11 +43,7 @@ const ResultsPage = () => {
         wallet,
         signedAccountId
       );
-
-      if (isWhitelisted) {
-        return owners;
-      }
-      return [];
+      return isWhitelisted ? owners : [];
     } catch (error) {
       console.error("Error fetching whitelisted voters", error);
       toast.error("Failed to fetch voters. Please try again later.");
@@ -68,15 +57,12 @@ const ResultsPage = () => {
   }, [wallet, fetchCategories]);
 
   const fetchNominees = useCallback(async () => {
-    const structuredCatsNominees = [];
-    console.log("Fetching nominees...");
-
     if (!categories || categories.length === 0) {
-      console.log("No categories available.");
       setLoading(false);
       return;
     }
 
+    const structuredCatsNominees = [];
     const promises = categories.map(async (category) => {
       const { id, title } = category;
       try {
@@ -87,8 +73,6 @@ const ResultsPage = () => {
         });
         if (nominees && nominees.length > 0) {
           structuredCatsNominees.push({ id, title, nominees });
-        } else {
-          console.log(`No nominees found for category ${title}.`);
         }
       } catch (error) {
         console.error(`Error fetching nominees for category ${title}:`, error);
@@ -96,21 +80,15 @@ const ResultsPage = () => {
     });
     await Promise.all(promises);
     setNomineesPerCategory(structuredCatsNominees);
-    console.log("Structured categories with nominees:", structuredCatsNominees);
   }, [categories, wallet]);
 
   const fetchVoters = useCallback(async () => {
     const voterWithNFT = [];
     const listCreators = [];
-    const categoriesUserVotedIn = [];
-
-    console.log("Fetching voters...");
 
     try {
       const allVoters = await fetchAndReturnVoters();
       if (allVoters && allVoters.length > 0) {
-        console.log("Fetched voters:", allVoters);
-
         const qualificationPromises = allVoters.map(async (voter) => {
           try {
             const isValid = await isValidVoter(voter);
@@ -138,35 +116,20 @@ const ResultsPage = () => {
         });
 
         await Promise.all([...qualificationPromises, ...creatorPromises]);
-
-        const votedCategories = await getAllVotedCategories({
-          voters: allVoters,
-          data: categories,
-        });
-        setVoterCategories(votedCategories);
-
-        console.log("Fetched voted categories:", voterCategories);
-        categoriesUserVotedIn.push(...votedCategories);
-      } else {
-        console.log("No voters found.");
       }
     } catch (error) {
-      console.error("Error fetching voters or voted categories:", error);
+      console.error("Error fetching voters:", error);
     }
 
-    setVoterWithNFT(voterWithNFT.slice(0, 10));
+    setVoterWithNFT(voterWithNFT);
     setListCreators(listCreators);
-    setAllUserVotedCategories(categoriesUserVotedIn);
     setLoadingVoters(false);
-    console.log("Voters with NFT qualification:", voterWithNFT);
-    console.log("List creators:", listCreators);
-  }, [categories, fetchAndReturnVoters, wallet]);
+  }, [fetchAndReturnVoters, wallet]);
 
   useEffect(() => {
     if (categories) {
       fetchNominees();
     } else {
-      console.log("Categories are not available.");
       setLoading(false);
     }
   }, [categories, fetchNominees]);
@@ -179,12 +142,9 @@ const ResultsPage = () => {
 
   const getWinners = useCallback((nominees) => {
     if (!nominees.length) return [];
-    // Get the highest vote count
     const maxVotes = Math.max(...nominees.map((n) => n.votes_received));
     if (maxVotes === 0) return [];
-    // Get all nominees with the highest vote count (could be multiple in case of tie)
-    const winners = nominees.filter((n) => n.votes_received === maxVotes);
-    return winners;
+    return nominees.filter((n) => n.votes_received === maxVotes);
   }, []);
 
   useEffect(() => {
@@ -194,14 +154,12 @@ const ResultsPage = () => {
         return { id: category.id, title: category.title, winners };
       });
 
-      const tiesPerCategory = winnersPerCategory.filter(
+      const ties = winnersPerCategory.filter(
         (category) => category.winners.length > 1
       );
 
       setWinnersPerCategory(winnersPerCategory);
-      setTiesPerCategory(tiesPerCategory);
-      console.log("Calculated winners per category:", winnersPerCategory);
-      console.log("Categories with ties:", tiesPerCategory);
+      setTiesPerCategory(ties);
     }
   }, [nomineesPerCategory, getWinners]);
 
@@ -211,15 +169,8 @@ const ResultsPage = () => {
       winnersPerCategory,
       tiesPerCategory,
       listCreators,
-      voterCategories,
     }),
-    [
-      voterWithNFT,
-      winnersPerCategory,
-      tiesPerCategory,
-      listCreators,
-      voterCategories,
-    ]
+    [voterWithNFT, winnersPerCategory, tiesPerCategory, listCreators]
   );
 
   return (
