@@ -1,6 +1,6 @@
 import { VoteContract } from "@/config";
 import { NearContext } from "@/wallets/near";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Audio } from "react-loader-spinner";
 
 const ResultsTable = ({
@@ -8,10 +8,11 @@ const ResultsTable = ({
   winnersPerCategory,
   tiesPerCategory,
   listCreators,
-  voterCategories,
   loadingVoters,
 }) => {
   const { wallet } = useContext(NearContext);
+  const [voterResults, setVoterResults] = useState([]);
+
   const checkVoteStatus = async ({ id, accountId }) => {
     if (!id || !accountId) return;
 
@@ -25,6 +26,49 @@ const ResultsTable = ({
     });
     return hasParticipated;
   };
+
+  useEffect(() => {
+    const allVoterResults = {};
+
+    const fetchVoterResults = async () => {
+      const allVoterPromises = voterWithNFT.map(async (voter) => {
+        const categoryPromises =
+          winnersPerCategory &&
+          winnersPerCategory.map(async (category) => {
+            try {
+              const hasVoted = await checkVoteStatus({
+                id: category.id,
+                accountId: voter.voter,
+              });
+
+              if (hasVoted) {
+                console.log(voter.voter, "voted for", category.title);
+                if (!allVoterResults[voter.voter]) {
+                  allVoterResults[voter.voter] = [];
+                }
+                allVoterResults[voter.voter].push(category.title);
+              }
+            } catch (error) {
+              console.error("Error checking vote status:", error);
+            }
+          });
+
+        await Promise.all(categoryPromises);
+      });
+
+      await Promise.all(allVoterPromises);
+
+      const results = Object.keys(allVoterResults).map((voter) => ({
+        voter,
+        categories: allVoterResults[voter],
+      }));
+
+      setVoterResults(results);
+      console.log({ allVoterResults });
+    };
+
+    fetchVoterResults();
+  }, [voterWithNFT, winnersPerCategory]);
 
   return (
     <div className="p-4">
@@ -98,26 +142,13 @@ const ResultsTable = ({
             </thead>
             <tbody>
               {voterWithNFT.map((voter, index) => {
-                const votedCategories =
-                  winnersPerCategory &&
-                  winnersPerCategory.map(async (category) => {
-                    const hasVoted = await checkVoteStatus({
-                      id: category.id,
-                      accountId: "jgodwill.near",
-                    });
+                const voterResult = voterResults.find(
+                  (result) => result.voter === voter.voter
+                );
+                const votedCategories = voterResult
+                  ? voterResult.categories.join(", ")
+                  : "None";
 
-                    if (hasVoted) {
-                      console.log({ category: category.title, hasVoted });
-                    }
-                    return hasVoted ? category.title : null;
-                  });
-                {
-                  /* console.log({
-                  voter: voter.voter,
-                  votedCategories,
-                  voterCategories,
-                }); */
-                }
                 return (
                   <tr
                     key={index}
@@ -140,7 +171,7 @@ const ResultsTable = ({
                         ? "Yes"
                         : "No"}
                     </td>
-                    {/* <td className="py-2 px-4 border-b">{hasVoted || "None"}</td> */}
+                    <td className="py-2 px-4 border-b">{votedCategories}</td>
                   </tr>
                 );
               })}
