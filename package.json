@@ -23,6 +23,7 @@
     "@near-wallet-selector/modal-ui": "^8.9.13",
     "@near-wallet-selector/my-near-wallet": "^8.9.13",
     "@near-wallet-selector/sender": "^8.9.13",
+    "@tippyjs/react": "^4.2.6",
     "@web3modal/wagmi": "^5.1.10",
     "big.js": "^6.2.2",
     "bootstrap": "^5",
