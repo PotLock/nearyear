@@ -302,7 +302,6 @@ const LandingPage = () => {
                 </span>
               </h1>
 
-              {/* Description - Responsive */}
               <p className="text-base sm:text-lg md:text-xl text-gray-600 mt-4 sm:mt-6 mb-8 sm:mb-10 max-w-3xl mx-auto px-4">
                 The first annual on-chain awards show celebrating the people and
                 projects of NEAR and predicting achievements in the upcoming
@@ -311,12 +310,12 @@ const LandingPage = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
-                  onClick={() => router.push("/vote")}
+                  onClick={() => router.push("/winners")}
                   className="group inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
                 >
-                  <span>Vote Now</span>
+                  <span>See Winners</span>
                   <span className="ml-2 group-hover:rotate-12 transition-transform duration-200">
-                    🗳️
+                    🏆
                   </span>
                 </button>
                 <button

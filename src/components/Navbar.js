@@ -45,15 +45,15 @@ const Navbar = () => {
         </Link>
         <div className="hidden md:flex items-center gap-5 flex-grow justify-center">
           {[
-            "/vote",
+            "/winners",
             "https://shard.dog/nearyear",
             "/nomination",
             "/register",
           ].map((path, index) => {
             const isActive = router.pathname === path;
             const linkText =
-              path === "/vote"
-                ? "Vote"
+              path === "/winners"
+                ? "Winners"
                 : path === "https://shard.dog/nearyear"
                 ? "Voter NFT"
                 : path === "/nomination"
@@ -110,15 +110,15 @@ const Navbar = () => {
       >
         <div className="flex flex-col items-stretch gap-2 mt-4 pt-4 border-t border-gray-200">
           {[
-            "/vote",
+            "/winners",
             "https://shard.dog/nearyear",
             "/nomination",
             "/register",
           ].map((path, index) => {
             const isActive = router.pathname === path;
             const linkText =
-              path === "/vote"
-                ? "Vote"
+              path === "/winners"
+                ? "Winners"
                 : path === "https://shard.dog/nearyear"
                 ? "Voter NFT"
                 : path === "/nomination"
