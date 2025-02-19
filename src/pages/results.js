@@ -43,7 +43,7 @@ const ResultsPage = () => {
         wallet,
         signedAccountId
       );
-      return isWhitelisted ? owners : [];
+      return owners.slice(0, 20) ?? [];
     } catch (error) {
       console.error("Error fetching whitelisted voters", error);
       toast.error("Failed to fetch voters. Please try again later.");
@@ -87,54 +87,48 @@ const ResultsPage = () => {
     const listCreators = [];
 
     try {
-      // Check if voters are already cached
-      const cachedVoters = localStorage.getItem("voterWithNFT");
-      const cachedListCreators = localStorage.getItem("listCreators");
-
-      if (cachedVoters && cachedListCreators) {
-        setVoterWithNFT(JSON.parse(cachedVoters));
-        setListCreators(JSON.parse(cachedListCreators));
-        setLoadingVoters(false);
-        return;
-      }
-
       const allVoters = await fetchAndReturnVoters();
+      console.log({ allVoters });
       if (allVoters && allVoters.length > 0) {
         const qualificationPromises = allVoters.map(async (voter) => {
           try {
             const isValid = await isValidVoter(voter);
-            voterWithNFT.push({ voter, isQualified: isValid });
+            return { voter, isQualified: isValid };
           } catch (error) {
             console.error(
               `Error checking qualification for voter ${voter}:`,
               error
             );
-            voterWithNFT.push({ voter, isQualified: false });
+            return { voter, isQualified: false };
           }
         });
 
         const creatorPromises = allVoters.map(async (voter) => {
           try {
             const isCreator = await isListCreator(wallet, voter);
-            listCreators.push({ voter, isCreator });
+            return { voter, isCreator };
           } catch (error) {
             console.error(
               `Error checking list creator for voter ${voter}:`,
               error
             );
-            listCreators.push({ voter, isCreator: false });
+            return { voter, isCreator: false };
           }
         });
 
-        await Promise.all([...qualificationPromises, ...creatorPromises]);
+        const [qualifiedVoters, creators] = await Promise.all([
+          Promise.all(qualificationPromises),
+          Promise.all(creatorPromises),
+        ]);
 
-        // Cache the voters' data
-        localStorage.setItem("voterWithNFT", JSON.stringify(voterWithNFT));
-        localStorage.setItem("listCreators", JSON.stringify(listCreators));
+        voterWithNFT.push(...qualifiedVoters);
+        listCreators.push(...creators);
       }
     } catch (error) {
       console.error("Error fetching voters:", error);
     }
+
+    console.log({ voterWithNFT, listCreators });
 
     setVoterWithNFT(voterWithNFT);
     setListCreators(listCreators);

@@ -1,4 +1,4 @@
-export const fetchWhitelistedVoters = async (wallet, signedAccountId) => {
+export const fetchWhitelistedVoters = async (signedAccountId) => {
   const query = `
     query MyQuery {
       mb_views_nft_owned_tokens(
