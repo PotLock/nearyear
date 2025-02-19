@@ -87,17 +87,6 @@ const ResultsPage = () => {
     const listCreators = [];
 
     try {
-      // Check if voters are already cached
-      const cachedVoters = localStorage.getItem("voterWithNFT");
-      const cachedListCreators = localStorage.getItem("listCreators");
-
-      if (cachedVoters && cachedListCreators) {
-        setVoterWithNFT(JSON.parse(cachedVoters));
-        setListCreators(JSON.parse(cachedListCreators));
-        setLoadingVoters(false);
-        return;
-      }
-
       const allVoters = await fetchAndReturnVoters();
       if (allVoters && allVoters.length > 0) {
         const qualificationPromises = allVoters.map(async (voter) => {
@@ -127,10 +116,6 @@ const ResultsPage = () => {
         });
 
         await Promise.all([...qualificationPromises, ...creatorPromises]);
-
-        // Cache the voters' data
-        localStorage.setItem("voterWithNFT", JSON.stringify(voterWithNFT));
-        localStorage.setItem("listCreators", JSON.stringify(listCreators));
       }
     } catch (error) {
       console.error("Error fetching voters:", error);
