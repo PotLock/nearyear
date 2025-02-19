@@ -1,7 +1,5 @@
 import ResultsTable from "@/components/ResultsTable";
 import { VoteContract } from "@/config";
-import { fetchWhitelistedVoters } from "@/utils/fetchWhitelistedVoters";
-import { isListCreator, isValidVoter } from "@/utils/voterUtils";
 import { NearContext } from "@/wallets/near";
 import React, {
   useContext,
@@ -18,8 +16,8 @@ const ResultsPage = () => {
   const [nomineesPerCategory, setNomineesPerCategory] = useState([]);
   const [winnersPerCategory, setWinnersPerCategory] = useState([]);
   const [tiesPerCategory, setTiesPerCategory] = useState([]);
-  const [voterWithNFT, setVoterWithNFT] = useState([]);
-  const [listCreators, setListCreators] = useState([]);
+  const [voterWithNFT, setVoterWithNFT] = useState(new Map());
+  const [listCreators, setListCreators] = useState(new Map());
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingVoters, setLoadingVoters] = useState(true);
@@ -36,20 +34,22 @@ const ResultsPage = () => {
       toast.error("Failed to fetch categories. Please try again later.");
     }
   }, [wallet]);
-
-  const fetchAndReturnVoters = useCallback(async () => {
+  const fetchAllVotersPerParticipation = useCallback(async () => {
     try {
-      const { owners, isWhitelisted } = await fetchWhitelistedVoters(
-        wallet,
-        signedAccountId
-      );
-      return owners.slice(0, 20) ?? [];
+      const data = await wallet.viewMethod({
+        contractId: VoteContract,
+        method: "get_all_voter_participation",
+      });
+
+      if (!data) {
+        throw new Error(`No data returned`);
+      }
+      setVoterWithNFT(data);
+      setLoadingVoters(false);
     } catch (error) {
-      console.error("Error fetching whitelisted voters", error);
-      toast.error("Failed to fetch voters. Please try again later.");
-      return [];
+      console.error("Error fetching voter participation:", error);
     }
-  }, [wallet, signedAccountId]);
+  }, [wallet]);
 
   useEffect(() => {
     if (!wallet) return;
@@ -82,59 +82,6 @@ const ResultsPage = () => {
     setNomineesPerCategory(structuredCatsNominees);
   }, [categories, wallet]);
 
-  const fetchVoters = useCallback(async () => {
-    const voterWithNFT = [];
-    const listCreators = [];
-
-    try {
-      const allVoters = await fetchAndReturnVoters();
-      console.log({ allVoters });
-      if (allVoters && allVoters.length > 0) {
-        const qualificationPromises = allVoters.map(async (voter) => {
-          try {
-            const isValid = await isValidVoter(voter);
-            return { voter, isQualified: isValid };
-          } catch (error) {
-            console.error(
-              `Error checking qualification for voter ${voter}:`,
-              error
-            );
-            return { voter, isQualified: false };
-          }
-        });
-
-        const creatorPromises = allVoters.map(async (voter) => {
-          try {
-            const isCreator = await isListCreator(wallet, voter);
-            return { voter, isCreator };
-          } catch (error) {
-            console.error(
-              `Error checking list creator for voter ${voter}:`,
-              error
-            );
-            return { voter, isCreator: false };
-          }
-        });
-
-        const [qualifiedVoters, creators] = await Promise.all([
-          Promise.all(qualificationPromises),
-          Promise.all(creatorPromises),
-        ]);
-
-        voterWithNFT.push(...qualifiedVoters);
-        listCreators.push(...creators);
-      }
-    } catch (error) {
-      console.error("Error fetching voters:", error);
-    }
-
-    console.log({ voterWithNFT, listCreators });
-
-    setVoterWithNFT(voterWithNFT);
-    setListCreators(listCreators);
-    setLoadingVoters(false);
-  }, [fetchAndReturnVoters, wallet]);
-
   useEffect(() => {
     if (categories) {
       fetchNominees();
@@ -142,12 +89,6 @@ const ResultsPage = () => {
       setLoading(false);
     }
   }, [categories, fetchNominees]);
-
-  useEffect(() => {
-    if (nomineesPerCategory.length > 0) {
-      fetchVoters();
-    }
-  }, [nomineesPerCategory, fetchVoters]);
 
   const getWinners = useCallback((nominees) => {
     if (!nominees.length) return [];
@@ -174,13 +115,35 @@ const ResultsPage = () => {
 
   const memoizedResults = useMemo(
     () => ({
+      voterWithNFT: Array.from(voterWithNFT),
+      winnersPerCategory,
+      tiesPerCategory,
+      listCreators: Array.from(listCreators.values()),
+    }),
+    [
       voterWithNFT,
       winnersPerCategory,
       tiesPerCategory,
       listCreators,
-    }),
-    [voterWithNFT, winnersPerCategory, tiesPerCategory, listCreators]
+    ]
   );
+
+  useEffect(() => {
+    const fetchVoterParticipation = async () => {
+      try {
+        const data = await fetchAllVotersPerParticipation();
+        const voterParticipationMap = new Map();
+
+        data.forEach(([voter, categories]) => {
+          voterParticipationMap.set(voter, categories.length);
+        });
+      } catch (error) {
+        console.error("Error fetching voter participation:", error);
+      }
+    };
+
+    fetchVoterParticipation();
+  }, [fetchAllVotersPerParticipation]);
 
   return (
     <div className="p-4">
